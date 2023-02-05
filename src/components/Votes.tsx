@@ -1,3 +1,4 @@
+import { Box } from '@mui/material';
 import { User } from '../types/User';
 
 type Votes = {
@@ -7,7 +8,15 @@ type Votes = {
 
 const Votes: React.FC<Votes> = ({ users, reveal }) => {
   return (
-    <div className='card-voting-container'>
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        marginTop: '25px',
+        alignItems: 'center',
+        userSelect: 'none',
+        flexDirection: 'row'
+      }}>
       {users?.length &&
         users.map(user => (
           <div key={user.clientId}>
@@ -29,7 +38,7 @@ const Votes: React.FC<Votes> = ({ users, reveal }) => {
             <div className='user'>{user.username}</div>
           </div>
         ))}
-    </div>
+    </Box>
   );
 };
 

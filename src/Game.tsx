@@ -6,6 +6,7 @@ import Votes from './components/Votes';
 import { StyledButton, StyledTextField } from './styles';
 import { Typography } from '@mui/material';
 import Board from './components/Board';
+import Header from './components/Header';
 
 const socket = io('ws://localhost:3000');
 
@@ -14,8 +15,15 @@ const Game = () => {
 
   return (
     <div className='App'>
-      {room.gameStarted && <div className='game-name'>{room.gameName}</div>}
-      {room.gameStarted && <div className='game-username'>{user.username}</div>}
+      {/* {room.gameStarted && <div className='game-name'>{room.gameName}</div>}
+      {room.gameStarted && <div className='game-username'>{user.username}</div>} */}
+
+      {room.gameStarted && user.username && (
+        <Header
+          gameName={room.gameName}
+          username={user.username}
+        />
+      )}
 
       {!room.roomId && !room.gameStarted && (
         <>

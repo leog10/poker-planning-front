@@ -20,8 +20,8 @@ export const StyledTextField = styled(TextField)(({ theme }) => ({
     padding: '0 0.8rem',
     fontWeight: 500,
     color: '#1a2935 !important',
-    top: '-1px',
-    left: '-11px'
+    top: '-2px',
+    left: '-14px'
   },
   '& .MuiOutlinedInput-root': {
     '& fieldset': {

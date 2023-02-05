@@ -3,6 +3,7 @@ import Typography from '@mui/material/Typography';
 import { StyledButton } from '../styles';
 import { User } from '../types/User';
 import { useMemo } from 'react';
+import { Link } from '@mui/material';
 
 type Board = {
   revealing: boolean;
@@ -30,8 +31,8 @@ const Board: React.FC<Board> = ({
           return (
             <StyledButton
               sx={{
-                width: 160,
-                fontSize: 20
+                width: 200,
+                fontSize: 25
               }}
               variant='contained'
               color='primary'
@@ -44,27 +45,31 @@ const Board: React.FC<Board> = ({
         }
       } else if (users && users.some(user => user.card.length > 0)) {
         return (
-          <Typography sx={{ fontSize: 18 }}>Voting in progress</Typography>
+          <Typography sx={{ fontSize: 22 }}>Voting in progress</Typography>
         );
       } else {
-        return <Typography sx={{ fontSize: 18 }}>Pick your cards!</Typography>;
+        return <Typography sx={{ fontSize: 22 }}>Pick your cards!</Typography>;
       }
     } else if (revealingTime <= 0) {
       if (allowedReveal) {
         return (
           <StyledButton
             sx={{
-              width: 160,
-              fontSize: 19
+              width: 240,
+              fontSize: 25,
+              backgroundColor: '#48545d',
+              '&:hover': {
+                backgroundColor: '#1a2935'
+              }
             }}
             variant='contained'
             color='primary'
             onClick={() => startNewVoting(roomId)}>
-            New Game
+            Start new voting
           </StyledButton>
         );
       } else {
-        return <Typography sx={{ fontSize: 18 }}>Voting finished</Typography>;
+        return <Typography sx={{ fontSize: 22 }}>Voting finished</Typography>;
       }
     } else {
       return (
@@ -74,23 +79,55 @@ const Board: React.FC<Board> = ({
         </Typography>
       );
     }
-    return <Typography sx={{ fontSize: 18 }}>Pick your cards!</Typography>;
+    return <Typography sx={{ fontSize: 22 }}>Pick your cards!</Typography>;
   }, [allowedReveal, users, revealing, revealingTime]);
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#d7e9ff',
-        width: 330,
-        height: 150,
-        borderRadius: '25px',
-        margin: '0 auto'
-      }}>
-      {boardContent}
-    </Box>
+    <div>
+      <Box
+        sx={{
+          marginBottom: 1.8
+        }}>
+        <Typography
+          sx={{
+            fontSize: 23,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'baseline'
+          }}>
+          Feeling lonely?
+          <Typography sx={{ fontSize: 18, marginLeft: '5px' }}>😴</Typography>
+        </Typography>
+        <Link
+          sx={{
+            fontSize: 23,
+            fontWeight: 700,
+            color: 'text.secondary',
+            cursor: 'pointer',
+            textDecoration: 'none',
+            transition: 'all 0.3s',
+            '&:hover': {
+              transition: 'all 0.3s',
+              opacity: 0.7
+            }
+          }}>
+          Invite players
+        </Link>
+      </Box>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: '#d7e9ff',
+          width: '21rem',
+          height: '9.4rem',
+          borderRadius: '35px',
+          margin: '0 auto'
+        }}>
+        {boardContent}
+      </Box>
+    </div>
   );
 };
 
