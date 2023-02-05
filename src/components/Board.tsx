@@ -42,10 +42,12 @@ const Board: React.FC<Board> = ({
             </StyledButton>
           );
         }
-      } else {
+      } else if (users && users.some(user => user.card.length > 0)) {
         return (
           <Typography sx={{ fontSize: 18 }}>Voting in progress</Typography>
         );
+      } else {
+        return <Typography sx={{ fontSize: 18 }}>Pick your cards!</Typography>;
       }
     } else if (revealingTime <= 0) {
       if (allowedReveal) {
