@@ -2,13 +2,15 @@ import { Box } from '@mui/material';
 import { StyledButton } from '../styles';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
+import { Link } from 'react-router-dom';
 
 type Header = {
   gameName: string;
-  username: string;
+  username: string | undefined;
+  gameStarted: boolean;
 };
 
-const Header: React.FC<Header> = ({ gameName, username }) => {
+const Header: React.FC<Header> = ({ gameName, username, gameStarted }) => {
   return (
     <Box
       sx={{
@@ -20,13 +22,21 @@ const Header: React.FC<Header> = ({ gameName, username }) => {
         padding: '1.7rem 2.5rem',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        backgroundColor: '#F9F9F9'
+        backgroundColor: '#F9F9F9',
+        userSelect: 'none'
       }}>
-      <img
-        src='../../../public/logo.png'
-        alt=''
-        width={48}
-      />
+      <Box
+        sx={{
+          alignSelf: 'end'
+        }}>
+        <Link to={'/'}>
+          <img
+            src='/logo.png'
+            alt=''
+            width={48}
+          />
+        </Link>
+      </Box>
       <Box sx={{ flexGrow: 1 }}>
         <Box
           sx={{
@@ -48,96 +58,102 @@ const Header: React.FC<Header> = ({ gameName, username }) => {
               cursor: 'pointer'
             }
           }}>
-          {gameName}
-          <KeyboardArrowDownIcon
-            sx={{
-              marginTop: 0.5,
-              marginLeft: 0.5,
-              color: '#626262',
-              width: '28px'
-            }}
-          />
+          {gameName && gameStarted ? gameName : 'Create game'}
+          {gameName && gameStarted && (
+            <KeyboardArrowDownIcon
+              sx={{
+                marginTop: 0.5,
+                marginLeft: 0.5,
+                color: '#626262',
+                width: '28px'
+              }}
+            />
+          )}
         </Box>
       </Box>
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: 2,
-          borderRadius: '10px',
-          padding: '0.7rem 0.8rem',
-          '&:hover': {
-            transition: 'all 0.3s',
-            backgroundColor: '#f1f1f1',
-            cursor: 'pointer'
-          }
-        }}>
-        <img
-          src='../../../public/logo.png'
-          alt=''
-          width={32}
-        />
-        <Box
-          sx={{
-            display: 'flex',
-            fontSize: 21,
-            fontWeight: 700,
-            color: '#626262'
-          }}>
-          {username}
-          <KeyboardArrowDownIcon
+      {gameStarted && (
+        <>
+          <Box
             sx={{
-              marginTop: 0.2,
-              marginLeft: 0.5,
-              color: '#626262',
-              width: '28px'
-            }}
-          />
-        </Box>
-      </Box>
-      <StyledButton
-        variant='outlined'
-        sx={{
-          border: 2,
-          width: 'fit-content',
-          padding: '0.4rem 1.2rem',
-          margin: '0 1.4rem 0',
-          fontWeight: 700,
-          fontSize: 23,
-          backgroundColor: '#fff',
-          '&:hover': {
-            border: 2,
-            transition: 'all 0.3s',
-            backgroundColor: '#ebf4ff',
-            cursor: 'pointer'
-          }
-        }}>
-        <Box sx={{ marginRight: 2 }}>🧛‍♂️</Box>Invite players
-      </StyledButton>
-      <StyledButton
-        variant='outlined'
-        sx={{
-          border: 2,
-          width: 'fit-content',
-          padding: '0.8rem 0.9rem',
-          margin: 0,
-          fontWeight: 700,
-          fontSize: 23,
-          backgroundColor: '#fff',
-          '&:hover': {
-            border: 2,
-            transition: 'all 0.3s',
-            backgroundColor: '#ebf4ff',
-            cursor: 'pointer'
-          }
-        }}>
-        <ArticleOutlinedIcon
-          fontSize='small'
-          viewBox='0 0 24 24'
-          sx={{ width: '24px', height: '24px' }}
-        />
-      </StyledButton>
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 2,
+              borderRadius: '10px',
+              padding: '0.7rem 0.8rem',
+              '&:hover': {
+                transition: 'all 0.3s',
+                backgroundColor: '#f1f1f1',
+                cursor: 'pointer'
+              }
+            }}>
+            <img
+              src='/logo.png'
+              alt=''
+              width={32}
+            />
+            <Box
+              sx={{
+                display: 'flex',
+                fontSize: 21,
+                fontWeight: 700,
+                color: '#626262'
+              }}>
+              {username}
+              <KeyboardArrowDownIcon
+                sx={{
+                  marginTop: 0.2,
+                  marginLeft: 0.5,
+                  color: '#626262',
+                  width: '28px'
+                }}
+              />
+            </Box>
+          </Box>
+          <StyledButton
+            variant='outlined'
+            sx={{
+              border: 2,
+              width: 'fit-content',
+              padding: '0.4rem 1.2rem',
+              margin: '0 1.4rem 0',
+              fontWeight: 700,
+              fontSize: 23,
+              backgroundColor: '#fff',
+              '&:hover': {
+                border: 2,
+                transition: 'all 0.3s',
+                backgroundColor: '#ebf4ff',
+                cursor: 'pointer'
+              }
+            }}>
+            <Box sx={{ marginRight: 2 }}>🧛‍♂️</Box>Invite players
+          </StyledButton>
+          <StyledButton
+            variant='outlined'
+            sx={{
+              border: 2,
+              width: 'fit-content',
+              padding: '0.8rem 0.9rem',
+              margin: 0,
+              fontWeight: 700,
+              fontSize: 23,
+              backgroundColor: '#fff',
+              '&:hover': {
+                border: 2,
+                transition: 'all 0.3s',
+                backgroundColor: '#ebf4ff',
+                cursor: 'pointer'
+              }
+            }}>
+            <ArticleOutlinedIcon
+              fontSize='small'
+              viewBox='0 0 24 24'
+              sx={{ width: '24px', height: '24px' }}
+            />
+          </StyledButton>
+        </>
+      )}
     </Box>
   );
 };

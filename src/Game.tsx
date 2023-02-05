@@ -4,7 +4,7 @@ import useRoom from './helpers/useRoom';
 import Cards from './components/Card';
 import Votes from './components/Votes';
 import { StyledButton, StyledTextField } from './styles';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import Board from './components/Board';
 import Header from './components/Header';
 
@@ -18,21 +18,25 @@ const Game = () => {
       {/* {room.gameStarted && <div className='game-name'>{room.gameName}</div>}
       {room.gameStarted && <div className='game-username'>{user.username}</div>} */}
 
-      {room.gameStarted && user.username && (
-        <Header
-          gameName={room.gameName}
-          username={user.username}
-        />
-      )}
+      <Header
+        gameName={room.gameName}
+        username={user.username}
+        gameStarted={room.gameStarted}
+      />
 
       {!room.roomId && !room.gameStarted && (
-        <>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            marginTop: '3.5rem'
+          }}>
           <Typography
             sx={{
-              fontSize: 21,
-              marginBottom: 4,
+              fontSize: 24,
+              marginBottom: 3,
               marginTop: -15,
-              fontWeight: 600
+              fontWeight: 400
             }}>
             Choose a name for your game.
           </Typography>
@@ -43,6 +47,7 @@ const Game = () => {
             onChange={e => room.setGameName(e.target.value)}
           />
           <StyledButton
+            sx={{ fontSize: 24, padding: '0.4rem' }}
             autoCapitalize='none'
             variant='contained'
             color='primary'
@@ -52,11 +57,16 @@ const Game = () => {
             }>
             Create game
           </StyledButton>
-        </>
+        </Box>
       )}
 
       {!room.gameStarted && room.roomId && room.gameName && (
-        <>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            marginTop: '3.5rem'
+          }}>
           <Typography
             sx={{
               fontSize: 21,
@@ -77,13 +87,14 @@ const Game = () => {
           />
 
           <StyledButton
+            sx={{ fontSize: 24, padding: '0.4rem' }}
             variant='contained'
             color='primary'
             disabled={!room.roomId || !user.username}
             onClick={room.handleChooseUsername}>
             Continue to game
           </StyledButton>
-        </>
+        </Box>
       )}
 
       {room.gameStarted && room.gameName && (
@@ -107,6 +118,7 @@ const Game = () => {
 
       {!room.revealing && room.gameStarted && (
         <Cards
+          revealing={room.revealing}
           roomId={room.roomId}
           clientId={user.clientId}
           fiboCards={room.fiboCards}

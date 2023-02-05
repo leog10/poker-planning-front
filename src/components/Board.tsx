@@ -45,10 +45,16 @@ const Board: React.FC<Board> = ({
         }
       } else if (users && users.some(user => user.card.length > 0)) {
         return (
-          <Typography sx={{ fontSize: 22 }}>Voting in progress</Typography>
+          <Typography sx={{ fontSize: 22, userSelect: 'none' }}>
+            Voting in progress
+          </Typography>
         );
       } else {
-        return <Typography sx={{ fontSize: 22 }}>Pick your cards!</Typography>;
+        return (
+          <Typography sx={{ fontSize: 22, userSelect: 'none' }}>
+            Pick your cards!
+          </Typography>
+        );
       }
     } else if (revealingTime <= 0) {
       if (allowedReveal) {
@@ -69,17 +75,30 @@ const Board: React.FC<Board> = ({
           </StyledButton>
         );
       } else {
-        return <Typography sx={{ fontSize: 22 }}>Voting finished</Typography>;
+        return (
+          <Typography sx={{ fontSize: 22, userSelect: 'none' }}>
+            Voting finished
+          </Typography>
+        );
       }
     } else {
       return (
         <Typography
-          sx={{ fontSize: 25, fontWeight: 700, color: 'text.secondary' }}>
+          sx={{
+            fontSize: 25,
+            fontWeight: 700,
+            color: 'text.secondary',
+            userSelect: 'none'
+          }}>
           {revealingTime}
         </Typography>
       );
     }
-    return <Typography sx={{ fontSize: 22 }}>Pick your cards!</Typography>;
+    return (
+      <Typography sx={{ fontSize: 22, userSelect: 'none' }}>
+        Pick your cards!
+      </Typography>
+    );
   }, [allowedReveal, users, revealing, revealingTime]);
 
   return (
@@ -88,16 +107,20 @@ const Board: React.FC<Board> = ({
         sx={{
           marginBottom: 1.8
         }}>
-        <Typography
+        <Box
           sx={{
             fontSize: 23,
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'baseline'
+            alignItems: 'baseline',
+            userSelect: 'none'
           }}>
           Feeling lonely?
-          <Typography sx={{ fontSize: 18, marginLeft: '5px' }}>😴</Typography>
-        </Typography>
+          <Typography
+            sx={{ fontSize: 18, marginLeft: '5px', userSelect: 'none' }}>
+            😴
+          </Typography>
+        </Box>
         <Link
           sx={{
             fontSize: 23,

@@ -6,6 +6,7 @@ type Cards = {
   fiboCards: FiboCards[];
   roomId: string;
   clientId: string;
+  revealing: boolean;
   handleCardSelect: (card: string, roomId: string, clientId: string) => void;
 };
 
@@ -13,6 +14,7 @@ const Cards: React.FC<Cards> = ({
   fiboCards,
   roomId,
   clientId,
+  revealing,
   handleCardSelect
 }) => {
   return (
@@ -26,17 +28,18 @@ const Cards: React.FC<Cards> = ({
         left: 0,
         bottom: '1%'
       }}>
-      <Typography
+      <Box
         sx={{
           margin: 2.5,
           fontSize: 22.5,
           display: 'flex',
           justifyContent: 'center',
-          alignItems: 'center'
+          alignItems: 'center',
+          userSelect: 'none'
         }}>
         Choose your card
         <Typography sx={{ fontSize: 20, marginLeft: '5px' }}>👇</Typography>
-      </Typography>
+      </Box>
       <Box
         sx={{
           display: 'flex',
