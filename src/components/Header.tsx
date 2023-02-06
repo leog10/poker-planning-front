@@ -64,7 +64,7 @@ const Header: React.FC<Header> = ({ gameName, username, gameStarted }) => {
               cursor: 'pointer'
             }
           }}>
-          {gameName ? gameName : 'Create game'}
+          {gameName && gameStarted ? gameName : 'Create game'}
           {gameName && gameStarted && (
             <KeyboardArrowDownIcon
               sx={{

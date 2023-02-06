@@ -7,16 +7,17 @@ import { StyledButton, StyledTextField } from './styles';
 import { Box, Typography } from '@mui/material';
 import Board from './components/Board';
 import Header from './components/Header';
-import { useState } from 'react';
 
 const socket = io('ws://localhost:3000');
 
 const Game = () => {
   const { room, user } = useRoom(socket);
-  const [gameName, setGameName] = useState('');
 
   return (
     <div className='App'>
+      {/* {room.gameStarted && <div className='game-name'>{room.gameName}</div>}
+      {room.gameStarted && <div className='game-username'>{user.username}</div>} */}
+
       <Header
         gameName={room.gameName}
         username={user.username}
@@ -43,16 +44,16 @@ const Game = () => {
             autoComplete='off'
             variant='outlined'
             label="Game's name"
-            onChange={e => setGameName(e.target.value)}
+            onChange={e => room.setGameName(e.target.value)}
           />
           <StyledButton
             sx={{ fontSize: 24, padding: '0.4rem' }}
             autoCapitalize='none'
             variant='contained'
             color='primary'
-            disabled={!gameName}
+            disabled={!room.gameName}
             onClick={() =>
-              room.createRoom(user.username || '', gameName, user.clientId)
+              room.createRoom(user.username || '', room.gameName, user.clientId)
             }>
             Create game
           </StyledButton>

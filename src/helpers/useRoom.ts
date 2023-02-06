@@ -39,7 +39,6 @@ const useCreateRoom = (socket: Socket) => {
       }
       setAllowedReveal(true);
       setAllowedNewGame(true);
-      setGameName(gameName);
     },
     [user.username]
   );
