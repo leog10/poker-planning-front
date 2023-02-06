@@ -23,7 +23,8 @@ const Header: React.FC<Header> = ({ gameName, username, gameStarted }) => {
         alignItems: 'center',
         justifyContent: 'flex-start',
         backgroundColor: '#F9F9F9',
-        userSelect: 'none'
+        userSelect: 'none',
+        height: '6.2rem'
       }}>
       <Box
         sx={{
