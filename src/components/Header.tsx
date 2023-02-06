@@ -29,7 +29,13 @@ const Header: React.FC<Header> = ({ gameName, username, gameStarted }) => {
         sx={{
           alignSelf: 'end'
         }}>
-        <Link to={'/'}>
+        <Link
+          to={'/'}
+          onClick={() => {
+            window.history.replaceState(null, 'Create game', '/');
+            window.location.reload();
+            // window.location.reload();
+          }}>
           <img
             src='/logo.png'
             alt=''
@@ -58,7 +64,7 @@ const Header: React.FC<Header> = ({ gameName, username, gameStarted }) => {
               cursor: 'pointer'
             }
           }}>
-          {gameName && gameStarted ? gameName : 'Create game'}
+          {gameName ? gameName : 'Create game'}
           {gameName && gameStarted && (
             <KeyboardArrowDownIcon
               sx={{

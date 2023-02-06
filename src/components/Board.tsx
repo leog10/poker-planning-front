@@ -103,40 +103,42 @@ const Board: React.FC<Board> = ({
 
   return (
     <div>
-      <Box
-        sx={{
-          marginBottom: 1.8
-        }}>
+      {users && users.length < 2 && (
         <Box
           sx={{
-            fontSize: 23,
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'baseline',
-            userSelect: 'none'
+            marginBottom: 1.8
           }}>
-          Feeling lonely?
-          <Typography
-            sx={{ fontSize: 18, marginLeft: '5px', userSelect: 'none' }}>
-            😴
-          </Typography>
-        </Box>
-        <Link
-          sx={{
-            fontSize: 23,
-            fontWeight: 700,
-            color: 'text.secondary',
-            cursor: 'pointer',
-            textDecoration: 'none',
-            transition: 'all 0.3s',
-            '&:hover': {
+          <Box
+            sx={{
+              fontSize: 23,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'baseline',
+              userSelect: 'none'
+            }}>
+            Feeling lonely?
+            <Typography
+              sx={{ fontSize: 18, marginLeft: '5px', userSelect: 'none' }}>
+              😴
+            </Typography>
+          </Box>
+          <Link
+            sx={{
+              fontSize: 23,
+              fontWeight: 700,
+              color: 'text.secondary',
+              cursor: 'pointer',
+              textDecoration: 'none',
               transition: 'all 0.3s',
-              opacity: 0.7
-            }
-          }}>
-          Invite players
-        </Link>
-      </Box>
+              '&:hover': {
+                transition: 'all 0.3s',
+                opacity: 0.7
+              }
+            }}>
+            Invite players
+          </Link>
+        </Box>
+      )}
       <Box
         sx={{
           display: 'flex',
