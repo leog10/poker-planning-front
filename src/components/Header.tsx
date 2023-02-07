@@ -35,7 +35,6 @@ const Header: React.FC<Header> = ({ gameName, username, gameStarted }) => {
           onClick={() => {
             window.history.replaceState(null, 'Create game', '/');
             window.location.reload();
-            // window.location.reload();
           }}>
           <img
             src='/logo.png'

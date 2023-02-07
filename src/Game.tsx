@@ -15,9 +15,6 @@ const Game = () => {
 
   return (
     <div className='App'>
-      {/* {room.gameStarted && <div className='game-name'>{room.gameName}</div>}
-      {room.gameStarted && <div className='game-username'>{user.username}</div>} */}
-
       <Header
         gameName={room.gameName}
         username={user.username}

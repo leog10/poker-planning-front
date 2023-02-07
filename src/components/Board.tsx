@@ -4,6 +4,7 @@ import { StyledButton } from '../styles';
 import { User } from '../types/User';
 import { useMemo } from 'react';
 import { Link } from '@mui/material';
+import Modal from './Modal';
 
 type Board = {
   revealing: boolean;
@@ -122,8 +123,9 @@ const Board: React.FC<Board> = ({
               😴
             </Typography>
           </Box>
-          <Link
+          <Box
             sx={{
+              display: 'inline-block',
               fontSize: 23,
               fontWeight: 700,
               color: 'text.secondary',
@@ -135,8 +137,8 @@ const Board: React.FC<Board> = ({
                 opacity: 0.7
               }
             }}>
-            Invite players
-          </Link>
+            <Modal text={'Invite players'} />
+          </Box>
         </Box>
       )}
       <Box
