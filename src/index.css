@@ -17,6 +17,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: #F9F9F9 !important;
 }
 
 /* a {
