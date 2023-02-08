@@ -3,6 +3,7 @@ import { StyledButton } from '../styles';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import { Link } from 'react-router-dom';
+import { Modal } from './Modal';
 
 type Header = {
   gameName: string;
@@ -116,25 +117,29 @@ const Header: React.FC<Header> = ({ gameName, username, gameStarted }) => {
               />
             </Box>
           </Box>
-          <StyledButton
-            variant='outlined'
-            sx={{
-              border: 2,
-              width: 'fit-content',
-              padding: '0.4rem 1.2rem',
-              margin: '0 1.4rem 0',
-              fontWeight: 700,
-              fontSize: 23,
-              backgroundColor: '#fff',
-              '&:hover': {
-                border: 2,
-                transition: 'all 0.3s',
-                backgroundColor: '#ebf4ff',
-                cursor: 'pointer'
-              }
-            }}>
-            <Box sx={{ marginRight: 2 }}>🧛‍♂️</Box>Invite players
-          </StyledButton>
+          <Modal
+            children={
+              <StyledButton
+                variant='outlined'
+                sx={{
+                  border: 2,
+                  width: 'fit-content',
+                  padding: '0.4rem 1.2rem',
+                  margin: '0 1.4rem 0',
+                  fontWeight: 700,
+                  fontSize: 23,
+                  backgroundColor: '#fff',
+                  '&:hover': {
+                    border: 2,
+                    transition: 'all 0.3s',
+                    backgroundColor: '#ebf4ff',
+                    cursor: 'pointer'
+                  }
+                }}>
+                <Box sx={{ marginRight: 2 }}>🧛‍♂️</Box>Invite players
+              </StyledButton>
+            }
+          />
           <StyledButton
             variant='outlined'
             sx={{

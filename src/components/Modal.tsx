@@ -25,17 +25,24 @@ const BootstrapDialog = styled(Dialog)(() => ({
 }));
 
 type Modal = {
-  text: string;
+  children: React.ReactElement;
 };
 
-export const Modal: React.FC<Modal> = ({ text }) => {
+export const Modal: React.FC<Modal> = ({ children }) => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
+
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleCopyLink = () => {
+    const inviteLink = window.location.href;
+    inviteLink && navigator.clipboard.writeText(inviteLink.toString());
+    handleClose();
   };
 
   return (
@@ -43,7 +50,7 @@ export const Modal: React.FC<Modal> = ({ text }) => {
       <Link
         sx={{ textDecoration: 'none' }}
         onClick={handleClickOpen}>
-        {text}
+        {children}
       </Link>
       <BootstrapDialog
         sx={{
@@ -103,9 +110,10 @@ export const Modal: React.FC<Modal> = ({ text }) => {
             inputProps={{
               readOnly: true
             }}
-            value={'https://planningpokeronline.com/eqwGt0jydr4EgKsCvelk'}
+            value={window.location.href}
           />
           <StyledButton
+            onClick={handleCopyLink}
             variant='contained'
             sx={{
               fontSize: 24,

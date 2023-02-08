@@ -123,22 +123,26 @@ const Board: React.FC<Board> = ({
               😴
             </Typography>
           </Box>
-          <Box
-            sx={{
-              display: 'inline-block',
-              fontSize: 23,
-              fontWeight: 700,
-              color: 'text.secondary',
-              cursor: 'pointer',
-              textDecoration: 'none',
-              transition: 'all 0.3s',
-              '&:hover': {
-                transition: 'all 0.3s',
-                opacity: 0.7
-              }
-            }}>
-            <Modal text={'Invite players'} />
-          </Box>
+          <Modal
+            children={
+              <Box
+                sx={{
+                  display: 'inline-block',
+                  fontSize: 23,
+                  fontWeight: 700,
+                  color: 'text.secondary',
+                  cursor: 'pointer',
+                  textDecoration: 'none',
+                  transition: 'all 0.3s',
+                  '&:hover': {
+                    transition: 'all 0.3s',
+                    opacity: 0.7
+                  }
+                }}>
+                Invite players
+              </Box>
+            }
+          />
         </Box>
       )}
       <Box
