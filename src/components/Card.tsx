@@ -26,7 +26,8 @@ const Cards: React.FC<Cards> = ({
         position: 'absolute',
         width: '100%',
         left: 0,
-        bottom: '1%'
+        bottom: '1%',
+        zIndex: 1
       }}>
       <Box
         sx={{
