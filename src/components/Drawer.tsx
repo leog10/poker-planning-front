@@ -1,5 +1,5 @@
 import { Box, Drawer, Link } from '@mui/material';
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
@@ -25,60 +25,64 @@ const DrawerRight: React.FC<DrawerRight> = ({ children }) => {
   const [open, setOpen] = useState(false);
   const theme = useTheme();
 
-  const handleDrawerOpen = () => {
+  const handleDrawerOpen = useCallback(() => {
     setOpen(true);
-  };
+  }, []);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setOpen(false);
-  };
+  }, []);
 
-  return (
-    <Box>
-      <Link
-        sx={{ textDecoration: 'none' }}
-        onClick={handleDrawerOpen}>
-        {children}
-      </Link>
-      <Drawer
-        sx={{
-          width: -drawerWidth,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            width: drawerWidth,
-            border: 'none'
-          }
-        }}
-        variant='persistent'
-        anchor='right'
-        open={open}>
-        <DrawerHeader>
-          <Divider
-            sx={{
-              borderColor: '#d0d0d0',
-              borderWidth: 1,
-              height: 32
-            }}
-            orientation='vertical'
-          />
-          <IconButton
-            onClick={handleClose}
-            aria-label='close'
-            sx={{
-              height: 60,
-              width: 60,
-              color: theme => theme.palette.grey[700]
-            }}>
-            <CloseIcon
+  const DrawerMemo = useMemo(() => {
+    return (
+      <Box>
+        <Link
+          sx={{ textDecoration: 'none' }}
+          onClick={handleDrawerOpen}>
+          {children}
+        </Link>
+        <Drawer
+          sx={{
+            width: -drawerWidth,
+            flexShrink: 0,
+            '& .MuiDrawer-paper': {
+              width: drawerWidth,
+              border: 'none'
+            }
+          }}
+          variant='persistent'
+          anchor='right'
+          open={open}>
+          <DrawerHeader>
+            <Divider
               sx={{
-                fontSize: 26
+                borderColor: '#d0d0d0',
+                borderWidth: 1,
+                height: 32
               }}
+              orientation='vertical'
             />
-          </IconButton>
-        </DrawerHeader>
-      </Drawer>
-    </Box>
-  );
+            <IconButton
+              onClick={handleClose}
+              aria-label='close'
+              sx={{
+                height: 60,
+                width: 60,
+                color: theme => theme.palette.grey[700]
+              }}>
+              <CloseIcon
+                sx={{
+                  fontSize: 26
+                }}
+              />
+            </IconButton>
+          </DrawerHeader>
+        </Drawer>
+      </Box>
+    );
+  }, [open]);
+
+  return <>{DrawerMemo}</>;
 };
 
 export default DrawerRight;
