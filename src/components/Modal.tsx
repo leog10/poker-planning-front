@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import IconButton from '@mui/material/IconButton';
@@ -6,6 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import { StyledButton, StyledTextField } from '../styles';
 import { Box, Link } from '@mui/material';
+import { useState } from 'react';
 
 const BootstrapDialog = styled(Dialog)(() => ({
   '& .MuiBackdrop-root': {
@@ -28,8 +28,8 @@ type Modal = {
   children: React.ReactElement;
 };
 
-export const Modal: React.FC<Modal> = ({ children }) => {
-  const [open, setOpen] = React.useState(false);
+const Modal: React.FC<Modal> = ({ children }) => {
+  const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);

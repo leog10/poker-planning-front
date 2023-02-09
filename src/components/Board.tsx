@@ -3,7 +3,6 @@ import Typography from '@mui/material/Typography';
 import { StyledButton } from '../styles';
 import { User } from '../types/User';
 import { useMemo } from 'react';
-import { Link } from '@mui/material';
 import Modal from './Modal';
 
 type Board = {

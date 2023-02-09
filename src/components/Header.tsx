@@ -3,7 +3,8 @@ import { StyledButton } from '../styles';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import { Link } from 'react-router-dom';
-import { Modal } from './Modal';
+import Modal from './Modal';
+import DrawerRight from './Drawer';
 
 type Header = {
   gameName: string;
@@ -79,7 +80,13 @@ const Header: React.FC<Header> = ({ gameName, username, gameStarted }) => {
         </Box>
       </Box>
       {gameStarted && (
-        <>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: 3
+          }}>
           <Box
             sx={{
               display: 'flex',
@@ -122,10 +129,10 @@ const Header: React.FC<Header> = ({ gameName, username, gameStarted }) => {
               <StyledButton
                 variant='outlined'
                 sx={{
+                  textWrap: 'no-wrap',
                   border: 2,
                   width: 'fit-content',
                   padding: '0.4rem 1.2rem',
-                  margin: '0 1.4rem 0',
                   fontWeight: 700,
                   fontSize: 23,
                   backgroundColor: '#fff',
@@ -140,30 +147,33 @@ const Header: React.FC<Header> = ({ gameName, username, gameStarted }) => {
               </StyledButton>
             }
           />
-          <StyledButton
-            variant='outlined'
-            sx={{
-              border: 2,
-              width: 'fit-content',
-              padding: '0.8rem 0.9rem',
-              margin: 0,
-              fontWeight: 700,
-              fontSize: 23,
-              backgroundColor: '#fff',
-              '&:hover': {
-                border: 2,
-                transition: 'all 0.3s',
-                backgroundColor: '#ebf4ff',
-                cursor: 'pointer'
-              }
-            }}>
-            <ArticleOutlinedIcon
-              fontSize='small'
-              viewBox='0 0 24 24'
-              sx={{ width: '24px', height: '24px' }}
-            />
-          </StyledButton>
-        </>
+          <DrawerRight
+            children={
+              <StyledButton
+                variant='outlined'
+                sx={{
+                  border: 2,
+                  width: 'fit-content',
+                  padding: '0.8rem 0.9rem',
+                  margin: 0,
+                  fontWeight: 700,
+                  fontSize: 23,
+                  backgroundColor: '#fff',
+                  '&:hover': {
+                    border: 2,
+                    transition: 'all 0.3s',
+                    backgroundColor: '#ebf4ff',
+                    cursor: 'pointer'
+                  }
+                }}>
+                <ArticleOutlinedIcon
+                  fontSize='small'
+                  viewBox='0 0 24 24'
+                  sx={{ width: '24px', height: '24px' }}
+                />
+              </StyledButton>
+            }></DrawerRight>
+        </Box>
       )}
     </Box>
   );
