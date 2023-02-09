@@ -1,4 +1,4 @@
-import { Box, Drawer, Link } from '@mui/material';
+import { Box, Drawer, Link, TextField, Typography } from '@mui/material';
 import { useCallback, useMemo, useState } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
@@ -14,7 +14,7 @@ const drawerWidth = 600;
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  padding: theme.spacing(3.3, 3.5),
+  padding: '1.5rem 2.5rem',
   gap: 10,
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
@@ -54,6 +54,15 @@ const DrawerRight: React.FC<DrawerRight> = ({ children }) => {
           anchor='right'
           open={open}>
           <DrawerHeader>
+            <Typography
+              sx={{
+                textAlign: 'left',
+                flexGrow: 1,
+                fontSize: 18,
+                fontWeight: 700
+              }}>
+              Issues
+            </Typography>
             <Divider
               sx={{
                 borderColor: '#d0d0d0',
@@ -77,6 +86,41 @@ const DrawerRight: React.FC<DrawerRight> = ({ children }) => {
               />
             </IconButton>
           </DrawerHeader>
+          <Box
+            sx={{
+              display: 'flex',
+              paddingLeft: 4,
+              paddingRight: 6,
+              flexDirection: 'column'
+            }}>
+            <Box>
+              <TextField
+                multiline
+                inputProps={{
+                  border: 'none',
+                  outline: 'none'
+                }}
+                sx={{
+                  backgroundColor: '#ededed'
+                }}></TextField>
+            </Box>
+            <Box
+              sx={{
+                flexGrow: 1,
+                paddingY: 1,
+                paddingX: 2.5,
+                textAlign: 'left',
+                fontSize: 19,
+                fontWeight: 700,
+                borderRadius: 2,
+                cursor: 'pointer',
+                '&:hover': {
+                  backgroundColor: '#f9f9f9'
+                }
+              }}>
+              + Add an issue
+            </Box>
+          </Box>
         </Drawer>
       </Box>
     );
