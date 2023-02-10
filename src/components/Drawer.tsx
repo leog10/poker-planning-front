@@ -93,16 +93,29 @@ const DrawerRight: React.FC<DrawerRight> = ({ children }) => {
               paddingRight: 6,
               flexDirection: 'column'
             }}>
-            <Box>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center'
+              }}>
               <TextField
                 multiline
-                inputProps={{
-                  border: 'none',
-                  outline: 'none'
-                }}
+                placeholder='Enter a title for the issue'
                 sx={{
-                  backgroundColor: '#ededed'
-                }}></TextField>
+                  backgroundColor: '#ededed',
+                  flexGrow: 1,
+                  borderRadius: 1.5,
+                  minHeight: 120,
+                  '& fieldset': {
+                    border: 'none'
+                  },
+                  '& .MuiInputBase-root': {
+                    display: 'flex',
+                    alignItems: 'flex-start',
+                    minHeight: 120
+                  }
+                }}
+              />
             </Box>
             <Box
               sx={{
