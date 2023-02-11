@@ -1,4 +1,4 @@
-import { Box, IconButton, ToggleButton, Typography } from '@mui/material';
+import { Box, ToggleButton, Typography } from '@mui/material';
 import { StyledButton } from '../styles';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import IssueCardMenu from './IssueCardMenu';
