@@ -4,6 +4,9 @@ import { styled, useTheme } from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import NewIssue from './NewIssue';
+import AddIcon from '@mui/icons-material/Add';
+import IssueCard from './IssueCard';
 
 type DrawerRight = {
   children: React.ReactElement;
@@ -14,7 +17,7 @@ const drawerWidth = 600;
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  padding: '1.5rem 2.5rem',
+  padding: '33px 35px 33px 50px',
   gap: 10,
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
@@ -23,7 +26,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 const DrawerRight: React.FC<DrawerRight> = ({ children }) => {
   const [open, setOpen] = useState(false);
-  const theme = useTheme();
+  const [openIssue, setOpenIssue] = useState(false);
 
   const handleDrawerOpen = useCallback(() => {
     setOpen(true);
@@ -31,6 +34,14 @@ const DrawerRight: React.FC<DrawerRight> = ({ children }) => {
 
   const handleClose = useCallback(() => {
     setOpen(false);
+  }, []);
+
+  const handleOpenIssue = useCallback(() => {
+    setOpenIssue(true);
+  }, []);
+
+  const handleCloseIssue = useCallback(() => {
+    setOpenIssue(false);
   }, []);
 
   const DrawerMemo = useMemo(() => {
@@ -58,7 +69,7 @@ const DrawerRight: React.FC<DrawerRight> = ({ children }) => {
               sx={{
                 textAlign: 'left',
                 flexGrow: 1,
-                fontSize: 18,
+                fontSize: 22.5,
                 fontWeight: 700
               }}>
               Issues
@@ -89,55 +100,45 @@ const DrawerRight: React.FC<DrawerRight> = ({ children }) => {
           <Box
             sx={{
               display: 'flex',
-              paddingLeft: 4,
-              paddingRight: 6,
+              paddingLeft: 5,
+              paddingRight: 5,
               flexDirection: 'column'
             }}>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center'
-              }}>
-              <TextField
-                multiline
-                placeholder='Enter a title for the issue'
+            <IssueCard />
+            {openIssue && <NewIssue handleClose={handleCloseIssue} />}
+            {!openIssue && (
+              <Box
+                onClick={handleOpenIssue}
                 sx={{
-                  backgroundColor: '#ededed',
+                  marginY: 2.4,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 0.3,
                   flexGrow: 1,
-                  borderRadius: 1.5,
-                  minHeight: 120,
-                  '& fieldset': {
-                    border: 'none'
-                  },
-                  '& .MuiInputBase-root': {
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    minHeight: 120
+                  paddingY: 1,
+                  paddingX: 2.5,
+                  textAlign: 'left',
+                  borderRadius: 2,
+                  cursor: 'pointer',
+                  '&:hover': {
+                    backgroundColor: '#f9f9f9'
                   }
-                }}
-              />
-            </Box>
-            <Box
-              sx={{
-                flexGrow: 1,
-                paddingY: 1,
-                paddingX: 2.5,
-                textAlign: 'left',
-                fontSize: 19,
-                fontWeight: 700,
-                borderRadius: 2,
-                cursor: 'pointer',
-                '&:hover': {
-                  backgroundColor: '#f9f9f9'
-                }
-              }}>
-              + Add an issue
-            </Box>
+                }}>
+                <AddIcon
+                  viewBox='0 0 24 24'
+                  sx={{ fontSize: 36, stroke: '#fff' }}
+                />
+                <Typography
+                  sx={{ fontSize: 23.5, fontWeight: 700, color: '#666666' }}>
+                  Add an issue
+                </Typography>
+              </Box>
+            )}
           </Box>
         </Drawer>
       </Box>
     );
-  }, [open]);
+  }, [open, openIssue]);
 
   return <>{DrawerMemo}</>;
 };
