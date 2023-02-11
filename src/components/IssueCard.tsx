@@ -1,7 +1,7 @@
-import { Box, IconButton, Typography } from '@mui/material';
+import { Box, IconButton, ToggleButton, Typography } from '@mui/material';
 import { StyledButton } from '../styles';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import CardMenu from './CardMenu';
+import IssueCardMenu from './IssueCardMenu';
 import { useCallback, useState } from 'react';
 import { useOutsideClick } from '../hooks/useOutsideClick';
 
@@ -12,9 +12,9 @@ const IssueCard = () => {
     setOpenMenu(!openMenu);
   }, [openMenu]);
 
-  const handleClickOutside = () => {
+  const handleClickOutside = useCallback(() => {
     setOpenMenu(false);
-  };
+  }, []);
 
   const ref = useOutsideClick(handleClickOutside);
 
@@ -44,16 +44,25 @@ const IssueCard = () => {
           top: '0',
           zIndex: 99
         }}>
-        <IconButton
+        <ToggleButton
+          href=''
+          value={'menu'}
           ref={ref}
           onClick={handleMenuClick}
           aria-label='close'
+          selected={openMenu}
           sx={{
-            padding: 1.7,
+            padding: 1.75,
             marginTop: 0.3,
             marginRight: 0.2,
             color: theme => theme.palette.grey[700],
-            '&:hover': {
+            borderRadius: 15,
+            border: 'none',
+            '&.MuiToggleButton-root:hover': {
+              transition: 'all 0.3s',
+              backgroundColor: '#ebf4ff'
+            },
+            '&.Mui-selected': {
               transition: 'all 0.3s',
               backgroundColor: '#ebf4ff'
             }
@@ -63,8 +72,8 @@ const IssueCard = () => {
               fontSize: 26
             }}
           />
-        </IconButton>
-        {openMenu && <CardMenu />}
+        </ToggleButton>
+        {openMenu && <IssueCardMenu />}
       </Box>
       <Typography sx={{ marginTop: 5, textAlign: 'left' }}>Title</Typography>
       <Box

@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 
-const CardMenu = () => {
+const IssueCardMenu = () => {
   return (
     <Box
       sx={{
@@ -78,4 +78,4 @@ const CardMenu = () => {
   );
 };
 
-export default CardMenu;
+export default IssueCardMenu;
