@@ -9,7 +9,7 @@ import { useState } from 'react';
 
 const BootstrapDialog = styled(Dialog)(() => ({
   '& .MuiBackdrop-root': {
-    backgroundColor: '#47535c'
+    backgroundColor: 'rgba(26,41,53,.8)'
   },
   '& .MuiPaper-root': {
     display: 'flex',
@@ -28,7 +28,7 @@ type Modal = {
   children: React.ReactElement;
 };
 
-const Modal: React.FC<Modal> = ({ children }) => {
+const InviteModal: React.FC<Modal> = ({ children }) => {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -97,7 +97,7 @@ const Modal: React.FC<Modal> = ({ children }) => {
             Invite players
           </Typography>
           <StyledTextField
-            autoFocus={open}
+            autoFocus={true}
             onFocus={e => e.target.select()}
             sx={{
               width: 670,
@@ -130,4 +130,4 @@ const Modal: React.FC<Modal> = ({ children }) => {
   );
 };
 
-export default Modal;
+export default InviteModal;

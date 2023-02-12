@@ -17,6 +17,7 @@ const IssueCard = () => {
   }, []);
 
   const ref = useOutsideClick(handleClickOutside);
+  // const ref = useOutsideClick(() => {});
 
   return (
     <Box
@@ -73,7 +74,10 @@ const IssueCard = () => {
             }}
           />
         </ToggleButton>
-        {openMenu && <IssueCardMenu />}
+        <IssueCardMenu
+          open={openMenu}
+          handleClose={handleMenuClick}
+        />
       </Box>
       <Typography sx={{ marginTop: 5, textAlign: 'left' }}>Title</Typography>
       <Box

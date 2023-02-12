@@ -3,7 +3,7 @@ import { StyledButton } from '../styles';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import { Link } from 'react-router-dom';
-import Modal from './Modal';
+import InviteModal from './InviteModal';
 import DrawerRight from './Drawer';
 
 type Header = {
@@ -125,7 +125,7 @@ const Header: React.FC<Header> = ({ gameName, username, gameStarted }) => {
               />
             </Box>
           </Box>
-          <Modal
+          <InviteModal
             children={
               <StyledButton
                 variant='outlined'

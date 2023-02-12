@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography';
 import { StyledButton } from '../styles';
 import { User } from '../types/User';
 import { useMemo } from 'react';
-import Modal from './Modal';
+import InviteModal from './InviteModal';
 
 type Board = {
   revealing: boolean;
@@ -101,49 +101,53 @@ const Board: React.FC<Board> = ({
     );
   }, [allowedReveal, users, revealing, revealingTime]);
 
-  return (
-    <div>
-      {users && users.length < 2 && (
+  const feelingLonely = useMemo(() => {
+    return (
+      <Box
+        sx={{
+          marginBottom: 1.8
+        }}>
         <Box
           sx={{
-            marginBottom: 1.8
+            fontSize: 23,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'baseline',
+            userSelect: 'none'
           }}>
-          <Box
-            sx={{
-              fontSize: 23,
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'baseline',
-              userSelect: 'none'
-            }}>
-            Feeling lonely?
-            <Typography
-              sx={{ fontSize: 18, marginLeft: '5px', userSelect: 'none' }}>
-              😴
-            </Typography>
-          </Box>
-          <Modal
-            children={
-              <Box
-                sx={{
-                  display: 'inline-block',
-                  fontSize: 23,
-                  fontWeight: 700,
-                  color: 'text.secondary',
-                  cursor: 'pointer',
-                  textDecoration: 'none',
-                  transition: 'all 0.3s',
-                  '&:hover': {
-                    transition: 'all 0.3s',
-                    opacity: 0.7
-                  }
-                }}>
-                Invite players
-              </Box>
-            }
-          />
+          Feeling lonely?
+          <Typography
+            sx={{ fontSize: 18, marginLeft: '5px', userSelect: 'none' }}>
+            😴
+          </Typography>
         </Box>
-      )}
+        <InviteModal
+          children={
+            <Box
+              sx={{
+                display: 'inline-block',
+                fontSize: 23,
+                fontWeight: 700,
+                color: 'text.secondary',
+                cursor: 'pointer',
+                textDecoration: 'none',
+                transition: 'all 0.3s',
+                '&:hover': {
+                  transition: 'all 0.3s',
+                  opacity: 0.7
+                }
+              }}>
+              Invite players
+            </Box>
+          }
+        />
+      </Box>
+    );
+  }, []);
+
+  return (
+    <div>
+      {users && users.length < 2 && feelingLonely}
       <Box
         sx={{
           display: 'flex',
