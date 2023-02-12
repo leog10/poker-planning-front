@@ -1,6 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import { useCallback, useState } from 'react';
 import DeleteIssueModal from './DeleteIssueModal';
+import EditIssueModal from './EditIssueModal';
 
 type IssueCardMenu = {
   handleClose: () => void;
@@ -12,6 +13,7 @@ const IssueCardMenu: React.FC<IssueCardMenu> = ({
   open = false
 }) => {
   const [openDeleteIssue, setOpenDeleteIssue] = useState(false);
+  const [openEditIssue, setOpenEditIssue] = useState(false);
 
   const handleOpenDeleteIssue = useCallback(() => {
     setOpenDeleteIssue(true);
@@ -19,6 +21,14 @@ const IssueCardMenu: React.FC<IssueCardMenu> = ({
 
   const handleCloseDeleteIssue = useCallback(() => {
     setOpenDeleteIssue(false);
+  }, []);
+
+  const handleOpenEditIssue = useCallback(() => {
+    setOpenEditIssue(true);
+  }, []);
+
+  const handleCloseEditIssue = useCallback(() => {
+    setOpenEditIssue(false);
   }, []);
 
   return (
@@ -37,6 +47,7 @@ const IssueCardMenu: React.FC<IssueCardMenu> = ({
             borderRadius: 2
           }}>
           <Box
+            onClick={handleOpenEditIssue}
             sx={{
               display: 'flex',
               justifyContent: 'start',
@@ -105,6 +116,10 @@ const IssueCardMenu: React.FC<IssueCardMenu> = ({
       <DeleteIssueModal
         open={openDeleteIssue}
         handleClose={handleCloseDeleteIssue}
+      />
+      <EditIssueModal
+        open={openEditIssue}
+        handleClose={handleCloseEditIssue}
       />
     </div>
   );
