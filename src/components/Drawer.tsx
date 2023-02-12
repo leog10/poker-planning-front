@@ -7,6 +7,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import NewIssue from './NewIssue';
 import AddIcon from '@mui/icons-material/Add';
 import IssueCard from './IssueCard';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import IssuesMenu from './IssuesMenu';
 
 type DrawerRight = {
   children: React.ReactElement;
@@ -17,7 +19,7 @@ const drawerWidth = 600;
 const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  padding: '33px 35px 33px 50px',
+  padding: '31px 35px 33px 50px',
   gap: 10,
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
@@ -27,6 +29,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 const DrawerRight: React.FC<DrawerRight> = ({ children }) => {
   const [open, setOpen] = useState(false);
   const [openIssue, setOpenIssue] = useState(false);
+  const [openIssuesMenu, setOpenMenuIssues] = useState(false);
 
   const handleDrawerOpen = useCallback(() => {
     setOpen(true);
@@ -43,6 +46,10 @@ const DrawerRight: React.FC<DrawerRight> = ({ children }) => {
   const handleCloseIssue = useCallback(() => {
     setOpenIssue(false);
   }, []);
+
+  const handleIssuesMenu = useCallback(() => {
+    setOpenMenuIssues(!openIssuesMenu);
+  }, [openIssuesMenu]);
 
   const DrawerMemo = useMemo(() => {
     return (
@@ -65,15 +72,45 @@ const DrawerRight: React.FC<DrawerRight> = ({ children }) => {
           anchor='right'
           open={open}>
           <DrawerHeader>
-            <Typography
+            <Box
               sx={{
                 textAlign: 'left',
-                flexGrow: 1,
-                fontSize: 22.5,
-                fontWeight: 700
+                flexGrow: 1
               }}>
-              Issues
-            </Typography>
+              <Typography
+                sx={{
+                  fontSize: 22.5,
+                  fontWeight: 700
+                }}>
+                Issues
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: 17.5,
+                  fontWeight: 700,
+                  color: '#a8a8a8',
+                  marginTop: '1.8px'
+                }}>
+                1 issue
+              </Typography>
+            </Box>
+            <Box sx={{ position: 'relative' }}>
+              <IconButton
+                onClick={handleIssuesMenu}
+                aria-label='close'
+                sx={{
+                  height: 60,
+                  width: 60,
+                  color: theme => theme.palette.grey[700]
+                }}>
+                <MoreVertIcon
+                  sx={{
+                    fontSize: 26
+                  }}
+                />
+              </IconButton>
+              {openIssuesMenu && <IssuesMenu />}
+            </Box>
             <Divider
               sx={{
                 borderColor: '#d0d0d0',
@@ -138,7 +175,7 @@ const DrawerRight: React.FC<DrawerRight> = ({ children }) => {
         </Drawer>
       </Box>
     );
-  }, [open, openIssue]);
+  }, [open, openIssue, openIssuesMenu]);
 
   return <>{DrawerMemo}</>;
 };
