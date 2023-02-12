@@ -11,9 +11,8 @@ const BootstrapDialog = styled(Dialog)(() => ({
     alignItems: 'center',
     justifyContent: 'center',
     maxWidth: 790,
-    padding: '0 0 3.1rem',
-    width: 790,
-    height: 408,
+    width: 787,
+    height: 307,
     borderRadius: 20,
     boxShadow: 'none'
   }
@@ -42,7 +41,10 @@ const DeleteIssueModal: React.FC<DeleteIssueModal> = ({
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          flexGrow: 1
+          width: '100%',
+          flexGrow: 1,
+          paddingX: 5.9,
+          paddingTop: 7.5
         }}>
         <IconButton
           onClick={handleClose}
@@ -63,43 +65,79 @@ const DeleteIssueModal: React.FC<DeleteIssueModal> = ({
             }}
           />
         </IconButton>
-        <Typography
+        <Box
           sx={{
-            fontSize: 30,
-            fontWeight: 700,
-            alignSelf: 'flex-start',
-            flexGrow: 1,
-            marginTop: 7.6
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            width: '100%'
           }}>
-          Invite players
-        </Typography>
-        <StyledTextField
-          autoFocus={true}
-          onFocus={e => e.target.select()}
+          <Typography
+            sx={{
+              fontSize: 30,
+              fontWeight: 700,
+              flexGrow: 1
+            }}>
+            Are you sure you want to delete this issue?
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: 22.5,
+              fontWeight: 400
+            }}>
+            This operation is irreversible.
+          </Typography>
+        </Box>
+        <Box
           sx={{
-            width: 670,
-            marginBottom: 4.8,
-            '& .MuiOutlinedInput-root': {
-              height: 60,
-              color: '#000'
-            }
-          }}
-          inputProps={{
-            readOnly: true
-          }}
-          value={window.location.href}
-        />
-        <StyledButton
-          variant='contained'
-          sx={{
-            fontSize: 24,
-            paddingY: 0.8,
-            m: 0,
-            width: 670,
-            borderRadius: 2.5
+            display: 'flex',
+            width: '100%',
+            marginTop: 3,
+            gap: 1.8,
+            height: 65
           }}>
-          Copy Invitation link
-        </StyledButton>
+          <StyledButton
+            onClick={handleClose}
+            variant='outlined'
+            sx={{
+              borderRadius: 3,
+              margin: 0,
+              textWrap: 'no-wrap',
+              border: '2px solid #f1f1f1',
+              width: '100%',
+              fontWeight: 700,
+              fontSize: 23,
+              backgroundColor: '#fff',
+              ':hover': {
+                border: '2px solid #f1f1f1',
+                transition: 'all 0.3s',
+                backgroundColor: '#ebf4ff'
+              }
+            }}>
+            Cancel
+          </StyledButton>
+          <StyledButton
+            onClick={handleClose}
+            variant='outlined'
+            sx={{
+              borderRadius: 3,
+              color: '#fff',
+              margin: 0,
+              textWrap: 'no-wrap',
+              border: 2,
+              width: '100%',
+              fontWeight: 700,
+              fontSize: 23,
+              backgroundColor: '#ff3d71',
+              '&:hover': {
+                border: 2,
+                transition: 'all 0.3s',
+                backgroundColor: '#ff3d7190'
+              }
+            }}>
+            Delete issue
+          </StyledButton>
+        </Box>
       </Box>
     </BootstrapDialog>
   );
