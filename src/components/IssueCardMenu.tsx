@@ -1,53 +1,38 @@
 import { Box, Typography } from '@mui/material';
-import { useCallback, useState } from 'react';
-import DeleteIssueModal from './DeleteIssueModal';
-import EditIssueModal from './EditIssueModal';
 
 type IssueCardMenu = {
-  handleClose: () => void;
+  handleCloseMenu: () => void;
   open: boolean;
+  openEditIssueModal: () => void;
+  openDeleteIssueModal: () => void;
 };
 
 const IssueCardMenu: React.FC<IssueCardMenu> = ({
-  handleClose,
+  handleCloseMenu,
+  openEditIssueModal,
+  openDeleteIssueModal,
   open = false
 }) => {
-  const [openDeleteIssue, setOpenDeleteIssue] = useState(false);
-  const [openEditIssue, setOpenEditIssue] = useState(false);
-
-  const handleOpenDeleteIssue = useCallback(() => {
-    setOpenDeleteIssue(true);
-  }, []);
-
-  const handleCloseDeleteIssue = useCallback(() => {
-    setOpenDeleteIssue(false);
-  }, []);
-
-  const handleOpenEditIssue = useCallback(() => {
-    setOpenEditIssue(true);
-  }, []);
-
-  const handleCloseEditIssue = useCallback(() => {
-    setOpenEditIssue(false);
-  }, []);
-
   return (
     <div>
       {open && (
         <Box
           sx={{
+            position: 'absolute',
+            top: 72,
+            right: 0,
             backgroundColor: '#fff',
-            marginTop: 0.9,
             marginRight: 0.2,
             boxShadow: '0 4px 8px hsl(204deg 6% 68% / 40%)',
             display: 'flex',
             flexDirection: 'column',
             width: 300,
             height: 240,
-            borderRadius: 2
+            borderRadius: 2,
+            zIndex: 99
           }}>
           <Box
-            onClick={handleOpenEditIssue}
+            onClick={openEditIssueModal}
             sx={{
               display: 'flex',
               justifyContent: 'start',
@@ -93,8 +78,8 @@ const IssueCardMenu: React.FC<IssueCardMenu> = ({
           </Box>
           <Box
             onClick={() => {
-              handleOpenDeleteIssue();
-              handleClose();
+              openDeleteIssueModal();
+              handleCloseMenu();
             }}
             sx={{
               display: 'flex',
@@ -113,15 +98,6 @@ const IssueCardMenu: React.FC<IssueCardMenu> = ({
           </Box>
         </Box>
       )}
-      <DeleteIssueModal
-        open={openDeleteIssue}
-        handleClose={handleCloseDeleteIssue}
-        handleDeleteIssue={handleCloseDeleteIssue}
-      />
-      <EditIssueModal
-        open={openEditIssue}
-        handleClose={handleCloseEditIssue}
-      />
     </div>
   );
 };
