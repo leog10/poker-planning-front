@@ -3,7 +3,7 @@ import { Socket } from 'socket.io-client';
 import { CardVotes } from '../types/CardVotes';
 import { FiboCards } from '../types/FiboCards';
 
-const fiboCardsArray: FiboCards[] = [
+export const fiboCardsArray: FiboCards[] = [
   { card: '0', checked: false },
   { card: '1', checked: false },
   { card: '2', checked: false },

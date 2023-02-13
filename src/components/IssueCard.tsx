@@ -6,16 +6,19 @@ import { useCallback, useState } from 'react';
 import { useOutsideClick } from '../hooks/useOutsideClick';
 import EditIssueModal from './EditIssueModal';
 import DeleteIssueModal from './DeleteIssueModal';
+import StoryPointsMenu from './StoryPointsMenu';
 
 const IssueCard = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const [openEditIssue, setOpenEditIssue] = useState(false);
   const [openDeleteIssue, setOpenDeleteIssue] = useState(false);
+  const [openStoryPointsMenu, setOpenStoryPointsMenu] = useState(false);
 
   const handleMenuClick = useCallback(
     (e?: React.MouseEvent<HTMLElement, MouseEvent>) => {
       e?.stopPropagation();
       setOpenMenu(!openMenu);
+      setOpenStoryPointsMenu(false);
     },
     [openMenu]
   );
@@ -40,7 +43,20 @@ const IssueCard = () => {
     setOpenDeleteIssue(false);
   }, []);
 
+  const handleStoryPointsMenu = useCallback(
+    (e?: React.MouseEvent<HTMLElement, MouseEvent>) => {
+      e?.stopPropagation();
+      setOpenStoryPointsMenu(!openStoryPointsMenu);
+    },
+    [openStoryPointsMenu]
+  );
+
+  const handleCloseStoryPointsMenu = useCallback(() => {
+    setOpenStoryPointsMenu(false);
+  }, []);
+
   const ref = useOutsideClick(handleClickOutside);
+  const storyPointsRef = useOutsideClick(handleCloseStoryPointsMenu);
 
   return (
     <Box sx={{ position: 'relative' }}>
@@ -129,6 +145,8 @@ const IssueCard = () => {
             Voting now...
           </StyledButton>
           <StyledButton
+            onClick={handleStoryPointsMenu}
+            ref={storyPointsRef}
             variant='outlined'
             sx={{
               color: '#000',
@@ -139,7 +157,7 @@ const IssueCard = () => {
               width: '5px',
               minWidth: '50px',
               padding: '0.33rem 0rem',
-              backgroundColor: '#fff',
+              backgroundColor: openStoryPointsMenu ? '#bbd6f7' : '#fff',
               zIndex: 90,
               '&:hover': {
                 border: 'none',
@@ -159,6 +177,10 @@ const IssueCard = () => {
         handleCloseMenu={handleMenuClick}
         openDeleteIssueModal={handleOpenDeleteIssue}
         openEditIssueModal={handleOpenEditIssue}
+      />
+      <StoryPointsMenu
+        open={openStoryPointsMenu}
+        handleClose={handleCloseStoryPointsMenu}
       />
       <DeleteIssueModal
         open={openDeleteIssue}

@@ -5,6 +5,7 @@ export const useOutsideClick = (callback: () => void): any => {
 
     useEffect(() => {
         const handleClick = (event: any) => {
+            event.stopPropagation();
             if (ref.current && !ref.current.contains(event.target)) {
                 callback();
             }
