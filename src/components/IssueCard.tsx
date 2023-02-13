@@ -51,7 +51,7 @@ const IssueCard = () => {
           position: 'relative',
           display: 'flex',
           flexDirection: 'column',
-          backgroundColor: '#ebf4ff',
+          backgroundColor: openMenu ? '#d7e9ff' : '#ebf4ff',
           height: 200,
           borderRadius: 2.5,
           boxShadow: '0px 1px 4px #a1a1a190',
