@@ -116,6 +116,7 @@ const IssueCardMenu: React.FC<IssueCardMenu> = ({
       <DeleteIssueModal
         open={openDeleteIssue}
         handleClose={handleCloseDeleteIssue}
+        handleDeleteIssue={handleCloseDeleteIssue}
       />
       <EditIssueModal
         open={openEditIssue}

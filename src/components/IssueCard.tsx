@@ -17,7 +17,6 @@ const IssueCard = () => {
   }, []);
 
   const ref = useOutsideClick(handleClickOutside);
-  // const ref = useOutsideClick(() => {});
 
   return (
     <Box

@@ -21,11 +21,13 @@ const BootstrapDialog = styled(Dialog)(() => ({
 type DeleteIssueModal = {
   open: boolean;
   handleClose: () => void;
+  handleDeleteIssue: () => void;
 };
 
 const DeleteIssueModal: React.FC<DeleteIssueModal> = ({
   open = false,
-  handleClose
+  handleClose,
+  handleDeleteIssue
 }) => {
   return (
     <BootstrapDialog
@@ -117,7 +119,7 @@ const DeleteIssueModal: React.FC<DeleteIssueModal> = ({
             Cancel
           </StyledButton>
           <StyledButton
-            onClick={handleClose}
+            onClick={handleDeleteIssue}
             variant='outlined'
             sx={{
               borderRadius: 3,

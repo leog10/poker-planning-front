@@ -269,6 +269,9 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
         open={openDeleteIssue}
         handleClose={() => {
           handleCloseDeleteIssue();
+        }}
+        handleDeleteIssue={() => {
+          handleCloseDeleteIssue();
           handleClose();
         }}
       />
