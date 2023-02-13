@@ -1,6 +1,6 @@
-import { Box, Drawer, Link, TextField, Typography } from '@mui/material';
-import { useCallback, useMemo, useState } from 'react';
-import { styled, useTheme } from '@mui/material/styles';
+import { Box, Drawer, Link, ToggleButton, Typography } from '@mui/material';
+import { useCallback, useState } from 'react';
+import { styled } from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
@@ -36,7 +36,7 @@ const DrawerRight: React.FC<DrawerRight> = ({ children }) => {
     setOpen(true);
   }, []);
 
-  const handleClose = useCallback(() => {
+  const handleDrawerClose = useCallback(() => {
     setOpen(false);
   }, []);
 
@@ -49,9 +49,7 @@ const DrawerRight: React.FC<DrawerRight> = ({ children }) => {
   }, []);
 
   const handleIssuesMenu = useCallback(() => {
-    setTimeout(() => {
-      setOpenMenuIssues(!openIssuesMenu);
-    }, 100);
+    setOpenMenuIssues(!openIssuesMenu);
   }, [openIssuesMenu]);
 
   const handleClickOutside = useCallback(() => {
@@ -60,135 +58,139 @@ const DrawerRight: React.FC<DrawerRight> = ({ children }) => {
 
   const ref = useOutsideClick(handleClickOutside);
 
-  const DrawerMemo = useMemo(() => {
-    return (
-      <Box>
-        <Link
-          sx={{ textDecoration: 'none' }}
-          onClick={handleDrawerOpen}>
-          {children}
-        </Link>
-        <Drawer
-          sx={{
-            width: -drawerWidth,
-            flexShrink: 0,
-            '& .MuiDrawer-paper': {
-              width: drawerWidth,
-              border: 'none'
-            }
-          }}
-          variant='persistent'
-          anchor='right'
-          open={open}>
-          <DrawerHeader>
-            <Box
+  return (
+    <Box>
+      <Link
+        sx={{ textDecoration: 'none' }}
+        onClick={handleDrawerOpen}>
+        {children}
+      </Link>
+      <Drawer
+        sx={{
+          width: -drawerWidth,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            width: drawerWidth,
+            border: 'none'
+          }
+        }}
+        variant='persistent'
+        anchor='right'
+        open={open}>
+        <DrawerHeader>
+          <Box
+            sx={{
+              textAlign: 'left',
+              flexGrow: 1
+            }}>
+            <Typography
               sx={{
-                textAlign: 'left',
-                flexGrow: 1
+                fontSize: 22.5,
+                fontWeight: 700
               }}>
-              <Typography
-                sx={{
-                  fontSize: 22.5,
-                  fontWeight: 700
-                }}>
-                Issues
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: 17.5,
-                  fontWeight: 700,
-                  color: '#a8a8a8',
-                  marginTop: '1.8px'
-                }}>
-                1 issue
-              </Typography>
-            </Box>
-            <Box sx={{ position: 'relative' }}>
-              <IconButton
-                onClick={handleIssuesMenu}
-                aria-label='close'
-                sx={{
-                  height: 60,
-                  width: 60,
-                  color: theme => theme.palette.grey[700]
-                }}>
-                <MoreVertIcon
-                  sx={{
-                    fontSize: 26
-                  }}
-                />
-              </IconButton>
-              <div ref={ref}>
-                <IssuesMenu open={openIssuesMenu} />
-              </div>
-            </Box>
-            <Divider
+              Issues
+            </Typography>
+            <Typography
               sx={{
-                borderColor: '#d0d0d0',
-                borderWidth: 1,
-                height: 32
-              }}
-              orientation='vertical'
-            />
-            <IconButton
-              onClick={handleClose}
+                fontSize: 17.5,
+                fontWeight: 700,
+                color: '#a8a8a8',
+                marginTop: '1.8px'
+              }}>
+              1 issue
+            </Typography>
+          </Box>
+          <Box sx={{ position: 'relative' }}>
+            <ToggleButton
+              href=''
+              value={'menu'}
+              ref={ref}
+              onClick={handleIssuesMenu}
+              selected={openIssuesMenu}
               aria-label='close'
               sx={{
                 height: 60,
                 width: 60,
-                color: theme => theme.palette.grey[700]
+                color: theme => theme.palette.grey[700],
+                borderRadius: 15,
+                border: 'none',
+                '&.Mui-selected': {
+                  transition: 'all 0.3s',
+                  backgroundColor: '#eaeaea'
+                }
               }}>
-              <CloseIcon
+              <MoreVertIcon
                 sx={{
                   fontSize: 26
                 }}
               />
-            </IconButton>
-          </DrawerHeader>
-          <Box
-            sx={{
-              display: 'flex',
-              paddingLeft: 5,
-              paddingRight: 5,
-              flexDirection: 'column'
-            }}>
-            <IssueCard />
-            {openIssue && <NewIssue handleClose={handleCloseIssue} />}
-            {!openIssue && (
-              <Box
-                onClick={handleOpenIssue}
-                sx={{
-                  marginY: 2.4,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 0.3,
-                  flexGrow: 1,
-                  paddingY: 1,
-                  paddingX: 2.5,
-                  textAlign: 'left',
-                  borderRadius: 2,
-                  cursor: 'pointer',
-                  '&:hover': {
-                    backgroundColor: '#f9f9f9'
-                  }
-                }}>
-                <AddIcon
-                  viewBox='0 0 24 24'
-                  sx={{ fontSize: 36, stroke: '#fff' }}
-                />
-                <Typography
-                  sx={{ fontSize: 23.5, fontWeight: 700, color: '#666666' }}>
-                  Add an issue
-                </Typography>
-              </Box>
-            )}
+            </ToggleButton>
+            <IssuesMenu open={openIssuesMenu} />
           </Box>
-        </Drawer>
-      </Box>
-    );
-  }, [open, openIssue, openIssuesMenu]);
-
-  return <>{DrawerMemo}</>;
+          <Divider
+            sx={{
+              borderColor: '#d0d0d0',
+              borderWidth: 1,
+              height: 32
+            }}
+            orientation='vertical'
+          />
+          <IconButton
+            onClick={handleDrawerClose}
+            aria-label='close'
+            sx={{
+              height: 60,
+              width: 60,
+              color: theme => theme.palette.grey[700]
+            }}>
+            <CloseIcon
+              sx={{
+                fontSize: 26
+              }}
+            />
+          </IconButton>
+        </DrawerHeader>
+        <Box
+          sx={{
+            display: 'flex',
+            paddingLeft: 5,
+            paddingRight: 5,
+            flexDirection: 'column'
+          }}>
+          <IssueCard />
+          {openIssue && <NewIssue handleClose={handleCloseIssue} />}
+          {!openIssue && (
+            <Box
+              onClick={handleOpenIssue}
+              sx={{
+                marginY: 2.4,
+                display: 'flex',
+                alignItems: 'center',
+                gap: 0.3,
+                flexGrow: 1,
+                paddingY: 1,
+                paddingX: 2.5,
+                textAlign: 'left',
+                borderRadius: 2,
+                cursor: 'pointer',
+                '&:hover': {
+                  backgroundColor: '#f9f9f9'
+                }
+              }}>
+              <AddIcon
+                viewBox='0 0 24 24'
+                sx={{ fontSize: 36, stroke: '#fff' }}
+              />
+              <Typography
+                sx={{ fontSize: 23.5, fontWeight: 700, color: '#666666' }}>
+                Add an issue
+              </Typography>
+            </Box>
+          )}
+        </Box>
+      </Drawer>
+    </Box>
+  );
 };
 
 export default DrawerRight;
