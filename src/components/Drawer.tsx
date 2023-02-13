@@ -9,6 +9,7 @@ import AddIcon from '@mui/icons-material/Add';
 import IssueCard from './IssueCard';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import IssuesMenu from './IssuesMenu';
+import { useOutsideClick } from '../hooks/useOutsideClick';
 
 type DrawerRight = {
   children: React.ReactElement;
@@ -48,8 +49,16 @@ const DrawerRight: React.FC<DrawerRight> = ({ children }) => {
   }, []);
 
   const handleIssuesMenu = useCallback(() => {
-    setOpenMenuIssues(!openIssuesMenu);
+    setTimeout(() => {
+      setOpenMenuIssues(!openIssuesMenu);
+    }, 100);
   }, [openIssuesMenu]);
+
+  const handleClickOutside = useCallback(() => {
+    setOpenMenuIssues(false);
+  }, []);
+
+  const ref = useOutsideClick(handleClickOutside);
 
   const DrawerMemo = useMemo(() => {
     return (
@@ -109,7 +118,9 @@ const DrawerRight: React.FC<DrawerRight> = ({ children }) => {
                   }}
                 />
               </IconButton>
-              {openIssuesMenu && <IssuesMenu />}
+              <div ref={ref}>
+                <IssuesMenu open={openIssuesMenu} />
+              </div>
             </Box>
             <Divider
               sx={{

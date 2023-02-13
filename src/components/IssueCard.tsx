@@ -15,7 +15,6 @@ const IssueCard = () => {
   const handleMenuClick = useCallback(
     (e?: React.MouseEvent<HTMLElement, MouseEvent>) => {
       e?.stopPropagation();
-      e?.nativeEvent.stopImmediatePropagation();
       setOpenMenu(!openMenu);
     },
     [openMenu]
