@@ -4,6 +4,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import DeleteIssueModal from './DeleteIssueModal';
 import { useCallback, useState } from 'react';
+import StoryPointsMenu from './StoryPointsMenu';
+import { useOutsideClick } from '../hooks/useOutsideClick';
 
 const BootstrapDialog = styled(Dialog)(() => ({
   '& .MuiBackdrop-root': {
@@ -31,6 +33,7 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
   handleClose
 }) => {
   const [openDeleteIssue, setOpenDeleteIssue] = useState(false);
+  const [openStoryPointsMenu, setOpenStoryPointsMenu] = useState(false);
 
   const handleOpenDeleteIssue = useCallback(() => {
     setOpenDeleteIssue(true);
@@ -40,13 +43,28 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
     setOpenDeleteIssue(false);
   }, []);
 
+  const handleStoryPointsMenu = useCallback(
+    (e?: React.MouseEvent<HTMLElement, MouseEvent>) => {
+      e?.stopPropagation();
+      setOpenStoryPointsMenu(!openStoryPointsMenu);
+    },
+    [openStoryPointsMenu]
+  );
+
+  const handleCloseStoryPointsMenu = useCallback(() => {
+    setOpenStoryPointsMenu(false);
+  }, []);
+
+  const storyPointsRef = useOutsideClick(handleCloseStoryPointsMenu);
+
   return (
-    <div>
+    <Box sx={{ position: 'relative' }}>
       <BootstrapDialog
         onClose={handleClose}
         sx={{
           display: 'flex',
-          justifyContent: 'center'
+          justifyContent: 'center',
+          zIndex: 99
         }}
         aria-labelledby='customized-dialog-title'
         open={open}>
@@ -59,7 +77,8 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
             flexGrow: 1,
             paddingX: 7,
             paddingTop: 9.8,
-            gap: 3
+            gap: 3,
+            overflow: 'hidden'
           }}>
           <IconButton
             onClick={handleOpenDeleteIssue}
@@ -240,8 +259,10 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
               Voting now...
             </StyledButton>
             <StyledButton
+              onClick={handleStoryPointsMenu}
               variant='outlined'
               sx={{
+                position: 'relative',
                 color: '#000',
                 margin: 0,
                 textWrap: 'no-wrap',
@@ -254,17 +275,21 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                 '&:hover': {
                   border: 'none',
                   transition: 'all 0.3s',
-                  backgroundColor: '#ebf4ff'
+                  backgroundColor: '#d1d4d7'
                 }
               }}>
               <Typography
-                sx={{ fontWeight: 700, fontFamily: '', fontSize: 20.5 }}>
+                sx={{ fontWeight: 700, fontFamily: '', fontSize: 23.5 }}>
                 89
               </Typography>
             </StyledButton>
           </Box>
         </Box>
       </BootstrapDialog>
+      <StoryPointsMenu
+        open={openStoryPointsMenu}
+        handleClose={handleCloseStoryPointsMenu}
+      />
       <DeleteIssueModal
         open={openDeleteIssue}
         handleClose={() => {
@@ -275,7 +300,7 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
           handleClose();
         }}
       />
-    </div>
+    </Box>
   );
 };
 
