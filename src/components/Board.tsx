@@ -3,7 +3,6 @@ import Typography from '@mui/material/Typography';
 import { StyledButton } from '../styles';
 import { User } from '../types/User';
 import { useMemo } from 'react';
-import InviteModal from './InviteModal';
 
 type Board = {
   revealing: boolean;
@@ -13,6 +12,7 @@ type Board = {
   startNewVoting: (roomId: string) => void;
   roomId: string;
   revealingTime: number;
+  handleOpenInvite: () => void;
 };
 
 const Board: React.FC<Board> = ({
@@ -22,7 +22,8 @@ const Board: React.FC<Board> = ({
   revealCards,
   startNewVoting,
   roomId,
-  revealingTime
+  revealingTime,
+  handleOpenInvite
 }) => {
   const boardContent = useMemo(() => {
     if (!revealing) {
@@ -121,26 +122,24 @@ const Board: React.FC<Board> = ({
             😴
           </Typography>
         </Box>
-        <InviteModal
-          children={
-            <Box
-              sx={{
-                display: 'inline-block',
-                fontSize: 23,
-                fontWeight: 700,
-                color: 'text.secondary',
-                cursor: 'pointer',
-                textDecoration: 'none',
-                transition: 'all 0.3s',
-                '&:hover': {
-                  transition: 'all 0.3s',
-                  opacity: 0.7
-                }
-              }}>
-              Invite players
-            </Box>
-          }
-        />
+        <Box
+          onClick={handleOpenInvite}
+          sx={{
+            display: 'inline-block',
+            fontSize: 23,
+            fontWeight: 700,
+            color: 'text.secondary',
+            cursor: 'pointer',
+            textDecoration: 'none',
+            transition: 'all 0.3s',
+            userSelect: 'none',
+            '&:hover': {
+              transition: 'all 0.3s',
+              opacity: 0.7
+            }
+          }}>
+          Invite players
+        </Box>
       </Box>
     );
   }, []);

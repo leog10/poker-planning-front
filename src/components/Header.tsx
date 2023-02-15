@@ -3,16 +3,22 @@ import { StyledButton } from '../styles';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import { Link } from 'react-router-dom';
-import InviteModal from './InviteModal';
-import DrawerRight from './Drawer';
 
 type Header = {
   gameName: string;
   username: string | undefined;
   gameStarted: boolean;
+  handleOpenDrawer: () => void;
+  handleOpenInvite: () => void;
 };
 
-const Header: React.FC<Header> = ({ gameName, username, gameStarted }) => {
+const Header: React.FC<Header> = ({
+  gameName,
+  username,
+  gameStarted,
+  handleOpenDrawer,
+  handleOpenInvite
+}) => {
   return (
     <Box
       sx={{
@@ -125,55 +131,50 @@ const Header: React.FC<Header> = ({ gameName, username, gameStarted }) => {
               />
             </Box>
           </Box>
-          <InviteModal
-            children={
-              <StyledButton
-                variant='outlined'
-                sx={{
-                  textWrap: 'no-wrap',
-                  border: 2,
-                  width: 'fit-content',
-                  padding: '0.4rem 1.2rem',
-                  fontWeight: 700,
-                  fontSize: 23,
-                  backgroundColor: '#fff',
-                  '&:hover': {
-                    border: 2,
-                    transition: 'all 0.3s',
-                    backgroundColor: '#ebf4ff',
-                    cursor: 'pointer'
-                  }
-                }}>
-                <Box sx={{ marginRight: 2 }}>🧛‍♂️</Box>Invite players
-              </StyledButton>
-            }
-          />
-          <DrawerRight
-            children={
-              <StyledButton
-                variant='outlined'
-                sx={{
-                  border: 2,
-                  width: 'fit-content',
-                  padding: '0.8rem 0.9rem',
-                  margin: 0,
-                  fontWeight: 700,
-                  fontSize: 23,
-                  backgroundColor: '#fff',
-                  '&:hover': {
-                    border: 2,
-                    transition: 'all 0.3s',
-                    backgroundColor: '#ebf4ff',
-                    cursor: 'pointer'
-                  }
-                }}>
-                <ArticleOutlinedIcon
-                  fontSize='small'
-                  viewBox='0 0 24 24'
-                  sx={{ width: '24px', height: '24px' }}
-                />
-              </StyledButton>
-            }></DrawerRight>
+          <StyledButton
+            onClick={handleOpenInvite}
+            variant='outlined'
+            sx={{
+              textWrap: 'no-wrap',
+              border: 2,
+              width: 'fit-content',
+              padding: '0.4rem 1.2rem',
+              fontWeight: 700,
+              fontSize: 23,
+              backgroundColor: '#fff',
+              '&:hover': {
+                border: 2,
+                transition: 'all 0.3s',
+                backgroundColor: '#ebf4ff',
+                cursor: 'pointer'
+              }
+            }}>
+            <Box sx={{ marginRight: 2 }}>🧛‍♂️</Box>Invite players
+          </StyledButton>
+          <StyledButton
+            onClick={handleOpenDrawer}
+            variant='outlined'
+            sx={{
+              border: 2,
+              width: 'fit-content',
+              padding: '0.8rem 0.9rem',
+              margin: 0,
+              fontWeight: 700,
+              fontSize: 23,
+              backgroundColor: '#fff',
+              '&:hover': {
+                border: 2,
+                transition: 'all 0.3s',
+                backgroundColor: '#ebf4ff',
+                cursor: 'pointer'
+              }
+            }}>
+            <ArticleOutlinedIcon
+              fontSize='small'
+              viewBox='0 0 24 24'
+              sx={{ width: '24px', height: '24px' }}
+            />
+          </StyledButton>
         </Box>
       )}
     </Box>

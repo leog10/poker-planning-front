@@ -7,15 +7,39 @@ import { StyledButton, StyledTextField } from './styles';
 import { Box, Typography } from '@mui/material';
 import Board from './components/Board';
 import Header from './components/Header';
+import DrawerRight from './components/Drawer';
+import { useCallback, useState } from 'react';
+import InviteModal from './components/InviteModal';
 
 const socket = io('ws://localhost:3000');
 
 const Game = () => {
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const [openInvite, setOpenInvite] = useState(false);
+
   const { room, user } = useRoom(socket);
+
+  const handleOpenDrawer = useCallback(() => {
+    setOpenDrawer(true);
+  }, []);
+
+  const handleDrawerClose = useCallback(() => {
+    setOpenDrawer(false);
+  }, []);
+
+  const handleOpenInvite = useCallback(() => {
+    setOpenInvite(true);
+  }, []);
+
+  const handleCloseInvite = useCallback(() => {
+    setOpenInvite(false);
+  }, []);
 
   return (
     <div className='App'>
       <Header
+        handleOpenInvite={handleOpenInvite}
+        handleOpenDrawer={handleOpenDrawer}
         gameName={room.gameName}
         username={user.username}
         gameStarted={room.gameStarted}
@@ -103,6 +127,7 @@ const Game = () => {
           revealCards={user.revealCards}
           startNewVoting={user.startNewVoting}
           revealingTime={room.revealingTime}
+          handleOpenInvite={handleOpenInvite}
         />
       )}
 
@@ -154,6 +179,16 @@ const Game = () => {
           </div>
         </div>
       )}
+
+      <InviteModal
+        open={openInvite}
+        handleClose={handleCloseInvite}
+      />
+
+      <DrawerRight
+        open={openDrawer}
+        handleDrawerClose={handleDrawerClose}
+      />
     </div>
   );
 };
