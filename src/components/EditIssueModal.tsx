@@ -63,8 +63,7 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
         onClose={handleClose}
         sx={{
           display: 'flex',
-          justifyContent: 'center',
-          zIndex: 99
+          justifyContent: 'center'
         }}
         aria-labelledby='customized-dialog-title'
         open={open}>
