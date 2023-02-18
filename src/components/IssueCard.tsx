@@ -3,7 +3,6 @@ import { StyledButton } from '../styles';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import IssueCardMenu from './IssueCardMenu';
 import { useCallback, useState } from 'react';
-import { useOutsideClick } from '../hooks/useOutsideClick';
 import EditIssueModal from './EditIssueModal';
 import DeleteIssueModal from './DeleteIssueModal';
 import StoryPointsMenu from './StoryPointsMenu';
@@ -14,20 +13,26 @@ const IssueCard = () => {
   const [openDeleteIssue, setOpenDeleteIssue] = useState(false);
   const [openStoryPointsMenu, setOpenStoryPointsMenu] = useState(false);
 
-  const handleMenuClick = useCallback(
+  const handleMenuClick = useCallback(() => {
+    setOpenMenu(!openMenu);
+  }, [openMenu]);
+
+  const handleOpenEditIssue = useCallback(
     (e?: React.MouseEvent<HTMLElement, MouseEvent>) => {
-      e?.stopPropagation();
-      setOpenMenu(!openMenu);
-      setOpenStoryPointsMenu(false);
+      const event = e?.target as HTMLElement;
+
+      if (event.id === 'title' || event.id === 'buttonsDiv') {
+        return setOpenEditIssue(true);
+      }
+
+      if (e?.currentTarget !== e?.target) return;
+
+      setOpenEditIssue(true);
     },
-    [openMenu]
+    []
   );
 
-  const handleClickOutside = useCallback(() => {
-    setOpenMenu(false);
-  }, []);
-
-  const handleOpenEditIssue = useCallback(() => {
+  const handleOpenEditIssueFromMenu = useCallback(() => {
     setOpenEditIssue(true);
   }, []);
 
@@ -43,20 +48,13 @@ const IssueCard = () => {
     setOpenDeleteIssue(false);
   }, []);
 
-  const handleStoryPointsMenu = useCallback(
-    (e?: React.MouseEvent<HTMLElement, MouseEvent>) => {
-      e?.stopPropagation();
-      setOpenStoryPointsMenu(!openStoryPointsMenu);
-    },
-    [openStoryPointsMenu]
-  );
+  const handleStoryPointsMenu = useCallback(() => {
+    setOpenStoryPointsMenu(!openStoryPointsMenu);
+  }, [openStoryPointsMenu]);
 
   const handleCloseStoryPointsMenu = useCallback(() => {
     setOpenStoryPointsMenu(false);
   }, []);
-
-  const ref = useOutsideClick(handleClickOutside);
-  const storyPointsRef = useOutsideClick(handleCloseStoryPointsMenu);
 
   return (
     <Box sx={{ position: 'relative' }}>
@@ -85,38 +83,50 @@ const IssueCard = () => {
             right: '0',
             top: '0'
           }}>
-          <ToggleButton
-            href=''
-            value={'menu'}
-            ref={ref}
-            onClick={handleMenuClick}
-            aria-label='close'
-            selected={openMenu}
-            sx={{
-              padding: 1.75,
-              marginTop: 0.3,
-              marginRight: 0.2,
-              color: theme => theme.palette.grey[700],
-              borderRadius: 15,
-              border: 'none',
-              '&.MuiToggleButton-root:hover': {
-                transition: 'all 0.3s',
-                backgroundColor: '#ebf4ff'
-              },
-              '&.Mui-selected': {
-                transition: 'all 0.3s',
-                backgroundColor: '#ebf4ff'
-              }
-            }}>
-            <MoreHorizIcon
+          <Box>
+            <ToggleButton
+              href=''
+              value={'menu'}
+              onClick={handleMenuClick}
+              aria-label='close'
+              selected={openMenu}
               sx={{
-                fontSize: 26
-              }}
+                padding: 1.75,
+                marginTop: 0.3,
+                marginRight: 0.2,
+                color: theme => theme.palette.grey[700],
+                borderRadius: 15,
+                border: 'none',
+                '&.MuiToggleButton-root:hover': {
+                  transition: 'all 0.3s',
+                  backgroundColor: '#ebf4ff'
+                },
+                '&.Mui-selected': {
+                  transition: 'all 0.3s',
+                  backgroundColor: '#ebf4ff'
+                }
+              }}>
+              <MoreHorizIcon
+                sx={{
+                  fontSize: 26
+                }}
+              />
+            </ToggleButton>
+            <IssueCardMenu
+              open={openMenu}
+              handleCloseMenu={handleMenuClick}
+              openDeleteIssueModal={handleOpenDeleteIssue}
+              openEditIssueModal={handleOpenEditIssueFromMenu}
             />
-          </ToggleButton>
+          </Box>
         </Box>
-        <Typography sx={{ marginTop: 5, textAlign: 'left' }}>Title</Typography>
+        <Typography
+          id='title'
+          sx={{ marginTop: 5, textAlign: 'left' }}>
+          Title
+        </Typography>
         <Box
+          id='buttonsDiv'
           sx={{
             display: 'flex',
             flexDirection: 'row',
@@ -144,44 +154,39 @@ const IssueCard = () => {
             }}>
             Voting now...
           </StyledButton>
-          <StyledButton
-            onClick={handleStoryPointsMenu}
-            ref={storyPointsRef}
-            variant='outlined'
-            sx={{
-              color: '#000',
-              margin: 0,
-              textWrap: 'no-wrap',
-              border: 'none',
-              borderRadius: 2.5,
-              width: '5px',
-              minWidth: '50px',
-              padding: '0.33rem 0rem',
-              backgroundColor: openStoryPointsMenu ? '#bbd6f7' : '#fff',
-              zIndex: 90,
-              '&:hover': {
+          <Box sx={{ position: 'relative' }}>
+            <StyledButton
+              onClick={handleStoryPointsMenu}
+              variant='outlined'
+              sx={{
+                color: '#000',
+                margin: 0,
+                textWrap: 'no-wrap',
                 border: 'none',
-                transition: 'all 0.3s',
-                backgroundColor: '#ebf4ff'
-              }
-            }}>
-            <Typography
-              sx={{ fontWeight: 700, fontFamily: '', fontSize: 20.5 }}>
-              89
-            </Typography>
-          </StyledButton>
+                borderRadius: 2.5,
+                width: '5px',
+                minWidth: '50px',
+                padding: '0.33rem 0rem',
+                backgroundColor: openStoryPointsMenu ? '#bbd6f7' : '#fff',
+                zIndex: 90,
+                '&:hover': {
+                  border: 'none',
+                  transition: 'all 0.3s',
+                  backgroundColor: '#ebf4ff'
+                }
+              }}>
+              <Typography
+                sx={{ fontWeight: 700, fontFamily: '', fontSize: 20.5 }}>
+                89
+              </Typography>
+            </StyledButton>
+            <StoryPointsMenu
+              open={openStoryPointsMenu}
+              handleClose={handleCloseStoryPointsMenu}
+            />
+          </Box>
         </Box>
       </Box>
-      <IssueCardMenu
-        open={openMenu}
-        handleCloseMenu={handleMenuClick}
-        openDeleteIssueModal={handleOpenDeleteIssue}
-        openEditIssueModal={handleOpenEditIssue}
-      />
-      <StoryPointsMenu
-        open={openStoryPointsMenu}
-        handleClose={handleCloseStoryPointsMenu}
-      />
       <DeleteIssueModal
         open={openDeleteIssue}
         handleClose={handleCloseDeleteIssue}

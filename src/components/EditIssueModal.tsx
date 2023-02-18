@@ -5,7 +5,6 @@ import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import DeleteIssueModal from './DeleteIssueModal';
 import { useCallback, useState } from 'react';
 import StoryPointsMenu from './StoryPointsMenu';
-import { useOutsideClick } from '../hooks/useOutsideClick';
 
 const BootstrapDialog = styled(Dialog)(() => ({
   '& .MuiBackdrop-root': {
@@ -55,11 +54,10 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
     setOpenStoryPointsMenu(false);
   }, []);
 
-  const storyPointsRef = useOutsideClick(handleCloseStoryPointsMenu);
-
   return (
-    <Box sx={{ position: 'relative' }}>
+    <Box>
       <BootstrapDialog
+        disablePortal
         onClose={handleClose}
         sx={{
           display: 'flex',
@@ -257,31 +255,33 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
               }}>
               Voting now...
             </StyledButton>
-            <StyledButton
-              onClick={handleStoryPointsMenu}
-              variant='outlined'
-              sx={{
-                position: 'relative',
-                color: '#000',
-                margin: 0,
-                textWrap: 'no-wrap',
-                border: 'none',
-                borderRadius: 2.5,
-                width: '60px',
-                minWidth: '60px',
-                padding: '0.33rem 0rem',
-                backgroundColor: '#e8e9ea',
-                '&:hover': {
+            <Box sx={{ position: 'relative' }}>
+              <StyledButton
+                onClick={handleStoryPointsMenu}
+                variant='outlined'
+                sx={{
+                  position: 'relative',
+                  color: '#000',
+                  margin: 0,
+                  textWrap: 'no-wrap',
                   border: 'none',
-                  transition: 'all 0.3s',
-                  backgroundColor: '#d1d4d7'
-                }
-              }}>
-              <Typography
-                sx={{ fontWeight: 700, fontFamily: '', fontSize: 23.5 }}>
-                89
-              </Typography>
-            </StyledButton>
+                  borderRadius: 2.5,
+                  width: '60px',
+                  minWidth: '60px',
+                  padding: '0.33rem 0rem',
+                  backgroundColor: '#e8e9ea',
+                  '&:hover': {
+                    border: 'none',
+                    transition: 'all 0.3s',
+                    backgroundColor: '#d1d4d7'
+                  }
+                }}>
+                <Typography
+                  sx={{ fontWeight: 700, fontFamily: '', fontSize: 23.5 }}>
+                  89
+                </Typography>
+              </StyledButton>
+            </Box>
           </Box>
         </Box>
       </BootstrapDialog>
