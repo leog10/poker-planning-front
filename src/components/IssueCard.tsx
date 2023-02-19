@@ -12,7 +12,7 @@ const IssueCard = () => {
   const [openEditIssue, setOpenEditIssue] = useState(false);
   const [openDeleteIssue, setOpenDeleteIssue] = useState(false);
   const [openStoryPointsMenu, setOpenStoryPointsMenu] = useState(false);
-  const storyPointsButtonRef = useRef<HTMLButtonElement | null>(null);
+  const storyPointsButtonRef = useRef<HTMLButtonElement>(null);
 
   const handleMenuClick = useCallback(() => {
     setOpenMenu(!openMenu);

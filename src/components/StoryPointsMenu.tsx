@@ -30,54 +30,52 @@ const StoryPointsMenu: React.FC<StoryPointsMenu> = ({
         }
       ]}
       placement={'left'}>
-      <>
-        <ClickAwayListener onClickAway={handleClose}>
+      <ClickAwayListener onClickAway={handleClose}>
+        <Box
+          sx={{
+            backgroundColor: '#fff',
+            boxShadow: '0 4px 8px hsl(204deg 6% 68% / 40%)',
+            display: 'flex',
+            flexDirection: 'column',
+            width: 375,
+            height: 360,
+            borderRadius: 2
+          }}>
           <Box
             sx={{
-              backgroundColor: '#fff',
-              boxShadow: '0 4px 8px hsl(204deg 6% 68% / 40%)',
               display: 'flex',
-              flexDirection: 'column',
-              width: 375,
-              height: 360,
-              borderRadius: 2
+              flexWrap: 'wrap',
+              paddingY: 1.8,
+              paddingX: 1.9
             }}>
-            <Box
-              sx={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                paddingY: 1.8,
-                paddingX: 1.9
-              }}>
-              {fiboCardsArray.map(card => {
-                return (
-                  <Box
-                    onClick={handleClose}
-                    key={card.card}
-                    sx={{
-                      cursor: 'pointer',
-                      color: '#48545d',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      fontSize: 22.5,
-                      fontWeight: 700,
-                      width: 60,
-                      height: 60,
-                      borderRadius: 50,
-                      margin: 1,
-                      ':hover': {
-                        backgroundColor: '#f1f1f1'
-                      }
-                    }}>
-                    {card.card}
-                  </Box>
-                );
-              })}
-            </Box>
+            {fiboCardsArray.map(card => {
+              return (
+                <Box
+                  onClick={handleClose}
+                  key={card.card}
+                  sx={{
+                    cursor: 'pointer',
+                    color: '#48545d',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    fontSize: 22.5,
+                    fontWeight: 700,
+                    width: 60,
+                    height: 60,
+                    borderRadius: 50,
+                    margin: 1,
+                    ':hover': {
+                      backgroundColor: '#f1f1f1'
+                    }
+                  }}>
+                  {card.card}
+                </Box>
+              );
+            })}
           </Box>
-        </ClickAwayListener>
-      </>
+        </Box>
+      </ClickAwayListener>
     </Popper>
   );
 };

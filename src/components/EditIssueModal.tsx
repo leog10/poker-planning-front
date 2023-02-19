@@ -33,7 +33,7 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
 }) => {
   const [openDeleteIssue, setOpenDeleteIssue] = useState(false);
   const [openStoryPointsMenu, setOpenStoryPointsMenu] = useState(false);
-  const anchorEl = useRef<HTMLButtonElement | null>(null);
+  const storyPointsButtonRef = useRef<HTMLButtonElement>(null);
 
   const handleOpenDeleteIssue = useCallback(() => {
     setOpenDeleteIssue(true);
@@ -43,9 +43,13 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
     setOpenDeleteIssue(false);
   }, []);
 
-  const handleStoryPointsMenu = useCallback(() => {
-    setOpenStoryPointsMenu(!openStoryPointsMenu);
-  }, [openStoryPointsMenu]);
+  const handleStoryPointsMenu = useCallback(
+    (e?: React.MouseEvent<HTMLElement, MouseEvent>) => {
+      e?.stopPropagation();
+      setOpenStoryPointsMenu(!openStoryPointsMenu);
+    },
+    [openStoryPointsMenu]
+  );
 
   const handleCloseStoryPointsMenu = useCallback(() => {
     setOpenStoryPointsMenu(false);
@@ -252,11 +256,9 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
               }}>
               Voting now...
             </StyledButton>
-            <Box
-              id='LOCURA'
-              sx={{ position: 'relative' }}>
+            <Box sx={{ position: 'relative' }}>
               <StyledButton
-                ref={anchorEl}
+                ref={storyPointsButtonRef}
                 onClick={handleStoryPointsMenu}
                 variant='outlined'
                 sx={{
@@ -283,7 +285,7 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                 <StoryPointsMenu
                   open={openStoryPointsMenu}
                   handleClose={handleCloseStoryPointsMenu}
-                  anchorEl={anchorEl.current}
+                  anchorEl={storyPointsButtonRef.current}
                 />
               </StyledButton>
             </Box>
