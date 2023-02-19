@@ -2,7 +2,7 @@ import { Box, ToggleButton, Typography } from '@mui/material';
 import { StyledButton } from '../styles';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import IssueCardMenu from './IssueCardMenu';
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import EditIssueModal from './EditIssueModal';
 import DeleteIssueModal from './DeleteIssueModal';
 import StoryPointsMenu from './StoryPointsMenu';
@@ -12,6 +12,7 @@ const IssueCard = () => {
   const [openEditIssue, setOpenEditIssue] = useState(false);
   const [openDeleteIssue, setOpenDeleteIssue] = useState(false);
   const [openStoryPointsMenu, setOpenStoryPointsMenu] = useState(false);
+  const storyPointsButtonRef = useRef<HTMLButtonElement | null>(null);
 
   const handleMenuClick = useCallback(() => {
     setOpenMenu(!openMenu);
@@ -156,9 +157,11 @@ const IssueCard = () => {
           </StyledButton>
           <Box sx={{ position: 'relative' }}>
             <StyledButton
+              ref={storyPointsButtonRef}
               onClick={handleStoryPointsMenu}
               variant='outlined'
               sx={{
+                position: 'relative',
                 color: '#000',
                 margin: 0,
                 textWrap: 'no-wrap',
@@ -183,6 +186,7 @@ const IssueCard = () => {
             <StoryPointsMenu
               open={openStoryPointsMenu}
               handleClose={handleCloseStoryPointsMenu}
+              anchorEl={storyPointsButtonRef.current}
             />
           </Box>
         </Box>

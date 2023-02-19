@@ -3,7 +3,7 @@ import { StyledButton } from '../styles';
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import DeleteIssueModal from './DeleteIssueModal';
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import StoryPointsMenu from './StoryPointsMenu';
 
 const BootstrapDialog = styled(Dialog)(() => ({
@@ -33,6 +33,7 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
 }) => {
   const [openDeleteIssue, setOpenDeleteIssue] = useState(false);
   const [openStoryPointsMenu, setOpenStoryPointsMenu] = useState(false);
+  const anchorEl = useRef<HTMLButtonElement | null>(null);
 
   const handleOpenDeleteIssue = useCallback(() => {
     setOpenDeleteIssue(true);
@@ -42,13 +43,9 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
     setOpenDeleteIssue(false);
   }, []);
 
-  const handleStoryPointsMenu = useCallback(
-    (e?: React.MouseEvent<HTMLElement, MouseEvent>) => {
-      e?.stopPropagation();
-      setOpenStoryPointsMenu(!openStoryPointsMenu);
-    },
-    [openStoryPointsMenu]
-  );
+  const handleStoryPointsMenu = useCallback(() => {
+    setOpenStoryPointsMenu(!openStoryPointsMenu);
+  }, [openStoryPointsMenu]);
 
   const handleCloseStoryPointsMenu = useCallback(() => {
     setOpenStoryPointsMenu(false);
@@ -255,8 +252,11 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
               }}>
               Voting now...
             </StyledButton>
-            <Box sx={{ position: 'relative' }}>
+            <Box
+              id='LOCURA'
+              sx={{ position: 'relative' }}>
               <StyledButton
+                ref={anchorEl}
                 onClick={handleStoryPointsMenu}
                 variant='outlined'
                 sx={{
@@ -280,15 +280,16 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                   sx={{ fontWeight: 700, fontFamily: '', fontSize: 23.5 }}>
                   89
                 </Typography>
+                <StoryPointsMenu
+                  open={openStoryPointsMenu}
+                  handleClose={handleCloseStoryPointsMenu}
+                  anchorEl={anchorEl.current}
+                />
               </StyledButton>
             </Box>
           </Box>
         </Box>
       </BootstrapDialog>
-      <StoryPointsMenu
-        open={openStoryPointsMenu}
-        handleClose={handleCloseStoryPointsMenu}
-      />
       <DeleteIssueModal
         open={openDeleteIssue}
         handleClose={() => {

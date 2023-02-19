@@ -1,23 +1,35 @@
-import { Box, ClickAwayListener, Modal } from '@mui/material';
+import { Box, ClickAwayListener, Modal, Popper } from '@mui/material';
 import { fiboCardsArray } from '../helpers/useCards';
 
 type StoryPointsMenu = {
   open: boolean;
   handleClose: () => void;
+  anchorEl: any;
 };
 
-const StoryPointsMenu: React.FC<StoryPointsMenu> = ({ open, handleClose }) => {
+const StoryPointsMenu: React.FC<StoryPointsMenu> = ({
+  open,
+  handleClose,
+  anchorEl
+}) => {
   return (
-    <Modal
-      onClose={handleClose}
+    <Popper
+      anchorEl={anchorEl}
       sx={{
         outline: 'none',
         width: 'fit-content',
-        top: '59.4%',
-        left: '50.9%'
+        zIndex: 1200
       }}
-      hideBackdrop
-      open={open}>
+      open={open}
+      modifiers={[
+        {
+          name: 'offset',
+          options: {
+            offset: [0, 10]
+          }
+        }
+      ]}
+      placement={'left'}>
       <>
         <ClickAwayListener onClickAway={handleClose}>
           <Box
@@ -66,7 +78,7 @@ const StoryPointsMenu: React.FC<StoryPointsMenu> = ({ open, handleClose }) => {
           </Box>
         </ClickAwayListener>
       </>
-    </Modal>
+    </Popper>
   );
 };
 
