@@ -42,6 +42,7 @@ const StoryPointsMenu: React.FC<StoryPointsMenu> = ({
             borderRadius: 2
           }}>
           <Box
+            id='storyPointsMenuBox'
             sx={{
               display: 'flex',
               flexWrap: 'wrap',

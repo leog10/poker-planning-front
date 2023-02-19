@@ -45,7 +45,10 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
 
   const handleStoryPointsMenu = useCallback(
     (e?: React.MouseEvent<HTMLElement, MouseEvent>) => {
-      e?.stopPropagation();
+      const event = e?.target as HTMLElement;
+
+      if (event.id === 'storyPointsMenuBox') return;
+
       setOpenStoryPointsMenu(!openStoryPointsMenu);
     },
     [openStoryPointsMenu]
