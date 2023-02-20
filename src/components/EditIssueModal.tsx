@@ -390,7 +390,7 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
               height: 60
             }}>
             <StyledButton
-              onClick={editVotingNow.handleVotingNow}
+              onClick={() => editVotingNow.handleVotingNow('1a')}
               variant='outlined'
               sx={{
                 color: editVotingNow.votingNow ? '#fff' : '#1a2935',
@@ -446,7 +446,9 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                 <StoryPointsMenu
                   open={editStoryPoints.openStoryPointsMenu}
                   handleClose={editStoryPoints.handleCloseStoryPointsMenu}
-                  handleSelectPoint={editStoryPoints.handleEditStoryPoints}
+                  handleSelectPoint={card =>
+                    editStoryPoints.handleEditStoryPoints('1a', card)
+                  }
                   anchorEl={storyPointsButtonRef.current}
                 />
               </StyledButton>

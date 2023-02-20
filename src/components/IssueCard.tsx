@@ -6,8 +6,19 @@ import { useCallback, useRef, useState } from 'react';
 import EditIssueModal from './EditIssueModal';
 import DeleteIssueModal from './DeleteIssueModal';
 import StoryPointsMenu from './StoryPointsMenu';
+import { Issue } from '../types/Issue';
 
-const IssueCard = () => {
+type IssueCard = {
+  issue: Issue;
+  handleVotingNow: (id: string) => void;
+  handleEditStoryPoints: (id: string, card: string) => void;
+};
+
+const IssueCard: React.FC<IssueCard> = ({
+  issue,
+  handleVotingNow,
+  handleEditStoryPoints
+}) => {
   const [openMenu, setOpenMenu] = useState(false);
   const [openEditIssue, setOpenEditIssue] = useState(false);
   const [openDeleteIssue, setOpenDeleteIssue] = useState(false);
@@ -124,7 +135,7 @@ const IssueCard = () => {
         <Typography
           id='title'
           sx={{ marginTop: 5, textAlign: 'left' }}>
-          Title
+          {issue.title}
         </Typography>
         <Box
           id='buttonsDiv'
@@ -135,9 +146,10 @@ const IssueCard = () => {
             justifyContent: 'space-between'
           }}>
           <StyledButton
+            onClick={() => handleVotingNow(issue.id)}
             variant='outlined'
             sx={{
-              color: '#fff',
+              color: issue.voting ? '#fff' : '#1a2935',
               margin: 0,
               textWrap: 'no-wrap',
               border: 'none',
@@ -146,14 +158,18 @@ const IssueCard = () => {
               padding: '0.33rem 0.78rem',
               fontWeight: 600,
               fontSize: 21.5,
-              backgroundColor: '#3993ff',
+              backgroundColor: issue.voting ? '#3993ff' : '#e8e9ea',
               '&:hover': {
                 border: 'none',
                 transition: 'all 0.3s',
-                backgroundColor: '#3993ff90'
+                backgroundColor: issue.voting ? '#3993ff90' : '#d1d4d7'
               }
             }}>
-            Voting now...
+            {!issue.voting && issue.storyPoints !== '-'
+              ? 'Vote again'
+              : issue.voting
+              ? 'Voting now...'
+              : 'Vote this issue'}
           </StyledButton>
           <Box sx={{ position: 'relative' }}>
             <StyledButton
@@ -169,25 +185,34 @@ const IssueCard = () => {
                 borderRadius: 2.5,
                 width: '5px',
                 minWidth: '50px',
-                padding: '0.33rem 0rem',
-                backgroundColor: openStoryPointsMenu ? '#bbd6f7' : '#fff',
+                padding: 1,
+                backgroundColor: !issue.voting
+                  ? '#e8e9ea'
+                  : openStoryPointsMenu && issue.voting
+                  ? '#bbd6f7'
+                  : openStoryPointsMenu
+                  ? '#bfc3c5'
+                  : '#fff',
                 zIndex: 90,
                 '&:hover': {
                   border: 'none',
                   transition: 'all 0.3s',
-                  backgroundColor: '#ebf4ff'
+                  backgroundColor: !issue.voting ? '#d1d4d7' : '#ebf4ff'
                 }
               }}>
               <Typography
                 sx={{ fontWeight: 700, fontFamily: '', fontSize: 20.5 }}>
-                89
+                {issue.storyPoints}
               </Typography>
             </StyledButton>
             <StoryPointsMenu
               open={openStoryPointsMenu}
               handleClose={handleCloseStoryPointsMenu}
               anchorEl={storyPointsButtonRef.current}
-              handleSelectPoint={() => {}}
+              handleSelectPoint={card => {
+                handleEditStoryPoints(issue.id, card);
+                handleCloseStoryPointsMenu();
+              }}
             />
           </Box>
         </Box>

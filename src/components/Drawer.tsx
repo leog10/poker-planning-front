@@ -9,6 +9,7 @@ import AddIcon from '@mui/icons-material/Add';
 import IssueCard from './IssueCard';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import IssuesMenu from './IssuesMenu';
+import useEditIssue from '../helpers/useEditIssue';
 
 type DrawerRight = {
   open: boolean;
@@ -46,6 +47,8 @@ const DrawerRight: React.FC<DrawerRight> = ({ open, handleDrawerClose }) => {
   const handleCloseMenuIssues = useCallback(() => {
     setOpenMenuIssues(false);
   }, []);
+
+  const { editStoryPoints, editVotingNow, issues } = useEditIssue();
 
   return (
     <Drawer
@@ -143,10 +146,26 @@ const DrawerRight: React.FC<DrawerRight> = ({ open, handleDrawerClose }) => {
           flexDirection: 'column'
         }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-          <IssueCard />
-          <IssueCard />
+          {issues.roomIssues.map(issue => {
+            return (
+              <IssueCard
+                key={issue.id}
+                issue={issue}
+                handleVotingNow={editVotingNow.handleVotingNow}
+                handleEditStoryPoints={editStoryPoints.handleEditStoryPoints}
+              />
+            );
+          })}
         </Box>
-        {openIssue && <NewIssue handleClose={handleCloseIssue} />}
+        {openIssue && (
+          <NewIssue
+            handleClose={handleCloseIssue}
+            handleAddIssue={title => {
+              issues.handleAddIssue(title);
+              handleCloseIssue();
+            }}
+          />
+        )}
         {!openIssue && (
           <Box
             onClick={handleOpenIssue}

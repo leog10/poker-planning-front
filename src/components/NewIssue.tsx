@@ -1,7 +1,22 @@
 import { Box, TextField } from '@mui/material';
+import { useCallback, useState } from 'react';
 import { StyledButton } from '../styles';
 
-const NewIssue: React.FC<{ handleClose: () => void }> = ({ handleClose }) => {
+type NewIssue = {
+  handleClose: () => void;
+  handleAddIssue: (title: string) => void;
+};
+
+const NewIssue: React.FC<NewIssue> = ({ handleClose, handleAddIssue }) => {
+  const [title, setTitle] = useState('');
+
+  const handleSetTitle = useCallback(
+    (title: string) => {
+      setTitle(title);
+    },
+    [title]
+  );
+
   return (
     <Box
       sx={{
@@ -11,6 +26,7 @@ const NewIssue: React.FC<{ handleClose: () => void }> = ({ handleClose }) => {
         justifyContent: 'center'
       }}>
       <TextField
+        onChange={e => handleSetTitle(e.target.value)}
         autoFocus
         multiline
         placeholder='Enter a title for the issue'
@@ -60,6 +76,7 @@ const NewIssue: React.FC<{ handleClose: () => void }> = ({ handleClose }) => {
           Cancel
         </StyledButton>
         <StyledButton
+          onClick={() => handleAddIssue(title)}
           variant='outlined'
           sx={{
             color: '#fff',

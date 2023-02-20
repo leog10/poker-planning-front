@@ -1,9 +1,28 @@
 import { useCallback, useState } from "react";
 import { Issue } from "../types/Issue";
 
-const HARDCODEDISSUES: Issue[] = [{ id: '1a', description: '', link: '', storyPoints: '1', title: '1er', voting: 'voted' }, { id: '2a', description: '', link: '', storyPoints: '2', title: '2d', voting: true }]
+const HARDCODEDISSUES: Issue[] = [
+    {
+        id: '1a',
+        description: '',
+        link: '',
+        storyPoints: '1',
+        title: '1er',
+        voting: true
+    },
+    {
+        id: '2a',
+        description: '',
+        link: '',
+        storyPoints: '2',
+        title: '2d',
+        voting: false
+    }
+]
 
 const useEditIssue = () => {
+    const [roomIssues, setRoomIssues] = useState<Issue[]>(HARDCODEDISSUES)
+
     const [openEditTitle, setOpenEditTitle] = useState(false);
     const [issueTitle, setIssueTitle] = useState('issueTitle');
 
@@ -52,9 +71,17 @@ const useEditIssue = () => {
     const [openStoryPointsMenu, setOpenStoryPointsMenu] = useState(false);
     const [storyPoints, setStoryPoints] = useState('-');
 
-    const handleEditStoryPoints = useCallback((storyPoints: string) => {
+    const handleEditStoryPoints = useCallback((id: string, storyPoints: string) => {
         setStoryPoints(storyPoints);
-    }, [])
+        const issue = roomIssues.find(issue => issue.id === id)
+        if (issue) {
+            if (issue.storyPoints === storyPoints) {
+                issue.storyPoints = '-'
+            } else {
+                issue.storyPoints = storyPoints;
+            }
+        }
+    }, [storyPoints])
 
     const handleStoryPointsMenu = useCallback(
         (e?: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -73,14 +100,27 @@ const useEditIssue = () => {
 
     const [votingNow, setVotingNow] = useState(false);
 
-    const handleVotingNow = useCallback(() => {
+    const handleVotingNow = useCallback((id: string) => {
         setVotingNow(!votingNow)
+        const issue = roomIssues.find(issue => issue.id === id)
+        if (issue) {
+            if (issue.voting) {
+                issue.voting = !issue.voting
+            } else {
+                roomIssues.forEach(issue => issue.voting = false)
+                issue.voting = !issue.voting
+            }
+        }
     }, [votingNow])
 
-    const [issues, setIssues] = useState<Issue[]>(HARDCODEDISSUES)
-
-    const handleAddIssue = useCallback((issue: Issue) => {
-        setIssues(prev => [...prev, issue])
+    const handleAddIssue = useCallback((title: string) => {
+        const newIssue: Issue = {
+            id: new Date().getTime().toString(),
+            title,
+            voting: false,
+            storyPoints: '-'
+        }
+        setRoomIssues(prev => [...prev, newIssue])
     }, [])
 
     return {
@@ -113,9 +153,9 @@ const useEditIssue = () => {
             votingNow,
             handleVotingNow
         },
-        editIssues: {
-            issues,
-            handleAddIssue
+        issues: {
+            handleAddIssue,
+            roomIssues
         }
     };
 }
