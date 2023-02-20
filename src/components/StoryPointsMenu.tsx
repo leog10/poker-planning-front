@@ -4,12 +4,14 @@ import { fiboCardsArray } from '../helpers/useCards';
 type StoryPointsMenu = {
   open: boolean;
   handleClose: () => void;
+  handleSelectPoint: (card: string) => void;
   anchorEl: any;
 };
 
 const StoryPointsMenu: React.FC<StoryPointsMenu> = ({
   open,
   handleClose,
+  handleSelectPoint,
   anchorEl
 }) => {
   return (
@@ -52,7 +54,7 @@ const StoryPointsMenu: React.FC<StoryPointsMenu> = ({
             {fiboCardsArray.map(card => {
               return (
                 <Box
-                  onClick={handleClose}
+                  onClick={() => handleSelectPoint(card.card)}
                   key={card.card}
                   sx={{
                     cursor: 'pointer',

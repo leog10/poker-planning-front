@@ -46,6 +46,28 @@ const useEditIssue = () => {
         setIssueDescription(textFieldValue);
     }, []);
 
+    const [openStoryPointsMenu, setOpenStoryPointsMenu] = useState(false);
+    const [storyPoints, setStoryPoints] = useState('-');
+
+    const handleEditStoryPoints = useCallback((storyPoints: string) => {
+        setStoryPoints(storyPoints);
+    }, [])
+
+    const handleStoryPointsMenu = useCallback(
+        (e?: React.MouseEvent<HTMLElement, MouseEvent>) => {
+            const event = e?.target as HTMLElement;
+
+            if (event.id === 'storyPointsMenuBox') return;
+
+            setOpenStoryPointsMenu(!openStoryPointsMenu);
+        },
+        [openStoryPointsMenu]
+    );
+
+    const handleCloseStoryPointsMenu = useCallback(() => {
+        setOpenStoryPointsMenu(false);
+    }, []);
+
     return {
         editTitle: {
             openEditTitle,
@@ -64,6 +86,13 @@ const useEditIssue = () => {
             issueDescription,
             handleEditDescription,
             handleSaveIssueDescription
+        },
+        editStoryPoints: {
+            openStoryPointsMenu,
+            storyPoints,
+            handleEditStoryPoints,
+            handleStoryPointsMenu,
+            handleCloseStoryPointsMenu
         }
     };
 }

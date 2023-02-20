@@ -42,10 +42,10 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
   handleClose
 }) => {
   const [openDeleteIssue, setOpenDeleteIssue] = useState(false);
-  const [openStoryPointsMenu, setOpenStoryPointsMenu] = useState(false);
   const storyPointsButtonRef = useRef<HTMLButtonElement>(null);
 
-  const { editTitle, editLink, editDescription } = useEditIssue();
+  const { editTitle, editLink, editDescription, editStoryPoints } =
+    useEditIssue();
 
   const handleOpenDeleteIssue = useCallback(() => {
     setOpenDeleteIssue(true);
@@ -53,21 +53,6 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
 
   const handleCloseDeleteIssue = useCallback(() => {
     setOpenDeleteIssue(false);
-  }, []);
-
-  const handleStoryPointsMenu = useCallback(
-    (e?: React.MouseEvent<HTMLElement, MouseEvent>) => {
-      const event = e?.target as HTMLElement;
-
-      if (event.id === 'storyPointsMenuBox') return;
-
-      setOpenStoryPointsMenu(!openStoryPointsMenu);
-    },
-    [openStoryPointsMenu]
-  );
-
-  const handleCloseStoryPointsMenu = useCallback(() => {
-    setOpenStoryPointsMenu(false);
   }, []);
 
   return (
@@ -423,7 +408,7 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
             <Box sx={{ position: 'relative' }}>
               <StyledButton
                 ref={storyPointsButtonRef}
-                onClick={handleStoryPointsMenu}
+                onClick={editStoryPoints.handleStoryPointsMenu}
                 variant='outlined'
                 sx={{
                   position: 'relative',
@@ -445,11 +430,12 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                 }}>
                 <Typography
                   sx={{ fontWeight: 700, fontFamily: '', fontSize: 23.5 }}>
-                  89
+                  {editStoryPoints.storyPoints}
                 </Typography>
                 <StoryPointsMenu
-                  open={openStoryPointsMenu}
-                  handleClose={handleCloseStoryPointsMenu}
+                  open={editStoryPoints.openStoryPointsMenu}
+                  handleClose={editStoryPoints.handleCloseStoryPointsMenu}
+                  handleSelectPoint={editStoryPoints.handleEditStoryPoints}
                   anchorEl={storyPointsButtonRef.current}
                 />
               </StyledButton>
