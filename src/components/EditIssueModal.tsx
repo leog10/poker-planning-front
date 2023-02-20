@@ -162,7 +162,6 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
             {openEditTitle && (
               <EditIssueField
                 id='editTitle'
-                open={openEditTitle}
                 handleClose={handleEditTitle}
                 handleSave={handleSaveIssueTitle}
                 fieldValue={issueTitle}
