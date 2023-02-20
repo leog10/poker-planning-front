@@ -37,14 +37,14 @@ const EditIssueField: React.FC<EditIssueField> = ({
         <TextField
           onChange={e => handleChangeField(e)}
           autoFocus
-          multiline
+          multiline={id !== 'editLink'}
           value={textFieldValue}
           sx={{
             padding: '2px 6px',
             backgroundColor: '#fff',
             flexGrow: 1,
             borderRadius: 1.5,
-            minHeight: 150,
+            minHeight: id === 'editLink' ? 50 : 150,
             border: '2px solid #d1d1d1',
             '& fieldset': {
               border: 'none'
@@ -52,9 +52,9 @@ const EditIssueField: React.FC<EditIssueField> = ({
             '& .MuiInputBase-root': {
               display: 'flex',
               alignItems: 'flex-start',
-              minHeight: 150,
-              fontSize: 27.5,
-              fontWeight: 700
+              minHeight: id === 'editLink' ? 50 : 150,
+              fontSize: id === 'editLink' ? 20.5 : 27.5,
+              fontWeight: id === 'editLink' ? 400 : 700
             },
             '& .css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input': {
               minHeight: 150
