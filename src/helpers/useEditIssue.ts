@@ -32,10 +32,18 @@ const useEditIssue = () => {
             }
         }
 
-
-
         setIssueLink('https://' + textFieldValue);
+    }, []);
 
+    const [openEditDescription, setOpenEditDescription] = useState(false);
+    const [issueDescription, setIssueDescription] = useState('');
+
+    const handleEditDescription = useCallback(() => {
+        setOpenEditDescription(!openEditDescription);
+    }, [openEditDescription]);
+
+    const handleSaveIssueDescription = useCallback((textFieldValue: string) => {
+        setIssueDescription(textFieldValue);
     }, []);
 
     return {
@@ -50,6 +58,12 @@ const useEditIssue = () => {
             issueLink,
             handleEditLink,
             handleSaveIssueLink
+        },
+        editDescription: {
+            openEditDescription,
+            issueDescription,
+            handleEditDescription,
+            handleSaveIssueDescription
         }
     };
 }

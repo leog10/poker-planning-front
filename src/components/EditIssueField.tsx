@@ -53,8 +53,9 @@ const EditIssueField: React.FC<EditIssueField> = ({
               display: 'flex',
               alignItems: 'flex-start',
               minHeight: id === 'editLink' ? 50 : 150,
-              fontSize: id === 'editLink' ? 20.5 : 27.5,
-              fontWeight: id === 'editLink' ? 400 : 700
+              fontSize: 'inherit',
+              fontWeight: 'inherit',
+              color: 'inherit'
             },
             '& .css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input': {
               minHeight: 150

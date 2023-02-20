@@ -44,7 +44,7 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
   const [openStoryPointsMenu, setOpenStoryPointsMenu] = useState(false);
   const storyPointsButtonRef = useRef<HTMLButtonElement>(null);
 
-  const { editTitle, editLink } = useEditIssue();
+  const { editTitle, editLink, editDescription } = useEditIssue();
 
   const handleOpenDeleteIssue = useCallback(() => {
     setOpenDeleteIssue(true);
@@ -78,16 +78,18 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
           display: 'flex',
           justifyContent: 'center',
           '& .MuiPaper-root': {
-            height: editTitle.openEditTitle
-              ? '97vh'
-              : editLink.openEditLink
-              ? '91vh'
-              : 720,
-            maxHeight: editTitle.openEditTitle
-              ? '97vh'
-              : editLink.openEditLink
-              ? '91vh'
-              : 720
+            height:
+              editTitle.openEditTitle || editDescription.openEditDescription
+                ? '97vh'
+                : editLink.openEditLink
+                ? '91vh'
+                : 720,
+            maxHeight:
+              editTitle.openEditTitle || editDescription.openEditDescription
+                ? '97vh'
+                : editLink.openEditLink
+                ? '91vh'
+                : 720
           }
         }}
         aria-labelledby='customized-dialog-title'
@@ -103,7 +105,10 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
             paddingTop: 9.8,
             gap: 3,
             overflow: 'auto',
-            paddingBottom: editTitle.openEditTitle ? 8 : 0
+            paddingBottom:
+              editTitle.openEditTitle || editDescription.openEditDescription
+                ? 8
+                : 0
           }}>
           <IconButton
             onClick={handleOpenDeleteIssue}
@@ -283,35 +288,55 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                 }}>
                 Description
               </Typography>
-              <Box
-                onClick={() => {}}
-                sx={{
-                  width: '96%',
-                  marginY: 2,
-                  marginX: 2,
-                  display: 'flex',
-                  flexGrow: 1,
-                  paddingY: 1.2,
-                  paddingX: 3,
-                  textAlign: 'left',
-                  borderRadius: 2,
-                  cursor: 'pointer',
-                  backgroundColor: '#f1f1f1',
-                  transition: 'all 0.2s',
-                  '&:hover': {
-                    transition: 'all 0.2s',
-                    backgroundColor: '#e8e9ea'
-                  }
-                }}>
-                <Typography
+              {!editDescription.openEditDescription && (
+                <Box
+                  onClick={editDescription.handleEditDescription}
                   sx={{
-                    fontSize: 24,
-                    fontWeight: 400,
-                    color: '#444444'
+                    width: '96%',
+                    marginY: 2,
+                    marginX: 2,
+                    display: 'flex',
+                    flexGrow: 1,
+                    paddingY: 1.2,
+                    paddingX: 3,
+                    textAlign: 'left',
+                    borderRadius: 2,
+                    cursor: 'pointer',
+                    backgroundColor: '#f1f1f1',
+                    transition: 'all 0.2s',
+                    '&:hover': {
+                      transition: 'all 0.2s',
+                      backgroundColor: '#e8e9ea'
+                    }
                   }}>
-                  Add a description...
-                </Typography>
-              </Box>
+                  <Typography
+                    sx={{
+                      fontSize: 24,
+                      fontWeight: 400,
+                      color: '#444444'
+                    }}>
+                    {editDescription.issueDescription.length
+                      ? editDescription.issueDescription
+                      : 'Add a description...'}
+                  </Typography>
+                </Box>
+              )}
+              {editDescription.openEditDescription && (
+                <Box
+                  sx={{
+                    width: '96%',
+                    margin: '0 auto',
+                    fontSize: 23,
+                    color: '#1a2935'
+                  }}>
+                  <EditIssueField
+                    id='editDescription'
+                    handleClose={editDescription.handleEditDescription}
+                    handleSave={editDescription.handleSaveIssueDescription}
+                    fieldValue={editDescription.issueDescription}
+                  />
+                </Box>
+              )}
             </Box>
           </Box>
           <Box
