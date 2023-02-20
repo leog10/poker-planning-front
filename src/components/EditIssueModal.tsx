@@ -14,6 +14,7 @@ import { useCallback, useRef, useState } from 'react';
 import StoryPointsMenu from './StoryPointsMenu';
 import EditIssueField from './EditIssueField';
 import useEditIssue from '../helpers/useEditIssue';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
 const BootstrapDialog = styled(Dialog)(() => ({
   '& .MuiBackdrop-root': {
@@ -196,21 +197,46 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
               textAlign: 'left'
             }}>
             <Box sx={{ width: '100%' }}>
-              <Typography
+              <Box
                 sx={{
-                  marginX: 2,
-                  fontSize: 22.5,
-                  fontWeight: 700,
-                  flexGrow: 1
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  width: '100%'
                 }}>
-                Link
-              </Typography>
+                <Typography
+                  sx={{
+                    marginLeft: 2,
+                    marginRight: 1,
+                    fontSize: 22.5,
+                    fontWeight: 700
+                  }}>
+                  Link
+                </Typography>
+                {editLink.issueLink && (
+                  <IconButton
+                    onClick={editLink.handleEditLink}
+                    aria-label='close'
+                    sx={{
+                      height: 60,
+                      width: 60,
+                      color: theme => theme.palette.grey[800]
+                    }}>
+                    <EditOutlinedIcon
+                      sx={{
+                        fontSize: 26
+                      }}
+                    />
+                  </IconButton>
+                )}
+              </Box>
               {!editLink.openEditLink && (
                 <Box
                   onClick={editLink.handleEditLink}
                   sx={{
                     width: editLink.openEditLink ? '98%' : '97%',
-                    marginY: 1.5,
+                    marginTop: editLink.issueLink ? 0 : 1.5,
+                    marginBottom: 1.5,
                     marginX: editLink.issueLink ? 1 : 2,
                     display: 'flex',
                     flexGrow: 1,
@@ -279,15 +305,38 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
               </Box>
             </Box>
             <Box sx={{ width: '100%' }}>
-              <Typography
+              <Box
                 sx={{
-                  marginX: 2,
-                  fontSize: 22.5,
-                  fontWeight: 700,
-                  flexGrow: 1
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  width: '100%'
                 }}>
-                Description
-              </Typography>
+                <Typography
+                  sx={{
+                    marginX: 2,
+                    fontSize: 22.5,
+                    fontWeight: 700
+                  }}>
+                  Description
+                </Typography>
+                {editDescription.issueDescription && (
+                  <IconButton
+                    onClick={editDescription.handleEditDescription}
+                    aria-label='close'
+                    sx={{
+                      height: 60,
+                      width: 60,
+                      color: theme => theme.palette.grey[800]
+                    }}>
+                    <EditOutlinedIcon
+                      sx={{
+                        fontSize: 26
+                      }}
+                    />
+                  </IconButton>
+                )}
+              </Box>
               {!editDescription.openEditDescription && (
                 <Box
                   onClick={editDescription.handleEditDescription}
