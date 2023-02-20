@@ -90,7 +90,7 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
             paddingX: 7,
             paddingTop: 9.8,
             gap: 3,
-            overflow: 'hidden'
+            overflow: 'auto'
           }}>
           <IconButton
             onClick={handleOpenDeleteIssue}
