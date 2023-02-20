@@ -5,6 +5,7 @@ import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import DeleteIssueModal from './DeleteIssueModal';
 import { useCallback, useRef, useState } from 'react';
 import StoryPointsMenu from './StoryPointsMenu';
+import EditIssueField from './EditIssueField';
 
 const BootstrapDialog = styled(Dialog)(() => ({
   '& .MuiBackdrop-root': {
@@ -34,6 +35,16 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
   const [openDeleteIssue, setOpenDeleteIssue] = useState(false);
   const [openStoryPointsMenu, setOpenStoryPointsMenu] = useState(false);
   const storyPointsButtonRef = useRef<HTMLButtonElement>(null);
+  const [openEditTitle, setOpenEditTitle] = useState(false);
+  const [issueTitle, setIssueTitle] = useState('issueTitle');
+
+  const handleEditTitle = useCallback(() => {
+    setOpenEditTitle(!openEditTitle);
+  }, [openEditTitle]);
+
+  const handleSaveIssueTitle = useCallback((textFieldValue: string) => {
+    setIssueTitle(textFieldValue);
+  }, []);
 
   const handleOpenDeleteIssue = useCallback(() => {
     setOpenDeleteIssue(true);
@@ -119,31 +130,44 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
               }}
             />
           </IconButton>
-          <Box
-            onClick={() => {}}
-            sx={{
-              width: '102%',
-              marginY: 2,
-              display: 'flex',
-              paddingY: 1,
-              paddingX: 1,
-              textAlign: 'left',
-              borderRadius: 2,
-              cursor: 'pointer',
-              transition: 'all 0.2s',
-              '&:hover': {
-                transition: 'all 0.2s',
-                backgroundColor: '#f1f1f1'
-              }
-            }}>
-            <Typography
-              sx={{
-                fontSize: 27.5,
-                fontWeight: 700,
-                color: '#000'
-              }}>
-              asd
-            </Typography>
+          <Box sx={{ width: '100%' }}>
+            {!openEditTitle && (
+              <Box
+                onClick={handleEditTitle}
+                sx={{
+                  width: '102%',
+                  marginY: 2,
+                  display: 'flex',
+                  paddingY: 1,
+                  paddingX: 1,
+                  textAlign: 'left',
+                  borderRadius: 2,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                  '&:hover': {
+                    transition: 'all 0.2s',
+                    backgroundColor: '#f1f1f1'
+                  }
+                }}>
+                <Typography
+                  sx={{
+                    fontSize: 27.5,
+                    fontWeight: 700,
+                    color: '#000'
+                  }}>
+                  {issueTitle}
+                </Typography>
+              </Box>
+            )}
+            {openEditTitle && (
+              <EditIssueField
+                id='editTitle'
+                open={openEditTitle}
+                handleClose={handleEditTitle}
+                handleSave={handleSaveIssueTitle}
+                fieldValue={issueTitle}
+              />
+            )}
           </Box>
           <Box
             sx={{
@@ -151,7 +175,8 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
               flexDirection: 'column',
               alignItems: 'flex-start',
               width: '100%',
-              gap: 4
+              gap: 4,
+              textAlign: 'left'
             }}>
             <Box sx={{ width: '100%' }}>
               <Typography
