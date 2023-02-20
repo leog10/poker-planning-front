@@ -76,7 +76,10 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
         onClose={handleClose}
         sx={{
           display: 'flex',
-          justifyContent: 'center'
+          justifyContent: 'center',
+          '& .MuiPaper-root': {
+            height: openEditTitle ? '100vh' : 738
+          }
         }}
         aria-labelledby='customized-dialog-title'
         open={open}>
@@ -90,7 +93,8 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
             paddingX: 7,
             paddingTop: 9.8,
             gap: 3,
-            overflow: 'auto'
+            overflow: 'auto',
+            paddingBottom: openEditTitle ? 8 : 0
           }}>
           <IconButton
             onClick={handleOpenDeleteIssue}
