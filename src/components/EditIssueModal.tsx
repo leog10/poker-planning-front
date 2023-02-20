@@ -78,7 +78,8 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
           display: 'flex',
           justifyContent: 'center',
           '& .MuiPaper-root': {
-            height: openEditTitle ? '100vh' : 738
+            height: openEditTitle ? '97vh' : 738,
+            maxHeight: openEditTitle ? '97vh' : 738
           }
         }}
         aria-labelledby='customized-dialog-title'
