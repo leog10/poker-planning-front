@@ -293,16 +293,19 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                   onClick={editDescription.handleEditDescription}
                   sx={{
                     width: '96%',
-                    marginY: 2,
+                    marginTop: editDescription.issueDescription ? 1 : 2,
+                    marginBottom: 2,
                     marginX: 2,
                     display: 'flex',
                     flexGrow: 1,
-                    paddingY: 1.2,
-                    paddingX: 3,
+                    paddingY: editDescription.issueDescription ? 0.5 : 1.2,
+                    paddingX: editDescription.issueDescription ? 0.2 : 3,
                     textAlign: 'left',
                     borderRadius: 2,
                     cursor: 'pointer',
-                    backgroundColor: '#f1f1f1',
+                    backgroundColor: editDescription.issueDescription
+                      ? ''
+                      : '#f1f1f1',
                     transition: 'all 0.2s',
                     '&:hover': {
                       transition: 'all 0.2s',
