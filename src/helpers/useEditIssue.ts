@@ -68,6 +68,12 @@ const useEditIssue = () => {
         setOpenStoryPointsMenu(false);
     }, []);
 
+    const [votingNow, setVotingNow] = useState(false);
+
+    const handleVotingNow = useCallback(() => {
+        setVotingNow(!votingNow)
+    }, [votingNow])
+
     return {
         editTitle: {
             openEditTitle,
@@ -93,6 +99,10 @@ const useEditIssue = () => {
             handleEditStoryPoints,
             handleStoryPointsMenu,
             handleCloseStoryPointsMenu
+        },
+        editVotingNow: {
+            votingNow,
+            handleVotingNow
         }
     };
 }

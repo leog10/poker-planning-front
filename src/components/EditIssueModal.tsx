@@ -44,8 +44,13 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
   const [openDeleteIssue, setOpenDeleteIssue] = useState(false);
   const storyPointsButtonRef = useRef<HTMLButtonElement>(null);
 
-  const { editTitle, editLink, editDescription, editStoryPoints } =
-    useEditIssue();
+  const {
+    editTitle,
+    editLink,
+    editDescription,
+    editStoryPoints,
+    editVotingNow
+  } = useEditIssue();
 
   const handleOpenDeleteIssue = useCallback(() => {
     setOpenDeleteIssue(true);
@@ -385,25 +390,31 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
               height: 60
             }}>
             <StyledButton
+              onClick={editVotingNow.handleVotingNow}
               variant='outlined'
               sx={{
-                color: '#fff',
+                color: editVotingNow.votingNow ? '#fff' : '#1a2935',
                 margin: 0,
                 textWrap: 'no-wrap',
                 border: 'none',
                 borderRadius: 2.5,
-                width: 200,
-                padding: '0.33rem 1rem',
-                fontWeight: 600,
-                fontSize: 21.5,
-                backgroundColor: '#3993ff',
+                width: 'fit-content',
+                paddingY: 0.5,
+                paddingX: 3,
+                fontWeight: 700,
+                fontSize: 23,
+                backgroundColor: editVotingNow.votingNow
+                  ? '#3993ff'
+                  : '#e8e9ea',
                 '&:hover': {
                   border: 'none',
                   transition: 'all 0.3s',
-                  backgroundColor: '#3993ff90'
+                  backgroundColor: editVotingNow.votingNow
+                    ? '#3993ff90'
+                    : '#d1d4d7'
                 }
               }}>
-              Voting now...
+              {editVotingNow.votingNow ? 'Voting now...' : 'Vote this issue'}
             </StyledButton>
             <Box sx={{ position: 'relative' }}>
               <StyledButton
