@@ -1,4 +1,7 @@
 import { useCallback, useState } from "react";
+import { Issue } from "../types/Issue";
+
+const HARDCODEDISSUES: Issue[] = [{ id: '1a', description: '', link: '', storyPoints: '1', title: '1er', voting: 'voted' }, { id: '2a', description: '', link: '', storyPoints: '2', title: '2d', voting: true }]
 
 const useEditIssue = () => {
     const [openEditTitle, setOpenEditTitle] = useState(false);
@@ -74,6 +77,12 @@ const useEditIssue = () => {
         setVotingNow(!votingNow)
     }, [votingNow])
 
+    const [issues, setIssues] = useState<Issue[]>(HARDCODEDISSUES)
+
+    const handleAddIssue = useCallback((issue: Issue) => {
+        setIssues(prev => [...prev, issue])
+    }, [])
+
     return {
         editTitle: {
             openEditTitle,
@@ -103,6 +112,10 @@ const useEditIssue = () => {
         editVotingNow: {
             votingNow,
             handleVotingNow
+        },
+        editIssues: {
+            issues,
+            handleAddIssue
         }
     };
 }

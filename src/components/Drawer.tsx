@@ -142,7 +142,10 @@ const DrawerRight: React.FC<DrawerRight> = ({ open, handleDrawerClose }) => {
           paddingRight: 5,
           flexDirection: 'column'
         }}>
-        <IssueCard />
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+          <IssueCard />
+          <IssueCard />
+        </Box>
         {openIssue && <NewIssue handleClose={handleCloseIssue} />}
         {!openIssue && (
           <Box

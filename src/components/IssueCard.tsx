@@ -187,6 +187,7 @@ const IssueCard = () => {
               open={openStoryPointsMenu}
               handleClose={handleCloseStoryPointsMenu}
               anchorEl={storyPointsButtonRef.current}
+              handleSelectPoint={() => {}}
             />
           </Box>
         </Box>
