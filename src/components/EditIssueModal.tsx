@@ -143,17 +143,16 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
               }}
             />
           </IconButton>
-          <Box sx={{ width: '100%' }}>
+          <Box sx={{ width: editTitle.openEditTitle ? '97%' : '98%' }}>
             {!editTitle.openEditTitle && (
               <Box
                 onClick={editTitle.handleEditTitle}
                 sx={{
-                  width: '98%',
+                  width: '100%',
                   marginY: 2,
                   display: 'flex',
                   paddingY: 1,
                   paddingX: 1,
-                  marginX: 1,
                   textAlign: 'left',
                   borderRadius: 2,
                   cursor: 'pointer',
@@ -205,7 +204,7 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                 <Box
                   onClick={editLink.handleEditLink}
                   sx={{
-                    width: editLink.issueLink ? '98%' : '97%',
+                    width: editLink.openEditLink ? '98%' : '97%',
                     marginY: 1.5,
                     marginX: editLink.issueLink ? 1 : 2,
                     display: 'flex',
@@ -231,7 +230,7 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                       }}>
                       Add a link to the issue...
                     </Typography>
-                  ) : (
+                  ) : editLink.issueLink.match(/^https?:\/\//i) ? (
                     <Link
                       href={editLink.issueLink}
                       target='_blank'
@@ -251,17 +250,28 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                       }}>
                       {editLink.issueLink}
                     </Link>
+                  ) : (
+                    <Typography
+                      sx={{
+                        fontSize: 22.5,
+                        fontWeight: 400,
+                        color: '#444444'
+                      }}>
+                      {editLink.issueLink}
+                    </Typography>
                   )}
                 </Box>
               )}
-              {editLink.openEditLink && (
-                <EditIssueField
-                  id='editLink'
-                  handleClose={editLink.handleEditLink}
-                  handleSave={editLink.handleSaveIssueLink}
-                  fieldValue={editLink.issueLink}
-                />
-              )}
+              <Box sx={{ width: '96%', margin: '0 auto' }}>
+                {editLink.openEditLink && (
+                  <EditIssueField
+                    id='editLink'
+                    handleClose={editLink.handleEditLink}
+                    handleSave={editLink.handleSaveIssueLink}
+                    fieldValue={editLink.issueLink}
+                  />
+                )}
+              </Box>
             </Box>
             <Box sx={{ width: '100%' }}>
               <Typography

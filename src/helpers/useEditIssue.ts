@@ -20,7 +20,22 @@ const useEditIssue = () => {
     }, [openEditLink]);
 
     const handleSaveIssueLink = useCallback((textFieldValue: string) => {
+        const ALLOWEDFIELDS = ['http', 'http:', 'http:/', 'http://', 'https', 'https:', 'https:/', 'https://',]
+        if (!textFieldValue) {
+            return setIssueLink('')
+        }
+
+        for (const protocol of ALLOWEDFIELDS) {
+            if (textFieldValue.includes(protocol)) {
+                setIssueLink(textFieldValue)
+                return;
+            }
+        }
+
+
+
         setIssueLink('https://' + textFieldValue);
+
     }, []);
 
     return {
