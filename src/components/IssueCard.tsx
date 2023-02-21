@@ -1,4 +1,4 @@
-import { Box, ToggleButton, Typography } from '@mui/material';
+import { Box, IconButton, ToggleButton, Typography } from '@mui/material';
 import { StyledButton } from '../styles';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import IssueCardMenu from './IssueCardMenu';
@@ -8,6 +8,7 @@ import DeleteIssueModal from './DeleteIssueModal';
 import StoryPointsMenu from './StoryPointsMenu';
 import { Issue } from '../types/Issue';
 import useIssue from '../types/useIssue';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
 type IssueCard = {
   issue: Issue;
@@ -155,8 +156,9 @@ const IssueCard: React.FC<IssueCard> = ({
           sx={{
             display: 'flex',
             flexDirection: 'row',
-            marginTop: 2.35,
-            justifyContent: 'space-between'
+            marginTop: 2,
+            justifyContent: 'space-between',
+            alignItems: 'center'
           }}>
           <StyledButton
             onClick={() => handleVotingNow(issue.id)}
@@ -168,7 +170,9 @@ const IssueCard: React.FC<IssueCard> = ({
               border: 'none',
               borderRadius: 2.5,
               width: 'fit-content',
-              padding: '0.33rem 0.78rem',
+              paddingX: 1.5,
+              height: 50,
+              paddingY: 0,
               fontWeight: 600,
               fontSize: 21.5,
               backgroundColor: issue.voting ? '#3993ff' : '#e8e9ea',
@@ -185,6 +189,27 @@ const IssueCard: React.FC<IssueCard> = ({
               : 'Vote this issue'}
           </StyledButton>
           <Box sx={{ position: 'relative' }}>
+            {issue.link && (
+              <IconButton
+                href={issue.link}
+                target='_blank'
+                rel='noopener'
+                sx={{
+                  marginX: 2,
+                  height: 60,
+                  width: 60,
+                  color: theme => theme.palette.primary.main,
+                  ':hover': {
+                    backgroundColor: '#ebf4ff'
+                  }
+                }}>
+                <OpenInNewIcon
+                  sx={{
+                    fontSize: 26
+                  }}
+                />
+              </IconButton>
+            )}
             <StyledButton
               ref={storyPointsButtonRef}
               onClick={handleStoryPointsMenu}
