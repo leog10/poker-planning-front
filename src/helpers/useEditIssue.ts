@@ -36,7 +36,7 @@ const useEditIssue = () => {
             issueTitle.title = textFieldValue;
         }
         setIssueTitle(textFieldValue);
-    }, [issueTitle]);
+    }, [roomIssues]);
 
     const [openEditLink, setOpenEditLink] = useState(false);
     const [issueLink, setIssueLink] = useState('');
@@ -59,7 +59,7 @@ const useEditIssue = () => {
         }
 
         setIssueLink('https://' + textFieldValue);
-    }, []);
+    }, [roomIssues]);
 
     const [openEditDescription, setOpenEditDescription] = useState(false);
     const [issueDescription, setIssueDescription] = useState('');
@@ -70,7 +70,7 @@ const useEditIssue = () => {
 
     const handleSaveIssueDescription = useCallback((textFieldValue: string) => {
         setIssueDescription(textFieldValue);
-    }, []);
+    }, [roomIssues]);
 
     const [openStoryPointsMenu, setOpenStoryPointsMenu] = useState(false);
     const [storyPoints, setStoryPoints] = useState('-');
@@ -85,7 +85,7 @@ const useEditIssue = () => {
                 issue.storyPoints = storyPoints;
             }
         }
-    }, [storyPoints])
+    }, [roomIssues])
 
     const handleStoryPointsMenu = useCallback(
         (e?: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -115,9 +115,9 @@ const useEditIssue = () => {
                 issue.voting = !issue.voting
             }
         }
-    }, [votingNow, roomIssues])
+    }, [roomIssues])
 
-    const handleAddIssue = (title: string) => {
+    const handleAddIssue = useCallback((title: string) => {
         const newIssue: Issue = {
             id: new Date().getTime().toString(),
             title,
@@ -127,13 +127,13 @@ const useEditIssue = () => {
         setRoomIssues((prev: Issue[]) => {
             return [...prev, newIssue];
         })
-    }
+    }, [roomIssues])
 
-    const handleDeleteIssue = (id: string) => {
+    const handleDeleteIssue = useCallback((id: string) => {
         setRoomIssues((prev: Issue[]) => {
             return prev.filter(issue => issue.id !== id)
         })
-    }
+    }, [roomIssues])
 
     return {
         editTitle: {
