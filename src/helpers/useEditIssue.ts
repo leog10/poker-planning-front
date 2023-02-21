@@ -45,20 +45,27 @@ const useEditIssue = () => {
         setOpenEditLink(!openEditLink);
     }, [openEditLink]);
 
-    const handleSaveIssueLink = useCallback((textFieldValue: string) => {
+    const handleSaveIssueLink = useCallback((id: string, textFieldValue: string) => {
         const PROTOCOLS = ['http', 'http:', 'http:/', 'http://', 'https', 'https:', 'https:/', 'https://',]
+        const issue = roomIssues.find(issue => issue.id === id);
+        if (!issue) return;
+
         if (!textFieldValue) {
-            return setIssueLink('')
+            issue.link = textFieldValue
+            setIssueLink('');
+            return;
         }
 
         for (const protocol of PROTOCOLS) {
             if (textFieldValue.includes(protocol)) {
+                issue.link = textFieldValue;
                 setIssueLink(textFieldValue)
                 return;
             }
         }
 
         setIssueLink('https://' + textFieldValue);
+        issue.link = 'https://' + textFieldValue;
     }, [roomIssues]);
 
     const [openEditDescription, setOpenEditDescription] = useState(false);

@@ -232,26 +232,24 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                   onClick={useIssue.editLink.handleEditLink}
                   sx={{
                     width: useIssue.editLink.openEditLink ? '98%' : '97%',
-                    marginTop: useIssue.editLink.issueLink ? 0 : 1.5,
+                    marginTop: issue.link ? 0 : 1.5,
                     marginBottom: 1.5,
-                    marginX: useIssue.editLink.issueLink ? 1 : 2,
+                    marginX: issue.link ? 1 : 2,
                     display: 'flex',
                     flexGrow: 1,
-                    paddingY: useIssue.editLink.issueLink ? 0.6 : 1.2,
-                    paddingX: useIssue.editLink.issueLink ? 1 : 3,
+                    paddingY: issue.link ? 0.6 : 1.2,
+                    paddingX: issue.link ? 1 : 3,
                     textAlign: 'left',
                     borderRadius: 2,
                     cursor: 'pointer',
-                    backgroundColor: useIssue.editLink.issueLink
-                      ? ''
-                      : '#f1f1f1',
+                    backgroundColor: issue.link ? '' : '#f1f1f1',
                     transition: 'all 0.2s',
                     '&:hover': {
                       transition: 'all 0.2s',
                       backgroundColor: '#e8e9ea'
                     }
                   }}>
-                  {useIssue.editLink.issueLink.length < 1 ? (
+                  {!issue.link ? (
                     <Typography
                       sx={{
                         fontSize: 24,
@@ -260,9 +258,9 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                       }}>
                       Add a link to the issue...
                     </Typography>
-                  ) : useIssue.editLink.issueLink.match(/^https?:\/\//i) ? (
+                  ) : issue.link && issue.link.match(/^https?:\/\//i) ? (
                     <Link
-                      href={useIssue.editLink.issueLink}
+                      href={issue.link}
                       target='_blank'
                       rel='noopener'
                       onClick={e => {
@@ -278,7 +276,7 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                           textDecoration: 'none'
                         }
                       }}>
-                      {useIssue.editLink.issueLink}
+                      {issue.link}
                     </Link>
                   ) : (
                     <Typography
@@ -287,7 +285,7 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                         fontWeight: 400,
                         color: '#444444'
                       }}>
-                      {useIssue.editLink.issueLink}
+                      {issue.link}
                     </Typography>
                   )}
                 </Box>
@@ -297,8 +295,10 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                   <EditIssueField
                     id='editLink'
                     handleClose={useIssue.editLink.handleEditLink}
-                    handleSave={useIssue.editLink.handleSaveIssueLink}
-                    fieldValue={useIssue.editLink.issueLink}
+                    handleSave={link =>
+                      useIssue.editLink.handleSaveIssueLink(issue.id, link)
+                    }
+                    fieldValue={issue.link ?? ''}
                   />
                 )}
               </Box>

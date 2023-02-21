@@ -11,7 +11,7 @@ type useIssue = {
         openEditLink: boolean;
         issueLink: string;
         handleEditLink: () => void;
-        handleSaveIssueLink: (textFieldValue: string) => void;
+        handleSaveIssueLink: (id: string, textFieldValue: string) => void;
     };
     editDescription: {
         openEditDescription: boolean;
