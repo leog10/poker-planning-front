@@ -31,7 +31,7 @@ type useIssue = {
         handleVotingNow: (id: string) => void;
     }
     issues: {
-        handleAddIssue: (title: string) => void;
+        handleAddIssue: (title: string, revealing: boolean) => void;
         handleDeleteIssue: (id: string) => void;
         handleDeleteAllIssues: () => void;
         roomIssues: Issue[];

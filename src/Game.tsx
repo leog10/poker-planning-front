@@ -190,6 +190,7 @@ const Game = () => {
         handleDrawerClose={handleDrawerClose}
         averageVote={room.average}
         useIssue={issue}
+        revealing={room.revealing}
       />
     </div>
   );

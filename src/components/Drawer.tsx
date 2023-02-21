@@ -17,6 +17,7 @@ type DrawerRight = {
   handleDrawerClose: () => void;
   averageVote: number | undefined;
   useIssue: useIssue;
+  revealing: boolean;
 };
 
 const drawerWidth = 600;
@@ -35,7 +36,8 @@ const DrawerRight: React.FC<DrawerRight> = ({
   open,
   handleDrawerClose,
   averageVote,
-  useIssue
+  useIssue,
+  revealing
 }) => {
   const [openIssue, setOpenIssue] = useState(false);
   const [openIssuesMenu, setOpenIssuesMenu] = useState(false);
@@ -199,7 +201,7 @@ const DrawerRight: React.FC<DrawerRight> = ({
           <NewIssue
             handleClose={handleCloseIssue}
             handleAddIssue={title => {
-              useIssue.issues.handleAddIssue(title);
+              useIssue.issues.handleAddIssue(title, revealing);
               handleCloseIssue();
             }}
           />

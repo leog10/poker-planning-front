@@ -129,11 +129,11 @@ const useIssue = (socket: Socket) => {
         }
     }, [votingNow, roomIssues])
 
-    const handleAddIssue = useCallback((title: string) => {
+    const handleAddIssue = useCallback((title: string, revealing: boolean) => {
         const newIssue: Issue = {
             id: new Date().getTime().toString(),
             title,
-            voting: roomIssues.length < 1,
+            voting: roomIssues.length < 1 && !revealing,
             storyPoints: '-'
         }
         setRoomIssues((prev: Issue[]) => {
