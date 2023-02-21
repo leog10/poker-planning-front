@@ -115,17 +115,18 @@ const useEditIssue = () => {
                 issue.voting = !issue.voting
             }
         }
-    }, [votingNow])
+    }, [votingNow, roomIssues])
 
     const handleAddIssue = (title: string) => {
         const newIssue: Issue = {
             id: new Date().getTime().toString(),
             title,
-            voting: false,
+            voting: roomIssues.length < 1,
             storyPoints: '-'
         }
-        roomIssues.push(newIssue);
-        setRoomIssues(roomIssues)
+        setRoomIssues((prev: Issue[]) => {
+            return [...prev, newIssue];
+        })
     }
 
     const handleDeleteIssue = (id: string) => {
