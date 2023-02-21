@@ -17,6 +17,7 @@ type IssueCard = {
   handleEditStoryPoints: (id: string, card: string) => void;
   useIssue: useIssue;
   averageVote: number | undefined;
+  roomId: string;
 };
 
 const IssueCard: React.FC<IssueCard> = ({
@@ -24,7 +25,8 @@ const IssueCard: React.FC<IssueCard> = ({
   handleVotingNow,
   handleEditStoryPoints,
   useIssue,
-  averageVote
+  averageVote,
+  roomId
 }) => {
   const [openMenu, setOpenMenu] = useState(false);
   const [openEditIssue, setOpenEditIssue] = useState(false);
@@ -75,10 +77,13 @@ const IssueCard: React.FC<IssueCard> = ({
     setOpenStoryPointsMenu(false);
   }, []);
 
-  const handleDeleteIssue = useCallback(() => {
-    useIssue.issues.handleDeleteIssue(issue.id);
-    handleCloseDeleteIssue();
-  }, []);
+  const handleDeleteIssue = useCallback(
+    (roomId: string) => {
+      useIssue.issues.handleDeleteIssue(issue.id, roomId);
+      handleCloseDeleteIssue();
+    },
+    [roomId]
+  );
 
   const selectStoryPoint = useCallback(
     (averageVote: number) => {
@@ -308,7 +313,7 @@ const IssueCard: React.FC<IssueCard> = ({
         }}
         open={openDeleteIssue}
         handleClose={handleCloseDeleteIssue}
-        handleDelete={handleDeleteIssue}
+        handleDelete={() => handleDeleteIssue(roomId)}
       />
       <EditIssueModal
         open={openEditIssue}

@@ -195,6 +195,7 @@ const DrawerRight: React.FC<DrawerRight> = ({
                 }
                 useIssue={useIssue}
                 averageVote={averageVote}
+                roomId={roomId}
               />
             );
           })}

@@ -32,7 +32,7 @@ type useIssue = {
     }
     issues: {
         handleAddIssue: (title: string, revealing: boolean, roomId: string) => void;
-        handleDeleteIssue: (id: string) => void;
+        handleDeleteIssue: (id: string, roomId: string) => void;
         handleDeleteAllIssues: (roomId: string) => void;
         roomIssues: Issue[];
         setRoomIssues: React.Dispatch<React.SetStateAction<Issue[]>>

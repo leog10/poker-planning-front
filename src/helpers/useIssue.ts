@@ -143,10 +143,11 @@ const useIssue = (socket: Socket) => {
         socket.emit('client:new_issue', { issue, roomId })
     }, [roomIssues])
 
-    const handleDeleteIssue = useCallback((id: string) => {
+    const handleDeleteIssue = useCallback((id: string, roomId: string) => {
         setRoomIssues((prev: Issue[]) => {
             return prev.filter(issue => issue.id !== id)
         })
+        socket.emit('client:delete_issue', { issueId: id, roomId })
     }, [roomIssues])
 
     const handleDeleteAllIssues = useCallback((roomId: string) => {
