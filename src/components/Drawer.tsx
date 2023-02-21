@@ -52,11 +52,11 @@ const DrawerRight: React.FC<DrawerRight> = ({ open, handleDrawerClose }) => {
 
   const drawerSubtitle = useMemo(() => {
     const issuesQuantity = useIssues.issues.roomIssues.length;
-    const issuesAverage = useIssues.issues.roomIssues
+    const issuesSum = useIssues.issues.roomIssues
       .filter(issue => !isNaN(Number(issue.storyPoints)))
       .reduce((a, b) => a + Number(b.storyPoints), 0);
-    if (issuesQuantity && issuesAverage) {
-      return `${issuesQuantity} issues   •   ${issuesAverage} points`;
+    if (issuesQuantity && issuesSum) {
+      return `${issuesQuantity} issues   •   ${issuesSum} points`;
     }
     if (issuesQuantity) {
       return `${issuesQuantity} issues`;
