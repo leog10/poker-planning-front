@@ -129,8 +129,9 @@ const useEditIssue = () => {
     }
 
     const handleDeleteIssue = (id: string) => {
-        const roomFilter = roomIssues.filter(issue => issue.id !== id);
-        setRoomIssues(roomFilter)
+        setRoomIssues((prev: Issue[]) => {
+            return prev.filter(issue => issue.id !== id)
+        })
     }
 
     return {
