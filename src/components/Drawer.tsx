@@ -1,5 +1,5 @@
 import { Box, Drawer, ToggleButton, Typography } from '@mui/material';
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
@@ -50,6 +50,19 @@ const DrawerRight: React.FC<DrawerRight> = ({ open, handleDrawerClose }) => {
 
   const useIssues = useEditIssue();
 
+  const drawerSubtitle = useMemo(() => {
+    const issuesQuantity = useIssues.issues.roomIssues.length;
+    const issuesAverage = useIssues.issues.roomIssues
+      .filter(issue => !isNaN(Number(issue.storyPoints)))
+      .reduce((a, b) => a + Number(b.storyPoints), 0);
+    if (issuesQuantity && issuesAverage) {
+      return `${issuesQuantity} issues   •   ${issuesAverage} points`;
+    }
+    if (issuesQuantity) {
+      return `${issuesQuantity} issues`;
+    }
+  }, [useIssues.issues]);
+
   return (
     <Drawer
       sx={{
@@ -83,7 +96,7 @@ const DrawerRight: React.FC<DrawerRight> = ({ open, handleDrawerClose }) => {
               color: '#a8a8a8',
               marginTop: '1.8px'
             }}>
-            1 issue
+            {drawerSubtitle}
           </Typography>
         </Box>
         <Box sx={{ position: 'relative' }}>
