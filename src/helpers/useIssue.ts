@@ -20,7 +20,7 @@ const HARDCODEDISSUES: Issue[] = [
     }
 ]
 
-const useEditIssue = () => {
+const useIssue = () => {
     const [roomIssues, setRoomIssues] = useState<Issue[]>(HARDCODEDISSUES)
 
     const [openEditTitle, setOpenEditTitle] = useState(false);
@@ -189,4 +189,4 @@ const useEditIssue = () => {
     };
 }
 
-export default useEditIssue;
+export default useIssue;

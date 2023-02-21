@@ -9,7 +9,7 @@ import AddIcon from '@mui/icons-material/Add';
 import IssueCard from './IssueCard';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import IssuesMenu from './IssuesMenu';
-import useEditIssue from '../helpers/useEditIssue';
+import useIssue from '../helpers/useIssue';
 import DeleteIssueModal from './DeleteIssueModal';
 
 type DrawerRight = {
@@ -39,7 +39,7 @@ const DrawerRight: React.FC<DrawerRight> = ({
   const [openIssuesMenu, setOpenIssuesMenu] = useState(false);
   const [openDeleteIssues, setOpenDeleteIssues] = useState(false);
 
-  const useIssues = useEditIssue();
+  const useIssues = useIssue();
 
   const handleOpenDeleteIssues = useCallback(() => {
     setOpenDeleteIssues(true);
