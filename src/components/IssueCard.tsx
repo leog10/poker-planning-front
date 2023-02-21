@@ -71,6 +71,11 @@ const IssueCard: React.FC<IssueCard> = ({
     setOpenStoryPointsMenu(false);
   }, []);
 
+  const handleDeleteIssue = useCallback(() => {
+    useIssue.issues.handleDeleteIssue(issue.id);
+    handleCloseDeleteIssue();
+  }, []);
+
   return (
     <Box sx={{ position: 'relative' }}>
       <Box
@@ -228,7 +233,7 @@ const IssueCard: React.FC<IssueCard> = ({
       <DeleteIssueModal
         open={openDeleteIssue}
         handleClose={handleCloseDeleteIssue}
-        handleDeleteIssue={handleCloseDeleteIssue}
+        handleDeleteIssue={handleDeleteIssue}
       />
       <EditIssueModal
         open={openEditIssue}

@@ -128,6 +128,11 @@ const useEditIssue = () => {
         setRoomIssues(roomIssues)
     }
 
+    const handleDeleteIssue = (id: string) => {
+        const roomFilter = roomIssues.filter(issue => issue.id !== id);
+        setRoomIssues(roomFilter)
+    }
+
     return {
         editTitle: {
             openEditTitle,
@@ -160,6 +165,7 @@ const useEditIssue = () => {
         },
         issues: {
             handleAddIssue,
+            handleDeleteIssue,
             roomIssues
         }
     };
