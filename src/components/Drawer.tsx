@@ -9,13 +9,14 @@ import AddIcon from '@mui/icons-material/Add';
 import IssueCard from './IssueCard';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import IssuesMenu from './IssuesMenu';
-import useIssue from '../helpers/useIssue';
 import DeleteIssueModal from './DeleteIssueModal';
+import useIssue from '../types/useIssue';
 
 type DrawerRight = {
   open: boolean;
   handleDrawerClose: () => void;
   averageVote: number | undefined;
+  useIssue: useIssue;
 };
 
 const drawerWidth = 600;
@@ -33,13 +34,12 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 const DrawerRight: React.FC<DrawerRight> = ({
   open,
   handleDrawerClose,
-  averageVote
+  averageVote,
+  useIssue
 }) => {
   const [openIssue, setOpenIssue] = useState(false);
   const [openIssuesMenu, setOpenIssuesMenu] = useState(false);
   const [openDeleteIssues, setOpenDeleteIssues] = useState(false);
-
-  const useIssues = useIssue();
 
   const handleOpenDeleteIssues = useCallback(() => {
     setOpenDeleteIssues(true);
@@ -50,7 +50,7 @@ const DrawerRight: React.FC<DrawerRight> = ({
   }, []);
 
   const handleDeleteIssues = useCallback(() => {
-    useIssues.issues.handleDeleteAllIssues();
+    useIssue.issues.handleDeleteAllIssues();
     handleCloseDeleteIssues();
   }, []);
 
@@ -71,8 +71,8 @@ const DrawerRight: React.FC<DrawerRight> = ({
   }, []);
 
   const drawerSubtitle = useMemo(() => {
-    const issuesQuantity = useIssues.issues.roomIssues.length;
-    const issuesSum = useIssues.issues.roomIssues
+    const issuesQuantity = useIssue.issues.roomIssues.length;
+    const issuesSum = useIssue.issues.roomIssues
       .filter(issue => !isNaN(Number(issue.storyPoints)))
       .reduce((a, b) => a + Number(b.storyPoints), 0);
     if (issuesQuantity && issuesSum) {
@@ -81,7 +81,7 @@ const DrawerRight: React.FC<DrawerRight> = ({
     if (issuesQuantity) {
       return `${issuesQuantity} issues`;
     }
-  }, [useIssues.issues]);
+  }, [useIssue.issues]);
 
   return (
     <Drawer
@@ -180,16 +180,16 @@ const DrawerRight: React.FC<DrawerRight> = ({
           flexDirection: 'column'
         }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-          {useIssues.issues.roomIssues.map(issue => {
+          {useIssue.issues.roomIssues.map(issue => {
             return (
               <IssueCard
                 key={issue.id}
                 issue={issue}
-                handleVotingNow={useIssues.editVotingNow.handleVotingNow}
+                handleVotingNow={useIssue.editVotingNow.handleVotingNow}
                 handleEditStoryPoints={
-                  useIssues.editStoryPoints.handleEditStoryPoints
+                  useIssue.editStoryPoints.handleEditStoryPoints
                 }
-                useIssue={useIssues}
+                useIssue={useIssue}
                 averageVote={averageVote}
               />
             );
@@ -199,7 +199,7 @@ const DrawerRight: React.FC<DrawerRight> = ({
           <NewIssue
             handleClose={handleCloseIssue}
             handleAddIssue={title => {
-              useIssues.issues.handleAddIssue(title);
+              useIssue.issues.handleAddIssue(title);
               handleCloseIssue();
             }}
           />
@@ -228,7 +228,7 @@ const DrawerRight: React.FC<DrawerRight> = ({
             />
             <Typography
               sx={{ fontSize: 23.5, fontWeight: 700, color: '#666666' }}>
-              {!useIssues.issues.roomIssues.length
+              {!useIssue.issues.roomIssues.length
                 ? 'Add an issue'
                 : 'Add another issue'}
             </Typography>

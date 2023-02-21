@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import { Socket } from "socket.io-client";
 import { Issue } from "../types/Issue";
 
 const HARDCODEDISSUES: Issue[] = [
@@ -20,7 +21,7 @@ const HARDCODEDISSUES: Issue[] = [
     }
 ]
 
-const useIssue = () => {
+const useIssue = (socket: Socket) => {
     const [roomIssues, setRoomIssues] = useState<Issue[]>(HARDCODEDISSUES)
 
     const [openEditTitle, setOpenEditTitle] = useState(false);

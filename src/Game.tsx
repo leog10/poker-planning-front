@@ -17,7 +17,7 @@ const Game = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openInvite, setOpenInvite] = useState(false);
 
-  const { room, user } = useRoom(socket);
+  const { room, user, issue } = useRoom(socket);
 
   const handleOpenDrawer = useCallback(() => {
     setOpenDrawer(true);
@@ -189,6 +189,7 @@ const Game = () => {
         open={openDrawer}
         handleDrawerClose={handleDrawerClose}
         averageVote={room.average}
+        useIssue={issue}
       />
     </div>
   );

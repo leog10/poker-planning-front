@@ -210,7 +210,7 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                   }}>
                   Link
                 </Typography>
-                {useIssue.editLink.issueLink && (
+                {issue.link && (
                   <IconButton
                     onClick={useIssue.editLink.handleEditLink}
                     aria-label='close'

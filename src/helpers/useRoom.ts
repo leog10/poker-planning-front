@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Socket } from 'socket.io-client';
 import { User } from '../types/User';
 import useCards from './useCards';
+import useIssue from './useIssue';
 import useTimer from './useTimer';
 import useUser from './useUser';
 
@@ -21,6 +22,7 @@ const useCreateRoom = (socket: Socket) => {
 
   const user = useUser(socket);
   const cards = useCards(socket);
+  const issue = useIssue(socket)
 
   const handleChooseUsername = useCallback(() => {
     user.changeUsername(roomId);
@@ -156,7 +158,8 @@ const useCreateRoom = (socket: Socket) => {
       allowedNewGame,
       startNewVoting: cards.startNewVoting,
       revealCards: cards.revealCards
-    }
+    },
+    issue
   };
 };
 
