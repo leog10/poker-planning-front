@@ -154,12 +154,6 @@ const useIssue = (socket: Socket) => {
         socket.emit('client:delete_all_issues', roomId)
     }, [roomIssues])
 
-    useEffect(() => {
-        socket.on('server:issues', issues => {
-            setRoomIssues(issues);
-        })
-    }, [])
-
     return {
         editTitle: {
             openEditTitle,

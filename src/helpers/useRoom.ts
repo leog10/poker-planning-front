@@ -131,6 +131,10 @@ const useCreateRoom = (socket: Socket) => {
       setGameStarted(false);
       navigate('/404');
     });
+
+    socket.on('server:issues', issues => {
+      issue.issues.setRoomIssues(issues);
+    })
   }, []);
 
   return {
