@@ -206,7 +206,9 @@ const DrawerRight: React.FC<DrawerRight> = ({ open, handleDrawerClose }) => {
             />
             <Typography
               sx={{ fontSize: 23.5, fontWeight: 700, color: '#666666' }}>
-              Add an issue
+              {!useIssues.issues.roomIssues.length
+                ? 'Add an issue'
+                : 'Add another issue'}
             </Typography>
           </Box>
         )}
