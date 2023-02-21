@@ -17,7 +17,7 @@ type useIssue = {
         openEditDescription: boolean;
         issueDescription: string;
         handleEditDescription: () => void;
-        handleSaveIssueDescription: (textFieldValue: string) => void;
+        handleSaveIssueDescription: (id: string, textFieldValue: string) => void;
     }
     editStoryPoints: {
         openStoryPointsMenu: boolean;

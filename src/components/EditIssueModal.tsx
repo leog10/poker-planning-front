@@ -372,8 +372,8 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                       fontWeight: 400,
                       color: '#444444'
                     }}>
-                    {useIssue.editDescription.issueDescription.length
-                      ? useIssue.editDescription.issueDescription
+                    {issue.description
+                      ? issue.description
                       : 'Add a description...'}
                   </Typography>
                 </Box>
@@ -389,10 +389,13 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                   <EditIssueField
                     id='editDescription'
                     handleClose={useIssue.editDescription.handleEditDescription}
-                    handleSave={
-                      useIssue.editDescription.handleSaveIssueDescription
+                    handleSave={description =>
+                      useIssue.editDescription.handleSaveIssueDescription(
+                        issue.id,
+                        description
+                      )
                     }
-                    fieldValue={useIssue.editDescription.issueDescription}
+                    fieldValue={issue.description ?? ''}
                   />
                 </Box>
               )}

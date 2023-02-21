@@ -68,7 +68,11 @@ const useEditIssue = () => {
         setOpenEditDescription(!openEditDescription);
     }, [openEditDescription]);
 
-    const handleSaveIssueDescription = useCallback((textFieldValue: string) => {
+    const handleSaveIssueDescription = useCallback((id: string, textFieldValue: string) => {
+        const issue = roomIssues.find(issue => issue.id === id);
+        if (issue) {
+            issue.description = textFieldValue;
+        }
         setIssueDescription(textFieldValue);
     }, [roomIssues]);
 
