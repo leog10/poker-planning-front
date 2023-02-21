@@ -86,11 +86,11 @@ const useEditIssue = () => {
     const [openStoryPointsMenu, setOpenStoryPointsMenu] = useState(false);
     const [storyPoints, setStoryPoints] = useState('-');
 
-    const handleEditStoryPoints = useCallback((id: string, storyPoints: string) => {
+    const handleEditStoryPoints = useCallback((id: string, storyPoints: string, voting?: boolean) => {
         setStoryPoints(storyPoints);
         const issue = roomIssues.find(issue => issue.id === id)
         if (issue) {
-            if (issue.storyPoints === storyPoints) {
+            if (issue.storyPoints === storyPoints && !voting) {
                 issue.storyPoints = '-'
             } else {
                 issue.storyPoints = storyPoints;

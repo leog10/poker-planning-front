@@ -2,26 +2,29 @@ import { Box, IconButton, ToggleButton, Typography } from '@mui/material';
 import { StyledButton } from '../styles';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import IssueCardMenu from './IssueCardMenu';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import EditIssueModal from './EditIssueModal';
 import DeleteIssueModal from './DeleteIssueModal';
 import StoryPointsMenu from './StoryPointsMenu';
 import { Issue } from '../types/Issue';
 import useIssue from '../types/useIssue';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import { fiboCardsArray } from '../helpers/useCards';
 
 type IssueCard = {
   issue: Issue;
   handleVotingNow: (id: string) => void;
   handleEditStoryPoints: (id: string, card: string) => void;
   useIssue: useIssue;
+  averageVote: number | undefined;
 };
 
 const IssueCard: React.FC<IssueCard> = ({
   issue,
   handleVotingNow,
   handleEditStoryPoints,
-  useIssue
+  useIssue,
+  averageVote
 }) => {
   const [openMenu, setOpenMenu] = useState(false);
   const [openEditIssue, setOpenEditIssue] = useState(false);
@@ -76,6 +79,48 @@ const IssueCard: React.FC<IssueCard> = ({
     useIssue.issues.handleDeleteIssue(issue.id);
     handleCloseDeleteIssue();
   }, []);
+
+  const selectStoryPoint = useCallback(
+    (averageVote: number) => {
+      if (fiboCardsArray.some(card => card.card === averageVote.toString())) {
+        return averageVote.toString();
+      }
+
+      let storyPoint = 89;
+      let check = 89;
+      for (let i = fiboCardsArray.length - 1; i >= 0; i--) {
+        if (isNaN(Number(fiboCardsArray[i].card))) continue;
+
+        const checkNumber = averageVote - Number(fiboCardsArray[i].card);
+
+        if (checkNumber >= 0 && checkNumber <= check) {
+          storyPoint = Number(fiboCardsArray[i].card);
+          check = checkNumber;
+        }
+      }
+
+      return storyPoint.toString();
+    },
+    [averageVote]
+  );
+
+  useEffect(() => {
+    if (issue.voting) {
+      const setStoryPoint = setTimeout(() => {
+        if ((averageVote || averageVote === 0) && issue.voting) {
+          const storyPoint = selectStoryPoint(averageVote);
+          useIssue.editVotingNow.handleVotingNow(issue.id);
+          useIssue.editStoryPoints.handleEditStoryPoints(
+            issue.id,
+            storyPoint,
+            true
+          );
+        }
+      }, 1000);
+
+      return () => clearTimeout(setStoryPoint);
+    }
+  }, [averageVote]);
 
   return (
     <Box sx={{ position: 'relative' }}>

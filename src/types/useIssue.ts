@@ -22,7 +22,7 @@ type useIssue = {
     editStoryPoints: {
         openStoryPointsMenu: boolean;
         storyPoints: string;
-        handleEditStoryPoints: (id: string, storyPoints: string) => void;
+        handleEditStoryPoints: (id: string, storyPoints: string, voting?: boolean) => void;
         handleStoryPointsMenu: (e?: React.MouseEvent<HTMLElement, MouseEvent>) => void;
         handleCloseStoryPointsMenu: () => void;
     }

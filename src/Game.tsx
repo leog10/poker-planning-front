@@ -188,6 +188,7 @@ const Game = () => {
       <DrawerRight
         open={openDrawer}
         handleDrawerClose={handleDrawerClose}
+        averageVote={room.average}
       />
     </div>
   );

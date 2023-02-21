@@ -15,6 +15,7 @@ import DeleteIssueModal from './DeleteIssueModal';
 type DrawerRight = {
   open: boolean;
   handleDrawerClose: () => void;
+  averageVote: number | undefined;
 };
 
 const drawerWidth = 600;
@@ -29,7 +30,11 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end'
 }));
 
-const DrawerRight: React.FC<DrawerRight> = ({ open, handleDrawerClose }) => {
+const DrawerRight: React.FC<DrawerRight> = ({
+  open,
+  handleDrawerClose,
+  averageVote
+}) => {
   const [openIssue, setOpenIssue] = useState(false);
   const [openIssuesMenu, setOpenIssuesMenu] = useState(false);
   const [openDeleteIssues, setOpenDeleteIssues] = useState(false);
@@ -185,6 +190,7 @@ const DrawerRight: React.FC<DrawerRight> = ({ open, handleDrawerClose }) => {
                   useIssues.editStoryPoints.handleEditStoryPoints
                 }
                 useIssue={useIssues}
+                averageVote={averageVote}
               />
             );
           })}
