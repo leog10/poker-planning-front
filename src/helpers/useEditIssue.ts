@@ -146,6 +146,10 @@ const useEditIssue = () => {
         })
     }, [roomIssues])
 
+    const handleDeleteAllIssues = useCallback(() => {
+        setRoomIssues([])
+    }, [roomIssues])
+
     return {
         editTitle: {
             openEditTitle,
@@ -179,6 +183,7 @@ const useEditIssue = () => {
         issues: {
             handleAddIssue,
             handleDeleteIssue,
+            handleDeleteAllIssues,
             roomIssues
         }
     };

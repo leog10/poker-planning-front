@@ -256,9 +256,14 @@ const IssueCard: React.FC<IssueCard> = ({
         </Box>
       </Box>
       <DeleteIssueModal
+        content={{
+          title: 'Are you sure you want to delete this issue?',
+          subtitle: 'This operation is irreversible.',
+          callToAction: 'Delete issue'
+        }}
         open={openDeleteIssue}
         handleClose={handleCloseDeleteIssue}
-        handleDeleteIssue={handleDeleteIssue}
+        handleDelete={handleDeleteIssue}
       />
       <EditIssueModal
         open={openEditIssue}

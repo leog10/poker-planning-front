@@ -489,11 +489,16 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
         </Box>
       </BootstrapDialog>
       <DeleteIssueModal
+        content={{
+          title: 'Are you sure you want to delete this issue?',
+          subtitle: 'This operation is irreversible.',
+          callToAction: 'Delete issue'
+        }}
         open={openDeleteIssue}
         handleClose={() => {
           handleCloseDeleteIssue();
         }}
-        handleDeleteIssue={() => {
+        handleDelete={() => {
           handleDeleteIssue();
           handleClose();
         }}

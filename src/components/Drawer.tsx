@@ -10,6 +10,7 @@ import IssueCard from './IssueCard';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import IssuesMenu from './IssuesMenu';
 import useEditIssue from '../helpers/useEditIssue';
+import DeleteIssueModal from './DeleteIssueModal';
 
 type DrawerRight = {
   open: boolean;
@@ -30,7 +31,23 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 const DrawerRight: React.FC<DrawerRight> = ({ open, handleDrawerClose }) => {
   const [openIssue, setOpenIssue] = useState(false);
-  const [openIssuesMenu, setOpenMenuIssues] = useState(false);
+  const [openIssuesMenu, setOpenIssuesMenu] = useState(false);
+  const [openDeleteIssues, setOpenDeleteIssues] = useState(false);
+
+  const useIssues = useEditIssue();
+
+  const handleOpenDeleteIssues = useCallback(() => {
+    setOpenDeleteIssues(true);
+  }, []);
+
+  const handleCloseDeleteIssues = useCallback(() => {
+    setOpenDeleteIssues(false);
+  }, []);
+
+  const handleDeleteIssues = useCallback(() => {
+    useIssues.issues.handleDeleteAllIssues();
+    handleCloseDeleteIssues();
+  }, []);
 
   const handleOpenIssue = useCallback(() => {
     setOpenIssue(true);
@@ -41,14 +58,12 @@ const DrawerRight: React.FC<DrawerRight> = ({ open, handleDrawerClose }) => {
   }, []);
 
   const handleIssuesMenu = useCallback(() => {
-    setOpenMenuIssues(!openIssuesMenu);
+    setOpenIssuesMenu(!openIssuesMenu);
   }, [openIssuesMenu]);
 
   const handleCloseMenuIssues = useCallback(() => {
-    setOpenMenuIssues(false);
+    setOpenIssuesMenu(false);
   }, []);
-
-  const useIssues = useEditIssue();
 
   const drawerSubtitle = useMemo(() => {
     const issuesQuantity = useIssues.issues.roomIssues.length;
@@ -126,6 +141,7 @@ const DrawerRight: React.FC<DrawerRight> = ({ open, handleDrawerClose }) => {
           <IssuesMenu
             open={openIssuesMenu}
             handleClose={handleCloseMenuIssues}
+            openDeleteAllIssuesModal={handleOpenDeleteIssues}
           />
         </Box>
         <Divider
@@ -213,6 +229,20 @@ const DrawerRight: React.FC<DrawerRight> = ({ open, handleDrawerClose }) => {
           </Box>
         )}
       </Box>
+      <DeleteIssueModal
+        content={{
+          title: 'Wait! Are you sure you want to delete all issues?',
+          subtitle: 'Once you confirm, you will not be able to recover them.',
+          callToAction: 'Delete issues'
+        }}
+        open={openDeleteIssues}
+        handleClose={() => {
+          handleCloseDeleteIssues();
+        }}
+        handleDelete={() => {
+          handleDeleteIssues();
+        }}
+      />
     </Drawer>
   );
 };

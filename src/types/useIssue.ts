@@ -33,6 +33,7 @@ type useIssue = {
     issues: {
         handleAddIssue: (title: string) => void;
         handleDeleteIssue: (id: string) => void;
+        handleDeleteAllIssues: () => void;
         roomIssues: Issue[];
     }
 }

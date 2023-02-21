@@ -12,7 +12,7 @@ const BootstrapDialog = styled(Dialog)(() => ({
     justifyContent: 'center',
     maxWidth: 790,
     width: 787,
-    height: 307,
+    // height: 307,
     borderRadius: 20,
     boxShadow: 'none'
   }
@@ -21,13 +21,19 @@ const BootstrapDialog = styled(Dialog)(() => ({
 type DeleteIssueModal = {
   open: boolean;
   handleClose: () => void;
-  handleDeleteIssue: () => void;
+  handleDelete: () => void;
+  content: {
+    title: string;
+    subtitle: string;
+    callToAction: string;
+  };
 };
 
 const DeleteIssueModal: React.FC<DeleteIssueModal> = ({
   open = false,
   handleClose,
-  handleDeleteIssue
+  handleDelete,
+  content
 }) => {
   return (
     <BootstrapDialog
@@ -43,10 +49,11 @@ const DeleteIssueModal: React.FC<DeleteIssueModal> = ({
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
+          justifyContent: 'center',
           width: '100%',
           flexGrow: 1,
           paddingX: 5.9,
-          paddingTop: 7.5
+          paddingY: 6.7
         }}>
         <IconButton
           onClick={handleClose}
@@ -80,14 +87,14 @@ const DeleteIssueModal: React.FC<DeleteIssueModal> = ({
               fontWeight: 700,
               flexGrow: 1
             }}>
-            Are you sure you want to delete this issue?
+            {content.title}
           </Typography>
           <Typography
             sx={{
               fontSize: 22.5,
               fontWeight: 400
             }}>
-            This operation is irreversible.
+            {content.subtitle}
           </Typography>
         </Box>
         <Box
@@ -119,7 +126,7 @@ const DeleteIssueModal: React.FC<DeleteIssueModal> = ({
             Cancel
           </StyledButton>
           <StyledButton
-            onClick={handleDeleteIssue}
+            onClick={handleDelete}
             variant='outlined'
             sx={{
               borderRadius: 3,
@@ -137,7 +144,7 @@ const DeleteIssueModal: React.FC<DeleteIssueModal> = ({
                 backgroundColor: '#ff3d7190'
               }
             }}>
-            Delete issue
+            {content.callToAction}
           </StyledButton>
         </Box>
       </Box>

@@ -5,9 +5,14 @@ import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 type IssuesMenu = {
   open: boolean;
   handleClose: () => void;
+  openDeleteAllIssuesModal: () => void;
 };
 
-const IssuesMenu: React.FC<IssuesMenu> = ({ open, handleClose }) => {
+const IssuesMenu: React.FC<IssuesMenu> = ({
+  open,
+  handleClose,
+  openDeleteAllIssuesModal
+}) => {
   return (
     <>
       {open && (
@@ -48,6 +53,10 @@ const IssuesMenu: React.FC<IssuesMenu> = ({ open, handleClose }) => {
               </Typography>
             </Box>
             <Box
+              onClick={() => {
+                openDeleteAllIssuesModal();
+                handleClose();
+              }}
               sx={{
                 display: 'flex',
                 justifyContent: 'start',
