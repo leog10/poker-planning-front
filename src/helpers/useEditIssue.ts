@@ -119,7 +119,7 @@ const useEditIssue = () => {
                 issue.voting = !issue.voting
             }
         }
-    }, [roomIssues])
+    }, [votingNow, roomIssues])
 
     const handleAddIssue = useCallback((title: string) => {
         const newIssue: Issue = {
