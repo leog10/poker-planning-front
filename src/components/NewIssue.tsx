@@ -18,6 +18,15 @@ const NewIssue: React.FC<NewIssue> = ({ handleClose, handleAddIssue }) => {
     [title]
   );
 
+  const addIssue = useCallback(() => {
+    if (title.length < 1 || title.trim().length < 1) {
+      handleClose();
+      return;
+    }
+
+    handleAddIssue(title);
+  }, [title]);
+
   return (
     <ClickAwayListener onClickAway={handleClose}>
       <Box
@@ -78,7 +87,7 @@ const NewIssue: React.FC<NewIssue> = ({ handleClose, handleAddIssue }) => {
             Cancel
           </StyledButton>
           <StyledButton
-            onClick={() => handleAddIssue(title)}
+            onClick={addIssue}
             variant='outlined'
             sx={{
               color: '#fff',
