@@ -79,14 +79,19 @@ const IssueCard: React.FC<IssueCard> = ({
           position: 'relative',
           display: 'flex',
           flexDirection: 'column',
-          backgroundColor: openMenu ? '#d7e9ff' : '#ebf4ff',
+          backgroundColor:
+            openMenu && issue.voting
+              ? '#d7e9ff'
+              : issue.voting
+              ? '#ebf4ff'
+              : '#f9f9f9',
           height: 200,
           borderRadius: 2.5,
           boxShadow: '0px 1px 4px #a1a1a190',
           padding: 2,
           cursor: 'pointer',
           ':hover': {
-            backgroundColor: '#d7e9ff'
+            backgroundColor: issue.voting ? '#d7e9ff' : '#f1f1f1'
           }
         }}>
         <Box
