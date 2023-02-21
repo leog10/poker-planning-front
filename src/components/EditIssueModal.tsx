@@ -13,8 +13,9 @@ import DeleteIssueModal from './DeleteIssueModal';
 import { useCallback, useRef, useState } from 'react';
 import StoryPointsMenu from './StoryPointsMenu';
 import EditIssueField from './EditIssueField';
-import useEditIssue from '../helpers/useEditIssue';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import { Issue } from '../types/Issue';
+import useIssue from '../types/useIssue';
 
 const BootstrapDialog = styled(Dialog)(() => ({
   '& .MuiBackdrop-root': {
@@ -35,22 +36,18 @@ const BootstrapDialog = styled(Dialog)(() => ({
 type EditIssueModal = {
   open: boolean;
   handleClose: () => void;
+  issue: Issue;
+  useIssue: useIssue;
 };
 
 const EditIssueModal: React.FC<EditIssueModal> = ({
   open = false,
-  handleClose
+  handleClose,
+  issue,
+  useIssue
 }) => {
   const [openDeleteIssue, setOpenDeleteIssue] = useState(false);
   const storyPointsButtonRef = useRef<HTMLButtonElement>(null);
-
-  const {
-    editTitle,
-    editLink,
-    editDescription,
-    editStoryPoints,
-    editVotingNow
-  } = useEditIssue();
 
   const handleOpenDeleteIssue = useCallback(() => {
     setOpenDeleteIssue(true);
@@ -70,15 +67,17 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
           justifyContent: 'center',
           '& .MuiPaper-root': {
             height:
-              editTitle.openEditTitle || editDescription.openEditDescription
+              useIssue.editTitle.openEditTitle ||
+              useIssue.editDescription.openEditDescription
                 ? '97vh'
-                : editLink.openEditLink
+                : useIssue.editLink.openEditLink
                 ? '91vh'
                 : 720,
             maxHeight:
-              editTitle.openEditTitle || editDescription.openEditDescription
+              useIssue.editTitle.openEditTitle ||
+              useIssue.editDescription.openEditDescription
                 ? '97vh'
-                : editLink.openEditLink
+                : useIssue.editLink.openEditLink
                 ? '91vh'
                 : 720
           }
@@ -97,7 +96,8 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
             gap: 3,
             overflow: 'auto',
             paddingBottom:
-              editTitle.openEditTitle || editDescription.openEditDescription
+              useIssue.editTitle.openEditTitle ||
+              useIssue.editDescription.openEditDescription
                 ? 8
                 : 0
           }}>
@@ -139,10 +139,10 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
               }}
             />
           </IconButton>
-          <Box sx={{ width: editTitle.openEditTitle ? '97%' : '98%' }}>
-            {!editTitle.openEditTitle && (
+          <Box sx={{ width: useIssue.editTitle.openEditTitle ? '97%' : '98%' }}>
+            {!useIssue.editTitle.openEditTitle && (
               <Box
-                onClick={editTitle.handleEditTitle}
+                onClick={useIssue.editTitle.handleEditTitle}
                 sx={{
                   width: '100%',
                   marginY: 2,
@@ -164,16 +164,18 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                     fontWeight: 700,
                     color: '#000'
                   }}>
-                  {editTitle.issueTitle}
+                  {issue.title}
                 </Typography>
               </Box>
             )}
-            {editTitle.openEditTitle && (
+            {useIssue.editTitle.openEditTitle && (
               <EditIssueField
                 id='editTitle'
-                handleClose={editTitle.handleEditTitle}
-                handleSave={editTitle.handleSaveIssueTitle}
-                fieldValue={editTitle.issueTitle}
+                handleClose={useIssue.editTitle.handleEditTitle}
+                handleSave={title =>
+                  useIssue.editTitle.handleSaveIssueTitle(issue.id, title)
+                }
+                fieldValue={issue.title}
               />
             )}
           </Box>
@@ -203,9 +205,9 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                   }}>
                   Link
                 </Typography>
-                {editLink.issueLink && (
+                {useIssue.editLink.issueLink && (
                   <IconButton
-                    onClick={editLink.handleEditLink}
+                    onClick={useIssue.editLink.handleEditLink}
                     aria-label='close'
                     sx={{
                       height: 60,
@@ -220,29 +222,31 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                   </IconButton>
                 )}
               </Box>
-              {!editLink.openEditLink && (
+              {!useIssue.editLink.openEditLink && (
                 <Box
-                  onClick={editLink.handleEditLink}
+                  onClick={useIssue.editLink.handleEditLink}
                   sx={{
-                    width: editLink.openEditLink ? '98%' : '97%',
-                    marginTop: editLink.issueLink ? 0 : 1.5,
+                    width: useIssue.editLink.openEditLink ? '98%' : '97%',
+                    marginTop: useIssue.editLink.issueLink ? 0 : 1.5,
                     marginBottom: 1.5,
-                    marginX: editLink.issueLink ? 1 : 2,
+                    marginX: useIssue.editLink.issueLink ? 1 : 2,
                     display: 'flex',
                     flexGrow: 1,
-                    paddingY: editLink.issueLink ? 0.6 : 1.2,
-                    paddingX: editLink.issueLink ? 1 : 3,
+                    paddingY: useIssue.editLink.issueLink ? 0.6 : 1.2,
+                    paddingX: useIssue.editLink.issueLink ? 1 : 3,
                     textAlign: 'left',
                     borderRadius: 2,
                     cursor: 'pointer',
-                    backgroundColor: editLink.issueLink ? '' : '#f1f1f1',
+                    backgroundColor: useIssue.editLink.issueLink
+                      ? ''
+                      : '#f1f1f1',
                     transition: 'all 0.2s',
                     '&:hover': {
                       transition: 'all 0.2s',
                       backgroundColor: '#e8e9ea'
                     }
                   }}>
-                  {editLink.issueLink.length < 1 ? (
+                  {useIssue.editLink.issueLink.length < 1 ? (
                     <Typography
                       sx={{
                         fontSize: 24,
@@ -251,9 +255,9 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                       }}>
                       Add a link to the issue...
                     </Typography>
-                  ) : editLink.issueLink.match(/^https?:\/\//i) ? (
+                  ) : useIssue.editLink.issueLink.match(/^https?:\/\//i) ? (
                     <Link
-                      href={editLink.issueLink}
+                      href={useIssue.editLink.issueLink}
                       target='_blank'
                       rel='noopener'
                       onClick={e => {
@@ -269,7 +273,7 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                           textDecoration: 'none'
                         }
                       }}>
-                      {editLink.issueLink}
+                      {useIssue.editLink.issueLink}
                     </Link>
                   ) : (
                     <Typography
@@ -278,18 +282,18 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                         fontWeight: 400,
                         color: '#444444'
                       }}>
-                      {editLink.issueLink}
+                      {useIssue.editLink.issueLink}
                     </Typography>
                   )}
                 </Box>
               )}
               <Box sx={{ width: '96%', margin: '0 auto' }}>
-                {editLink.openEditLink && (
+                {useIssue.editLink.openEditLink && (
                   <EditIssueField
                     id='editLink'
-                    handleClose={editLink.handleEditLink}
-                    handleSave={editLink.handleSaveIssueLink}
-                    fieldValue={editLink.issueLink}
+                    handleClose={useIssue.editLink.handleEditLink}
+                    handleSave={useIssue.editLink.handleSaveIssueLink}
+                    fieldValue={useIssue.editLink.issueLink}
                   />
                 )}
               </Box>
@@ -310,9 +314,9 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                   }}>
                   Description
                 </Typography>
-                {editDescription.issueDescription && (
+                {useIssue.editDescription.issueDescription && (
                   <IconButton
-                    onClick={editDescription.handleEditDescription}
+                    onClick={useIssue.editDescription.handleEditDescription}
                     aria-label='close'
                     sx={{
                       height: 60,
@@ -327,22 +331,28 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                   </IconButton>
                 )}
               </Box>
-              {!editDescription.openEditDescription && (
+              {!useIssue.editDescription.openEditDescription && (
                 <Box
-                  onClick={editDescription.handleEditDescription}
+                  onClick={useIssue.editDescription.handleEditDescription}
                   sx={{
                     width: '96%',
-                    marginTop: editDescription.issueDescription ? 1 : 2,
+                    marginTop: useIssue.editDescription.issueDescription
+                      ? 1
+                      : 2,
                     marginBottom: 2,
                     marginX: 2,
                     display: 'flex',
                     flexGrow: 1,
-                    paddingY: editDescription.issueDescription ? 0.5 : 1.2,
-                    paddingX: editDescription.issueDescription ? 0.2 : 3,
+                    paddingY: useIssue.editDescription.issueDescription
+                      ? 0.5
+                      : 1.2,
+                    paddingX: useIssue.editDescription.issueDescription
+                      ? 0.2
+                      : 3,
                     textAlign: 'left',
                     borderRadius: 2,
                     cursor: 'pointer',
-                    backgroundColor: editDescription.issueDescription
+                    backgroundColor: useIssue.editDescription.issueDescription
                       ? ''
                       : '#f1f1f1',
                     transition: 'all 0.2s',
@@ -357,13 +367,13 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                       fontWeight: 400,
                       color: '#444444'
                     }}>
-                    {editDescription.issueDescription.length
-                      ? editDescription.issueDescription
+                    {useIssue.editDescription.issueDescription.length
+                      ? useIssue.editDescription.issueDescription
                       : 'Add a description...'}
                   </Typography>
                 </Box>
               )}
-              {editDescription.openEditDescription && (
+              {useIssue.editDescription.openEditDescription && (
                 <Box
                   sx={{
                     width: '96%',
@@ -373,9 +383,11 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                   }}>
                   <EditIssueField
                     id='editDescription'
-                    handleClose={editDescription.handleEditDescription}
-                    handleSave={editDescription.handleSaveIssueDescription}
-                    fieldValue={editDescription.issueDescription}
+                    handleClose={useIssue.editDescription.handleEditDescription}
+                    handleSave={
+                      useIssue.editDescription.handleSaveIssueDescription
+                    }
+                    fieldValue={useIssue.editDescription.issueDescription}
                   />
                 </Box>
               )}
@@ -390,10 +402,10 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
               height: 60
             }}>
             <StyledButton
-              onClick={() => editVotingNow.handleVotingNow('1a')}
+              onClick={() => useIssue.editVotingNow.handleVotingNow(issue.id)}
               variant='outlined'
               sx={{
-                color: editVotingNow.votingNow ? '#fff' : '#1a2935',
+                color: issue.voting ? '#fff' : '#1a2935',
                 margin: 0,
                 textWrap: 'no-wrap',
                 border: 'none',
@@ -403,23 +415,23 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                 paddingX: 3,
                 fontWeight: 700,
                 fontSize: 23,
-                backgroundColor: editVotingNow.votingNow
-                  ? '#3993ff'
-                  : '#e8e9ea',
+                backgroundColor: issue.voting ? '#3993ff' : '#e8e9ea',
                 '&:hover': {
                   border: 'none',
                   transition: 'all 0.3s',
-                  backgroundColor: editVotingNow.votingNow
-                    ? '#3993ff90'
-                    : '#d1d4d7'
+                  backgroundColor: issue.voting ? '#3993ff90' : '#d1d4d7'
                 }
               }}>
-              {editVotingNow.votingNow ? 'Voting now...' : 'Vote this issue'}
+              {!issue.voting && issue.storyPoints !== '-'
+                ? 'Vote again'
+                : issue.voting
+                ? 'Voting now...'
+                : 'Vote this issue'}
             </StyledButton>
             <Box sx={{ position: 'relative' }}>
               <StyledButton
                 ref={storyPointsButtonRef}
-                onClick={editStoryPoints.handleStoryPointsMenu}
+                onClick={useIssue.editStoryPoints.handleStoryPointsMenu}
                 variant='outlined'
                 sx={{
                   position: 'relative',
@@ -432,22 +444,34 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                   width: '60px',
                   minWidth: '60px',
                   padding: '0.33rem 0rem',
-                  backgroundColor: '#e8e9ea',
+                  backgroundColor: !issue.voting
+                    ? '#e8e9ea'
+                    : useIssue.editStoryPoints.openStoryPointsMenu &&
+                      issue.voting
+                    ? '#bbd6f7'
+                    : useIssue.editStoryPoints.openStoryPointsMenu
+                    ? '#bfc3c5'
+                    : '#fff',
                   '&:hover': {
                     border: 'none',
                     transition: 'all 0.3s',
-                    backgroundColor: '#d1d4d7'
+                    backgroundColor: !issue.voting ? '#d1d4d7' : '#ebf4ff'
                   }
                 }}>
                 <Typography
                   sx={{ fontWeight: 700, fontFamily: '', fontSize: 23.5 }}>
-                  {editStoryPoints.storyPoints}
+                  {issue.storyPoints}
                 </Typography>
                 <StoryPointsMenu
-                  open={editStoryPoints.openStoryPointsMenu}
-                  handleClose={editStoryPoints.handleCloseStoryPointsMenu}
+                  open={useIssue.editStoryPoints.openStoryPointsMenu}
+                  handleClose={
+                    useIssue.editStoryPoints.handleCloseStoryPointsMenu
+                  }
                   handleSelectPoint={card =>
-                    editStoryPoints.handleEditStoryPoints('1a', card)
+                    useIssue.editStoryPoints.handleEditStoryPoints(
+                      issue.id,
+                      card
+                    )
                   }
                   anchorEl={storyPointsButtonRef.current}
                 />

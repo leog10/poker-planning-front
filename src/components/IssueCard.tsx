@@ -7,17 +7,20 @@ import EditIssueModal from './EditIssueModal';
 import DeleteIssueModal from './DeleteIssueModal';
 import StoryPointsMenu from './StoryPointsMenu';
 import { Issue } from '../types/Issue';
+import useIssue from '../types/useIssue';
 
 type IssueCard = {
   issue: Issue;
   handleVotingNow: (id: string) => void;
   handleEditStoryPoints: (id: string, card: string) => void;
+  useIssue: useIssue;
 };
 
 const IssueCard: React.FC<IssueCard> = ({
   issue,
   handleVotingNow,
-  handleEditStoryPoints
+  handleEditStoryPoints,
+  useIssue
 }) => {
   const [openMenu, setOpenMenu] = useState(false);
   const [openEditIssue, setOpenEditIssue] = useState(false);
@@ -225,6 +228,8 @@ const IssueCard: React.FC<IssueCard> = ({
       <EditIssueModal
         open={openEditIssue}
         handleClose={handleCloseEditIssue}
+        issue={issue}
+        useIssue={useIssue}
       />
     </Box>
   );

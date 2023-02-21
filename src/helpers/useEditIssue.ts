@@ -30,9 +30,13 @@ const useEditIssue = () => {
         setOpenEditTitle(!openEditTitle);
     }, [openEditTitle]);
 
-    const handleSaveIssueTitle = useCallback((textFieldValue: string) => {
+    const handleSaveIssueTitle = useCallback((id: string, textFieldValue: string) => {
+        const issueTitle = roomIssues.find(issue => issue.id === id);
+        if (issueTitle) {
+            issueTitle.title = textFieldValue;
+        }
         setIssueTitle(textFieldValue);
-    }, []);
+    }, [issueTitle]);
 
     const [openEditLink, setOpenEditLink] = useState(false);
     const [issueLink, setIssueLink] = useState('');
@@ -113,15 +117,16 @@ const useEditIssue = () => {
         }
     }, [votingNow])
 
-    const handleAddIssue = useCallback((title: string) => {
+    const handleAddIssue = (title: string) => {
         const newIssue: Issue = {
             id: new Date().getTime().toString(),
             title,
             voting: false,
             storyPoints: '-'
         }
-        setRoomIssues(prev => [...prev, newIssue])
-    }, [])
+        roomIssues.push(newIssue);
+        setRoomIssues(roomIssues)
+    }
 
     return {
         editTitle: {

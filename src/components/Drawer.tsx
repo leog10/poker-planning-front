@@ -48,7 +48,7 @@ const DrawerRight: React.FC<DrawerRight> = ({ open, handleDrawerClose }) => {
     setOpenMenuIssues(false);
   }, []);
 
-  const { editStoryPoints, editVotingNow, issues } = useEditIssue();
+  const useIssues = useEditIssue();
 
   return (
     <Drawer
@@ -146,13 +146,16 @@ const DrawerRight: React.FC<DrawerRight> = ({ open, handleDrawerClose }) => {
           flexDirection: 'column'
         }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-          {issues.roomIssues.map(issue => {
+          {useIssues.issues.roomIssues.map(issue => {
             return (
               <IssueCard
                 key={issue.id}
                 issue={issue}
-                handleVotingNow={editVotingNow.handleVotingNow}
-                handleEditStoryPoints={editStoryPoints.handleEditStoryPoints}
+                handleVotingNow={useIssues.editVotingNow.handleVotingNow}
+                handleEditStoryPoints={
+                  useIssues.editStoryPoints.handleEditStoryPoints
+                }
+                useIssue={useIssues}
               />
             );
           })}
@@ -161,7 +164,7 @@ const DrawerRight: React.FC<DrawerRight> = ({ open, handleDrawerClose }) => {
           <NewIssue
             handleClose={handleCloseIssue}
             handleAddIssue={title => {
-              issues.handleAddIssue(title);
+              useIssues.issues.handleAddIssue(title);
               handleCloseIssue();
             }}
           />
