@@ -22,7 +22,7 @@ const useCreateRoom = (socket: Socket) => {
 
   const user = useUser(socket);
   const cards = useCards(socket);
-  const issue = useIssue(socket)
+  const issue = useIssue(socket);
 
   const handleChooseUsername = useCallback(() => {
     user.changeUsername(roomId);
@@ -73,7 +73,8 @@ const useCreateRoom = (socket: Socket) => {
         coffeeTime,
         cardsVotes,
         average,
-        gameOptions
+        gameOptions,
+        issues
       }) => {
         setUsers(roomUsers);
         cards.setRevealing(reveal);
@@ -81,6 +82,7 @@ const useCreateRoom = (socket: Socket) => {
         cards.setCoffee(coffeeTime);
         cards.setCardsVotes(cardsVotes);
         setAverage(average);
+        issue.issues.setRoomIssues(issues);
 
         if (user.username) {
           setGameStarted(true);

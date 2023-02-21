@@ -18,6 +18,7 @@ type DrawerRight = {
   averageVote: number | undefined;
   useIssue: useIssue;
   revealing: boolean;
+  roomId: string;
 };
 
 const drawerWidth = 600;
@@ -37,7 +38,8 @@ const DrawerRight: React.FC<DrawerRight> = ({
   handleDrawerClose,
   averageVote,
   useIssue,
-  revealing
+  revealing,
+  roomId
 }) => {
   const [openIssue, setOpenIssue] = useState(false);
   const [openIssuesMenu, setOpenIssuesMenu] = useState(false);
@@ -52,9 +54,9 @@ const DrawerRight: React.FC<DrawerRight> = ({
   }, []);
 
   const handleDeleteIssues = useCallback(() => {
-    useIssue.issues.handleDeleteAllIssues();
+    useIssue.issues.handleDeleteAllIssues(roomId);
     handleCloseDeleteIssues();
-  }, []);
+  }, [roomId]);
 
   const handleOpenIssue = useCallback(() => {
     setOpenIssue(true);
@@ -201,7 +203,7 @@ const DrawerRight: React.FC<DrawerRight> = ({
           <NewIssue
             handleClose={handleCloseIssue}
             handleAddIssue={title => {
-              useIssue.issues.handleAddIssue(title, revealing);
+              useIssue.issues.handleAddIssue(title, revealing, roomId);
               handleCloseIssue();
             }}
           />

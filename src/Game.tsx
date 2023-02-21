@@ -191,6 +191,7 @@ const Game = () => {
         averageVote={room.average}
         useIssue={issue}
         revealing={room.revealing}
+        roomId={room.roomId}
       />
     </div>
   );

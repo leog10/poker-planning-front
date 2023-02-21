@@ -31,10 +31,11 @@ type useIssue = {
         handleVotingNow: (id: string) => void;
     }
     issues: {
-        handleAddIssue: (title: string, revealing: boolean) => void;
+        handleAddIssue: (title: string, revealing: boolean, roomId: string) => void;
         handleDeleteIssue: (id: string) => void;
-        handleDeleteAllIssues: () => void;
+        handleDeleteAllIssues: (roomId: string) => void;
         roomIssues: Issue[];
+        setRoomIssues: React.Dispatch<React.SetStateAction<Issue[]>>
     }
 }
 

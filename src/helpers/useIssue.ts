@@ -1,28 +1,28 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Socket } from "socket.io-client";
 import { Issue } from "../types/Issue";
 
-const HARDCODEDISSUES: Issue[] = [
-    {
-        id: '1a',
-        description: '',
-        link: '',
-        storyPoints: '1',
-        title: '1er',
-        voting: true
-    },
-    {
-        id: '2a',
-        description: '',
-        link: '',
-        storyPoints: '2',
-        title: '2d',
-        voting: false
-    }
-]
+// const HARDCODEDISSUES: Issue[] = [
+//     {
+//         id: '1a',
+//         description: '',
+//         link: '',
+//         storyPoints: '1',
+//         title: '1er',
+//         voting: true
+//     },
+//     {
+//         id: '2a',
+//         description: '',
+//         link: '',
+//         storyPoints: '2',
+//         title: '2d',
+//         voting: false
+//     }
+// ]
 
 const useIssue = (socket: Socket) => {
-    const [roomIssues, setRoomIssues] = useState<Issue[]>(HARDCODEDISSUES)
+    const [roomIssues, setRoomIssues] = useState<Issue[]>([])
 
     const [openEditTitle, setOpenEditTitle] = useState(false);
     const [issueTitle, setIssueTitle] = useState('issueTitle');
@@ -129,16 +129,18 @@ const useIssue = (socket: Socket) => {
         }
     }, [votingNow, roomIssues])
 
-    const handleAddIssue = useCallback((title: string, revealing: boolean) => {
-        const newIssue: Issue = {
+    const handleAddIssue = useCallback((title: string, revealing: boolean, roomId: string) => {
+        const issue: Issue = {
             id: new Date().getTime().toString(),
             title,
             voting: roomIssues.length < 1 && !revealing,
             storyPoints: '-'
         }
         setRoomIssues((prev: Issue[]) => {
-            return [...prev, newIssue];
-        })
+            return [...prev, issue];
+        });
+
+        socket.emit('client:new_issue', { issue, roomId })
     }, [roomIssues])
 
     const handleDeleteIssue = useCallback((id: string) => {
@@ -147,9 +149,16 @@ const useIssue = (socket: Socket) => {
         })
     }, [roomIssues])
 
-    const handleDeleteAllIssues = useCallback(() => {
-        setRoomIssues([])
+    const handleDeleteAllIssues = useCallback((roomId: string) => {
+        setRoomIssues([]);
+        socket.emit('client:delete_all_issues', roomId)
     }, [roomIssues])
+
+    useEffect(() => {
+        socket.on('server:issues', issues => {
+            setRoomIssues(issues);
+        })
+    }, [])
 
     return {
         editTitle: {
@@ -185,7 +194,8 @@ const useIssue = (socket: Socket) => {
             handleAddIssue,
             handleDeleteIssue,
             handleDeleteAllIssues,
-            roomIssues
+            roomIssues,
+            setRoomIssues
         }
     };
 }
