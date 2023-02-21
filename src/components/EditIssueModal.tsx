@@ -57,6 +57,11 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
     setOpenDeleteIssue(false);
   }, []);
 
+  const handleDeleteIssue = useCallback(() => {
+    useIssue.issues.handleDeleteIssue(issue.id);
+    handleCloseDeleteIssue();
+  }, []);
+
   return (
     <Box>
       <BootstrapDialog
@@ -486,7 +491,7 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
           handleCloseDeleteIssue();
         }}
         handleDeleteIssue={() => {
-          handleCloseDeleteIssue();
+          handleDeleteIssue();
           handleClose();
         }}
       />
