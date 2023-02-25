@@ -4,6 +4,7 @@ import { StyledButton } from '../styles';
 import { User } from '../types/User';
 import { useMemo } from 'react';
 import Votes from './Votes';
+import { useMediaQuery, useTheme } from '@mui/material';
 
 type Board = {
   revealing: boolean;
@@ -28,6 +29,9 @@ const Board: React.FC<Board> = ({
   handleOpenInvite,
   reveal
 }) => {
+  const theme = useTheme();
+  const matchesSm = useMediaQuery(theme.breakpoints.down('sm'));
+
   const boardContent = useMemo(() => {
     if (!revealing) {
       if (allowedReveal) {
@@ -154,7 +158,8 @@ const Board: React.FC<Board> = ({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginBottom: matchesSm ? 0 : 8
       }}>
       {users && users.length < 2 && feelingLonely}
       <Box
@@ -164,10 +169,11 @@ const Board: React.FC<Board> = ({
           justifyContent: 'center',
           alignItems: 'center',
           backgroundColor: '#d7e9ff',
-          width: '21rem',
+          width: matchesSm ? 300 : 440,
           height: '9.4rem',
           borderRadius: '35px',
-          margin: '0 auto'
+          margin: '0 auto',
+          zIndex: 1
         }}>
         {boardContent}
       </Box>

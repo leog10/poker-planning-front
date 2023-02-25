@@ -19,5 +19,14 @@ export const appTheme = createTheme({
   typography: {
     fontFamily:
       '-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif'
+  },
+  breakpoints: {
+    values: {
+      xs: 330,
+      sm: 425,
+      md: 1030,
+      lg: 1200,
+      xl: 1536
+    }
   }
 });

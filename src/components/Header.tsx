@@ -20,7 +20,8 @@ const Header: React.FC<Header> = ({
   handleOpenInvite
 }) => {
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down('md'));
+  const matchesMd = useMediaQuery(theme.breakpoints.down('md'));
+  const matchesSm = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <Box
@@ -55,39 +56,41 @@ const Header: React.FC<Header> = ({
           />
         </Link>
       </Box>
-      <Box sx={{ flexGrow: 1 }}>
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            margin: '0 1rem',
-            width: 'fit-content',
-            color: '#222222',
-            fontSize: '1.4rem',
-            fontWeight: 700,
-            padding: '0rem 0.4rem',
-            borderRadius: '10px',
-            transition: 'all 0.3s',
-            userSelect: 'none',
-            textAlign: 'left',
-            '&:hover': {
+      <Box sx={{ flexGrow: 1, marginRight: matchesSm ? 3 : 0 }}>
+        {!matchesSm && (
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              margin: '0 1rem',
+              width: 'fit-content',
+              color: '#222222',
+              fontSize: '1.4rem',
+              fontWeight: 700,
+              padding: '0rem 0.4rem',
+              borderRadius: '10px',
               transition: 'all 0.3s',
-              backgroundColor: '#f1f1f1',
-              cursor: 'pointer'
-            }
-          }}>
-          {gameName && gameStarted ? gameName : 'Create game'}
-          {gameName && gameStarted && (
-            <KeyboardArrowDownIcon
-              sx={{
-                marginTop: 0.5,
-                marginLeft: 0.5,
-                color: '#626262',
-                width: '28px'
-              }}
-            />
-          )}
-        </Box>
+              userSelect: 'none',
+              textAlign: 'left',
+              '&:hover': {
+                transition: 'all 0.3s',
+                backgroundColor: '#f1f1f1',
+                cursor: 'pointer'
+              }
+            }}>
+            {gameName && gameStarted ? gameName : 'Create game'}
+            {gameName && gameStarted && (
+              <KeyboardArrowDownIcon
+                sx={{
+                  marginTop: 0.5,
+                  marginLeft: 0.5,
+                  color: '#626262',
+                  width: '28px'
+                }}
+              />
+            )}
+          </Box>
+        )}
       </Box>
       {gameStarted && (
         <Box
@@ -97,7 +100,7 @@ const Header: React.FC<Header> = ({
             alignItems: 'center',
             gap: 3
           }}>
-          {!matches && (
+          {!matchesMd && (
             <Box
               sx={{
                 display: 'flex',
@@ -142,10 +145,11 @@ const Header: React.FC<Header> = ({
             sx={{
               textWrap: 'no-wrap',
               border: 2,
-              width: matches ? 50 : 250,
+              height: 60,
+              width: matchesMd ? 50 : 250,
               padding: '0.4rem 1.2rem',
               fontWeight: 700,
-              fontSize: matches ? 21 : 23,
+              fontSize: matchesMd ? 21 : 23,
               backgroundColor: '#fff',
               '&:hover': {
                 border: 2,
@@ -154,8 +158,8 @@ const Header: React.FC<Header> = ({
                 cursor: 'pointer'
               }
             }}>
-            <Box sx={{ marginRight: matches ? 0 : 2 }}>🧛‍♂️</Box>
-            {matches ? '' : 'Invite players'}
+            <Box sx={{ marginRight: matchesMd ? 0 : 2 }}>🧛‍♂️</Box>
+            {matchesMd ? '' : 'Invite players'}
           </StyledButton>
           <StyledButton
             onClick={handleOpenDrawer}
@@ -166,7 +170,7 @@ const Header: React.FC<Header> = ({
               padding: '0.8rem 0.9rem',
               margin: 0,
               fontWeight: 700,
-              fontSize: 23,
+              height: 60,
               backgroundColor: '#fff',
               '&:hover': {
                 border: 2,

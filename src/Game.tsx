@@ -35,7 +35,13 @@ const Game = () => {
   }, []);
 
   return (
-    <div className='App'>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
       <Header
         handleOpenInvite={handleOpenInvite}
         handleOpenDrawer={handleOpenDrawer}
@@ -184,7 +190,7 @@ const Game = () => {
         revealing={room.revealing}
         roomId={room.roomId}
       />
-    </div>
+    </Box>
   );
 };
 
