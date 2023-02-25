@@ -188,7 +188,6 @@ const Game = () => {
       <DrawerRight
         open={openDrawer}
         handleDrawerClose={handleDrawerClose}
-        averageVote={room.average}
         useIssue={issue}
         revealing={room.revealing}
         roomId={room.roomId}

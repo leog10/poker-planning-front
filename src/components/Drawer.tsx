@@ -15,7 +15,6 @@ import useIssue from '../types/useIssue';
 type DrawerRight = {
   open: boolean;
   handleDrawerClose: () => void;
-  averageVote: number | undefined;
   useIssue: useIssue;
   revealing: boolean;
   roomId: string;
@@ -36,7 +35,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 const DrawerRight: React.FC<DrawerRight> = ({
   open,
   handleDrawerClose,
-  averageVote,
   useIssue,
   revealing,
   roomId
@@ -190,7 +188,6 @@ const DrawerRight: React.FC<DrawerRight> = ({
                 key={issue.id}
                 issue={issue}
                 useIssue={useIssue}
-                averageVote={averageVote}
                 roomId={roomId}
               />
             );

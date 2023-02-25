@@ -14,16 +14,10 @@ import { fiboCardsArray } from '../helpers/useCards';
 type IssueCard = {
   issue: Issue;
   useIssue: useIssue;
-  averageVote: number | undefined;
   roomId: string;
 };
 
-const IssueCard: React.FC<IssueCard> = ({
-  issue,
-  useIssue,
-  averageVote,
-  roomId
-}) => {
+const IssueCard: React.FC<IssueCard> = ({ issue, useIssue, roomId }) => {
   const [openMenu, setOpenMenu] = useState(false);
   const [openEditIssue, setOpenEditIssue] = useState(false);
   const [openDeleteIssue, setOpenDeleteIssue] = useState(false);
