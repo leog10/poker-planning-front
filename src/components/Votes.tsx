@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, useMediaQuery, useTheme } from '@mui/material';
 import { User } from '../types/User';
 
 type Votes = {
@@ -7,6 +7,9 @@ type Votes = {
 };
 
 const Votes: React.FC<Votes> = ({ users, reveal }) => {
+  const theme = useTheme();
+  const matchesMd = useMediaQuery(theme.breakpoints.down('md'));
+
   return (
     <Box
       sx={{
@@ -20,7 +23,7 @@ const Votes: React.FC<Votes> = ({ users, reveal }) => {
         flexWrap: 'wrap',
         width: users && users.length * 70,
         columnGap: 5,
-        rowGap: 25
+        rowGap: matchesMd ? 21 : 25
       }}>
       {users?.length &&
         users.map(user => (

@@ -30,7 +30,7 @@ const Board: React.FC<Board> = ({
   reveal
 }) => {
   const theme = useTheme();
-  const matchesSm = useMediaQuery(theme.breakpoints.down('sm'));
+  const matchesMd = useMediaQuery(theme.breakpoints.down('md'));
 
   const boardContent = useMemo(() => {
     if (!revealing) {
@@ -159,7 +159,7 @@ const Board: React.FC<Board> = ({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: matchesSm ? 0 : 8
+        marginBottom: matchesMd ? 8 : 0
       }}>
       {users && users.length < 2 && feelingLonely}
       <Box
@@ -169,7 +169,7 @@ const Board: React.FC<Board> = ({
           justifyContent: 'center',
           alignItems: 'center',
           backgroundColor: '#d7e9ff',
-          width: matchesSm ? 300 : 440,
+          width: matchesMd ? 300 : 440,
           height: '9.4rem',
           borderRadius: '35px',
           margin: '0 auto',
