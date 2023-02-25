@@ -3,6 +3,7 @@ import Typography from '@mui/material/Typography';
 import { StyledButton } from '../styles';
 import { User } from '../types/User';
 import { useMemo } from 'react';
+import Votes from './Votes';
 
 type Board = {
   revealing: boolean;
@@ -13,6 +14,7 @@ type Board = {
   roomId: string;
   revealingTime: number;
   handleOpenInvite: () => void;
+  reveal: boolean;
 };
 
 const Board: React.FC<Board> = ({
@@ -23,7 +25,8 @@ const Board: React.FC<Board> = ({
   startNewVoting,
   roomId,
   revealingTime,
-  handleOpenInvite
+  handleOpenInvite,
+  reveal
 }) => {
   const boardContent = useMemo(() => {
     if (!revealing) {
@@ -145,10 +148,18 @@ const Board: React.FC<Board> = ({
   }, []);
 
   return (
-    <div>
+    <Box
+      sx={{
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}>
       {users && users.length < 2 && feelingLonely}
       <Box
         sx={{
+          position: 'relative',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
@@ -160,7 +171,11 @@ const Board: React.FC<Board> = ({
         }}>
         {boardContent}
       </Box>
-    </div>
+      <Votes
+        users={users}
+        reveal={reveal}
+      />
+    </Box>
   );
 };
 

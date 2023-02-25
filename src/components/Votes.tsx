@@ -10,12 +10,17 @@ const Votes: React.FC<Votes> = ({ users, reveal }) => {
   return (
     <Box
       sx={{
+        position: users && users.length > 1 ? 'absolute' : 'unset',
         display: 'flex',
         justifyContent: 'center',
-        marginTop: '25px',
+        marginTop: users && users.length > 1 ? 0 : '25px',
         alignItems: 'center',
         userSelect: 'none',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        width: users && users.length * 70,
+        columnGap: 5,
+        rowGap: 25
       }}>
       {users?.length &&
         users.map(user => (

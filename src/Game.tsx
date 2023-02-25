@@ -2,7 +2,6 @@ import './App.css';
 import { io } from 'socket.io-client';
 import useRoom from './helpers/useRoom';
 import Cards from './components/Card';
-import Votes from './components/Votes';
 import { StyledButton, StyledTextField } from './styles';
 import { Box, Typography } from '@mui/material';
 import Board from './components/Board';
@@ -128,12 +127,6 @@ const Game = () => {
           startNewVoting={user.startNewVoting}
           revealingTime={room.revealingTime}
           handleOpenInvite={handleOpenInvite}
-        />
-      )}
-
-      {room.gameStarted && (
-        <Votes
-          users={room.users}
           reveal={room.revealing && room.revealingTime <= 0}
         />
       )}
