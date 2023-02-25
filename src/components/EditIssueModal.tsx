@@ -38,13 +38,15 @@ type EditIssueModal = {
   handleClose: () => void;
   issue: Issue;
   useIssue: useIssue;
+  roomId: string;
 };
 
 const EditIssueModal: React.FC<EditIssueModal> = ({
   open = false,
   handleClose,
   issue,
-  useIssue
+  useIssue,
+  roomId
 }) => {
   const [openDeleteIssue, setOpenDeleteIssue] = useState(false);
   const storyPointsButtonRef = useRef<HTMLButtonElement>(null);
@@ -58,7 +60,7 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
   }, []);
 
   const handleDeleteIssue = useCallback(() => {
-    useIssue.issues.handleDeleteIssue(issue.id);
+    useIssue.issues.handleDeleteIssue(issue.id, roomId);
     handleCloseDeleteIssue();
   }, []);
 
@@ -178,7 +180,11 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                 id='editTitle'
                 handleClose={useIssue.editTitle.handleEditTitle}
                 handleSave={title =>
-                  useIssue.editTitle.handleSaveIssueTitle(issue.id, title)
+                  useIssue.editTitle.handleSaveIssueTitle(
+                    issue.id,
+                    title,
+                    roomId
+                  )
                 }
                 fieldValue={issue.title}
               />
@@ -296,7 +302,11 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                     id='editLink'
                     handleClose={useIssue.editLink.handleEditLink}
                     handleSave={link =>
-                      useIssue.editLink.handleSaveIssueLink(issue.id, link)
+                      useIssue.editLink.handleSaveIssueLink(
+                        issue.id,
+                        link,
+                        roomId
+                      )
                     }
                     fieldValue={issue.link ?? ''}
                   />
@@ -392,7 +402,8 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                     handleSave={description =>
                       useIssue.editDescription.handleSaveIssueDescription(
                         issue.id,
-                        description
+                        description,
+                        roomId
                       )
                     }
                     fieldValue={issue.description ?? ''}
@@ -410,7 +421,9 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
               height: 60
             }}>
             <StyledButton
-              onClick={() => useIssue.editVotingNow.handleVotingNow(issue.id)}
+              onClick={() =>
+                useIssue.editVotingNow.handleVotingNow(issue.id, roomId)
+              }
               variant='outlined'
               sx={{
                 color: issue.voting ? '#fff' : '#1a2935',
@@ -478,7 +491,9 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                   handleSelectPoint={card =>
                     useIssue.editStoryPoints.handleEditStoryPoints(
                       issue.id,
-                      card
+                      card,
+                      false,
+                      roomId
                     )
                   }
                   anchorEl={storyPointsButtonRef.current}

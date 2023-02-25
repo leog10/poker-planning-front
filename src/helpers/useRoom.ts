@@ -134,7 +134,7 @@ const useCreateRoom = (socket: Socket) => {
 
     socket.on('server:issues', issues => {
       issue.issues.setRoomIssues(issues);
-    })
+    });
   }, []);
 
   return {
@@ -151,7 +151,7 @@ const useCreateRoom = (socket: Socket) => {
       average,
       coffee: cards.coffee,
       handleChooseUsername,
-      revealingTime: time,
+      revealingTime: time
     },
     user: {
       username: user.username,

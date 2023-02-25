@@ -13,8 +13,6 @@ import { fiboCardsArray } from '../helpers/useCards';
 
 type IssueCard = {
   issue: Issue;
-  handleVotingNow: (id: string) => void;
-  handleEditStoryPoints: (id: string, card: string) => void;
   useIssue: useIssue;
   averageVote: number | undefined;
   roomId: string;
@@ -22,8 +20,6 @@ type IssueCard = {
 
 const IssueCard: React.FC<IssueCard> = ({
   issue,
-  handleVotingNow,
-  handleEditStoryPoints,
   useIssue,
   averageVote,
   roomId
@@ -84,48 +80,6 @@ const IssueCard: React.FC<IssueCard> = ({
     },
     [roomId]
   );
-
-  const selectStoryPoint = useCallback(
-    (averageVote: number) => {
-      if (fiboCardsArray.some(card => card.card === averageVote.toString())) {
-        return averageVote.toString();
-      }
-
-      let storyPoint = 89;
-      let check = 89;
-      for (let i = fiboCardsArray.length - 1; i >= 0; i--) {
-        if (isNaN(Number(fiboCardsArray[i].card))) continue;
-
-        const checkNumber = averageVote - Number(fiboCardsArray[i].card);
-
-        if (checkNumber >= 0 && checkNumber <= check) {
-          storyPoint = Number(fiboCardsArray[i].card);
-          check = checkNumber;
-        }
-      }
-
-      return storyPoint.toString();
-    },
-    [averageVote]
-  );
-
-  useEffect(() => {
-    if (issue.voting) {
-      const setStoryPoint = setTimeout(() => {
-        if ((averageVote || averageVote === 0) && issue.voting) {
-          const storyPoint = selectStoryPoint(averageVote);
-          useIssue.editVotingNow.handleVotingNow(issue.id);
-          useIssue.editStoryPoints.handleEditStoryPoints(
-            issue.id,
-            storyPoint,
-            true
-          );
-        }
-      }, 1000);
-
-      return () => clearTimeout(setStoryPoint);
-    }
-  }, [averageVote]);
 
   return (
     <Box sx={{ position: 'relative' }}>
@@ -211,7 +165,9 @@ const IssueCard: React.FC<IssueCard> = ({
             alignItems: 'center'
           }}>
           <StyledButton
-            onClick={() => handleVotingNow(issue.id)}
+            onClick={() =>
+              useIssue.editVotingNow.handleVotingNow(issue.id, roomId)
+            }
             variant='outlined'
             sx={{
               color: issue.voting ? '#fff' : '#1a2935',
@@ -298,7 +254,12 @@ const IssueCard: React.FC<IssueCard> = ({
               handleClose={handleCloseStoryPointsMenu}
               anchorEl={storyPointsButtonRef.current}
               handleSelectPoint={card => {
-                handleEditStoryPoints(issue.id, card);
+                useIssue.editStoryPoints.handleEditStoryPoints(
+                  issue.id,
+                  card,
+                  false,
+                  roomId
+                );
                 handleCloseStoryPointsMenu();
               }}
             />
@@ -320,6 +281,7 @@ const IssueCard: React.FC<IssueCard> = ({
         handleClose={handleCloseEditIssue}
         issue={issue}
         useIssue={useIssue}
+        roomId={roomId}
       />
     </Box>
   );

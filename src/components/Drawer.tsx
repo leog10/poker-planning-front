@@ -189,10 +189,6 @@ const DrawerRight: React.FC<DrawerRight> = ({
               <IssueCard
                 key={issue.id}
                 issue={issue}
-                handleVotingNow={useIssue.editVotingNow.handleVotingNow}
-                handleEditStoryPoints={
-                  useIssue.editStoryPoints.handleEditStoryPoints
-                }
                 useIssue={useIssue}
                 averageVote={averageVote}
                 roomId={roomId}
