@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import { Box, useMediaQuery, useTheme } from '@mui/material';
 import { StyledButton } from '../styles';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
@@ -19,6 +19,9 @@ const Header: React.FC<Header> = ({
   handleOpenDrawer,
   handleOpenInvite
 }) => {
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down('md'));
+
   return (
     <Box
       sx={{
@@ -94,53 +97,55 @@ const Header: React.FC<Header> = ({
             alignItems: 'center',
             gap: 3
           }}>
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: 2,
-              borderRadius: '10px',
-              padding: '0.7rem 0.8rem',
-              '&:hover': {
-                transition: 'all 0.3s',
-                backgroundColor: '#f1f1f1',
-                cursor: 'pointer'
-              }
-            }}>
-            <img
-              src='/logo.png'
-              alt=''
-              width={32}
-            />
+          {!matches && (
             <Box
               sx={{
                 display: 'flex',
-                fontSize: 21,
-                fontWeight: 700,
-                color: '#626262'
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 2,
+                borderRadius: '10px',
+                padding: '0.7rem 0.8rem',
+                '&:hover': {
+                  transition: 'all 0.3s',
+                  backgroundColor: '#f1f1f1',
+                  cursor: 'pointer'
+                }
               }}>
-              {username}
-              <KeyboardArrowDownIcon
-                sx={{
-                  marginTop: 0.2,
-                  marginLeft: 0.5,
-                  color: '#626262',
-                  width: '28px'
-                }}
+              <img
+                src='/logo.png'
+                alt=''
+                width={32}
               />
+              <Box
+                sx={{
+                  display: 'flex',
+                  fontSize: 21,
+                  fontWeight: 700,
+                  color: '#626262'
+                }}>
+                {username}
+                <KeyboardArrowDownIcon
+                  sx={{
+                    marginTop: 0.2,
+                    marginLeft: 0.5,
+                    color: '#626262',
+                    width: '28px'
+                  }}
+                />
+              </Box>
             </Box>
-          </Box>
+          )}
           <StyledButton
             onClick={handleOpenInvite}
             variant='outlined'
             sx={{
               textWrap: 'no-wrap',
               border: 2,
-              width: 'fit-content',
+              width: matches ? 50 : 250,
               padding: '0.4rem 1.2rem',
               fontWeight: 700,
-              fontSize: 23,
+              fontSize: matches ? 21 : 23,
               backgroundColor: '#fff',
               '&:hover': {
                 border: 2,
@@ -149,7 +154,8 @@ const Header: React.FC<Header> = ({
                 cursor: 'pointer'
               }
             }}>
-            <Box sx={{ marginRight: 2 }}>🧛‍♂️</Box>Invite players
+            <Box sx={{ marginRight: matches ? 0 : 2 }}>🧛‍♂️</Box>
+            {matches ? '' : 'Invite players'}
           </StyledButton>
           <StyledButton
             onClick={handleOpenDrawer}
