@@ -46,7 +46,7 @@
   cursor: pointer;
 }
 
-.card {
+/* .card {
   color: #3993ff;
   font-size: 1rem;
   font-weight: 700;
@@ -86,7 +86,7 @@
   transition: all 0.1s;
   transform: translateY(-3px);
   background-color: #ebf4ff;
-}
+} */
 
 .card-vote {
   font-size: 1.3rem;

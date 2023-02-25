@@ -77,10 +77,14 @@ const Cards: React.FC<Cards> = ({
                 margin: '5px 10px',
                 cursor: 'pointer',
                 transition: 'all 0.1s',
-                transform: fibo.checked ? 'translateY(-8px)' : ''
+                transform: fibo.checked ? 'translateY(-10px)' : '',
+                ':hover': {
+                  transition: 'all 0.1s',
+                  transform: fibo.checked ? '' : 'translateY(-3px)',
+                  backgroundColor: fibo.checked ? '#1a7bf2' : '#ebf4ff'
+                }
               }}
               onClick={() => handleCardSelect(fibo.card, roomId, clientId)}
-              // className={fibo.checked ? 'card-checked' : 'card'}
               key={fibo.card}>
               {fibo.card}
             </Box>
