@@ -133,7 +133,6 @@ const Game = () => {
 
       {!room.revealing && room.gameStarted && (
         <Cards
-          revealing={room.revealing}
           roomId={room.roomId}
           clientId={user.clientId}
           fiboCards={room.fiboCards}
