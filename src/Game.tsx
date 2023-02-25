@@ -9,6 +9,7 @@ import Header from './components/Header';
 import DrawerRight from './components/Drawer';
 import { useCallback, useState } from 'react';
 import InviteModal from './components/InviteModal';
+import VotingResult from './components/VotingResult';
 
 const socket = io('ws://localhost:3000');
 
@@ -147,35 +148,11 @@ const Game = () => {
       )}
 
       {room.revealing && room.revealingTime <= 0 && (
-        <div className='card-container'>
-          {room.cards &&
-            room.cards.map(card => (
-              <div
-                key={card.card}
-                className='card-vote-container'>
-                <div className='card-vote'>{card.card}</div>
-                <span className='vote-quantity'>
-                  {card.quantity} {card.quantity > 1 ? 'Votes' : 'Vote'}
-                </span>
-              </div>
-            ))}
-
-          <div>
-            {room.average !== undefined && room.average !== null && (
-              <div className='average'>
-                <p>Average:</p>
-                <p className='average-number'>{room.average}</p>
-              </div>
-            )}
-
-            {room.coffee && (
-              <div className='coffee'>
-                <p>Coffee time!</p>
-                <span>☕</span>
-              </div>
-            )}
-          </div>
-        </div>
+        <VotingResult
+          average={room.average}
+          cards={room.cards}
+          coffee={room.coffee}
+        />
       )}
 
       <InviteModal

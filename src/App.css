@@ -9,7 +9,7 @@
   margin-top: -4.5rem;
 } */
 
-.card-container {
+/* .card-container {
   display: flex;
   justify-content: center;
   margin-top: 25px;
@@ -19,7 +19,7 @@
   width: 100%;
   left: 0;
   bottom: 1%;
-}
+} */
 
 .card-voting-container {
   display: flex;
@@ -88,7 +88,7 @@
   background-color: #ebf4ff;
 } */
 
-.card-vote {
+/* .card-vote {
   font-size: 1.3rem;
   font-weight: 600;
   display: flex;
@@ -103,13 +103,13 @@
   user-select: none;
   cursor: default;
   margin: 0 15px 15px;
-}
+} */
 
-.vote-quantity {
+/* .vote-quantity {
   color: #515151;
   font-size: 1.2rem;
   font-weight: 500;
-}
+} */
 
 .card-vote-container {
   display: flex;
@@ -182,24 +182,24 @@
   cursor: pointer;
 }
 
-.average {
+/* .average {
   font-size: 1.5rem;
   margin: 0 0 0 2rem;
   color: #a8aeb2;
-}
+} */
 
-.average-number {
+/* .average-number {
   font-size: 2.2rem;
   font-weight: 700;
   color: black;
   margin-top: 5px;
-}
+} */
 
-.coffee {
+/* .coffee {
   margin: 0 0 0 2rem;
-}
+} */
 
-.coffee>p {
+/* .coffee>p {
   font-size: 1.5rem;
   color: #a8aeb2;
   margin: 0 0 20px;
@@ -207,4 +207,4 @@
 
 .coffee>span {
   font-size: 2.2rem;
-}
+} */

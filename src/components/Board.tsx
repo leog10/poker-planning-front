@@ -159,7 +159,7 @@ const Board: React.FC<Board> = ({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: matchesMd ? 8 : 0
+        marginBottom: matchesMd ? 8 : 8
       }}>
       {users && users.length < 2 && feelingLonely}
       <Box
