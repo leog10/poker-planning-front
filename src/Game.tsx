@@ -37,8 +37,10 @@ const Game = () => {
   }, []);
 
   const theme = useTheme();
-  const matchesMd = useMediaQuery(theme.breakpoints.down('md'));
   const matchesSm = useMediaQuery(theme.breakpoints.down('sm'));
+  const matchesMd = useMediaQuery(theme.breakpoints.down('md'));
+  const matchesLg = useMediaQuery(theme.breakpoints.down('lg'));
+  const matchesXl = useMediaQuery(theme.breakpoints.down('xl'));
 
   return (
     <Box
@@ -61,7 +63,15 @@ const Game = () => {
             justifyContent: 'center',
             marginX: 'auto',
             marginTop: '3.5rem',
-            maxWidth: matchesSm ? '95%' : matchesMd ? '70%' : '50%',
+            maxWidth: matchesSm
+              ? '95%'
+              : matchesMd
+              ? '85%'
+              : matchesLg
+              ? '65%'
+              : matchesXl
+              ? '45%'
+              : '33%',
             transition: 'all .1s'
           }}>
           <Typography

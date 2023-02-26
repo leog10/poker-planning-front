@@ -17,11 +17,9 @@ export const StyledButton = styled(Button)(({ theme }) => ({
 
 export const StyledTextField = styled(TextField)(({ theme }) => ({
   '& label.MuiInputLabel-shrink': {
-    padding: '0 0.8rem',
     fontWeight: 500,
     color: '#1a2935 !important',
-    top: '-2px',
-    left: '-14px'
+    top: '-2px'
   },
   '& .MuiOutlinedInput-root': {
     '& fieldset': {
