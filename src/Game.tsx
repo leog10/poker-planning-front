@@ -3,13 +3,14 @@ import { io } from 'socket.io-client';
 import useRoom from './helpers/useRoom';
 import Cards from './components/Card';
 import { StyledButton, StyledTextField } from './styles';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import Board from './components/Board';
 import Header from './components/Header';
 import DrawerRight from './components/Drawer';
 import { useCallback, useState } from 'react';
 import InviteModal from './components/InviteModal';
 import VotingResult from './components/VotingResult';
+import { appTheme } from './Theme';
 
 const socket = io('ws://localhost:3000');
 
@@ -35,13 +36,14 @@ const Game = () => {
     setOpenInvite(false);
   }, []);
 
+  const theme = useTheme();
+  const matchesMd = useMediaQuery(theme.breakpoints.down('md'));
+  const matchesSm = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <Box
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center'
+        width: '100vw'
       }}>
       <Header
         handleOpenInvite={handleOpenInvite}
@@ -56,7 +58,11 @@ const Game = () => {
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            marginTop: '3.5rem'
+            justifyContent: 'center',
+            marginX: 'auto',
+            marginTop: '3.5rem',
+            maxWidth: matchesSm ? '95%' : matchesMd ? '70%' : '50%',
+            transition: 'all .1s'
           }}>
           <Typography
             sx={{
@@ -68,13 +74,16 @@ const Game = () => {
             Choose a name for your game.
           </Typography>
           <StyledTextField
+            sx={{
+              width: '100%'
+            }}
             autoComplete='off'
             variant='outlined'
             label="Game's name"
             onChange={e => room.setGameName(e.target.value)}
           />
           <StyledButton
-            sx={{ fontSize: 24, padding: '0.4rem' }}
+            sx={{ fontSize: 24, padding: '0.4rem', width: '100%' }}
             autoCapitalize='none'
             variant='contained'
             color='primary'
