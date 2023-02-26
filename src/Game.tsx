@@ -151,7 +151,7 @@ const Game = () => {
         <VotingResult
           average={room.average}
           cards={room.cards}
-          coffee={room.coffee}
+          mate={room.mate}
         />
       )}
 

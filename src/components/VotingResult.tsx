@@ -5,10 +5,10 @@ import { CardVotes } from '../types/CardVotes';
 type VotingResults = {
   cards: CardVotes[] | undefined;
   average: number | undefined;
-  coffee: boolean;
+  mate: boolean;
 };
 
-const VotingResult: React.FC<VotingResults> = ({ cards, average, coffee }) => {
+const VotingResult: React.FC<VotingResults> = ({ cards, average, mate }) => {
   const theme = useTheme();
   const matchesMd = useMediaQuery(theme.breakpoints.down('md'));
   const matchesXs = useMediaQuery(theme.breakpoints.down('xs'));
@@ -103,20 +103,20 @@ const VotingResult: React.FC<VotingResults> = ({ cards, average, coffee }) => {
           </Box>
         )}
 
-        {coffee && (
+        {mate && (
           <Box
             sx={{
               marginLeft: matchesMd ? 0 : 5,
               marginBottom: 1
             }}>
             <Typography sx={{ fontSize: 22, color: '#a8aeb2' }}>
-              Coffee time!
+              Mate time!
             </Typography>
             <Box
               sx={{
                 fontSize: 40
               }}>
-              ☕
+              🧉
             </Box>
           </Box>
         )}

@@ -16,14 +16,14 @@ export const fiboCardsArray: FiboCards[] = [
   { card: '55', checked: false },
   { card: '89', checked: false },
   { card: '?', checked: false },
-  { card: '☕', checked: false }
+  { card: '🧉', checked: false }
 ];
 
 const useCards = (socket: Socket) => {
   const [revealing, setRevealing] = useState<boolean>(false);
   const [canReveal, setCanReveal] = useState(false);
   const [cardsVotes, setCardsVotes] = useState<CardVotes[]>();
-  const [coffee, setCoffee] = useState<boolean>(false);
+  const [mate, setMate] = useState<boolean>(false);
   const [fiboCards, setFiboCards] = useState<FiboCards[]>(fiboCardsArray);
 
   const revealCards = useCallback((roomId: string) => {
@@ -60,12 +60,12 @@ const useCards = (socket: Socket) => {
     socket.emit('client:start_new_voting', roomId);
     setRevealing(false);
     setCardsVotes([]);
-    setCoffee(false);
+    setMate(false);
   }, []);
 
   useEffect(() => {
-    socket.on('server:coffee', () => {
-      setCoffee(true);
+    socket.on('server:mate', () => {
+      setMate(true);
     });
   }, []);
 
@@ -93,8 +93,8 @@ const useCards = (socket: Socket) => {
     canReveal,
     setCanReveal,
     fiboCards,
-    coffee,
-    setCoffee,
+    mate,
+    setMate,
     cardsVotes,
     setCardsVotes,
     startNewVoting

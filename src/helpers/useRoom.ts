@@ -70,7 +70,7 @@ const useCreateRoom = (socket: Socket) => {
         roomUsers,
         reveal,
         gameName,
-        coffeeTime,
+        mateTime,
         cardsVotes,
         average,
         gameOptions,
@@ -79,7 +79,7 @@ const useCreateRoom = (socket: Socket) => {
         setUsers(roomUsers);
         cards.setRevealing(reveal);
         setGameName(gameName);
-        cards.setCoffee(coffeeTime);
+        cards.setMate(mateTime);
         cards.setCardsVotes(cardsVotes);
         setAverage(average);
         issue.issues.setRoomIssues(issues);
@@ -122,7 +122,7 @@ const useCreateRoom = (socket: Socket) => {
       setUsers(roomUsers);
       setAverage(undefined);
       cards.setCardsVotes([]);
-      cards.setCoffee(false);
+      cards.setMate(false);
       cards.setCanReveal(false);
       cards.fiboCards.forEach(fibo => (fibo.checked = false));
     });
@@ -149,7 +149,7 @@ const useCreateRoom = (socket: Socket) => {
       gameName,
       users,
       average,
-      coffee: cards.coffee,
+      mate: cards.mate,
       handleChooseUsername,
       revealingTime: time
     },
