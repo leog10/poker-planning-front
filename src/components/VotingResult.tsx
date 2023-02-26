@@ -11,14 +11,14 @@ type VotingResults = {
 const VotingResult: React.FC<VotingResults> = ({ cards, average, coffee }) => {
   const theme = useTheme();
   const matchesMd = useMediaQuery(theme.breakpoints.down('md'));
-  const matchesSm = useMediaQuery(theme.breakpoints.down('sm'));
+  const matchesXs = useMediaQuery(theme.breakpoints.down('xs'));
 
   return (
     <Box
       sx={{
         display: 'flex',
         justifyContent: 'center',
-        alignItems: matchesSm ? 'flex-start' : 'center',
+        alignItems: matchesXs ? 'flex-start' : 'center',
         userSelect: 'none',
         position: 'fixed',
         width: '100%',
@@ -32,7 +32,8 @@ const VotingResult: React.FC<VotingResults> = ({ cards, average, coffee }) => {
       }}>
       <Box
         sx={{
-          display: 'flex'
+          display: 'flex',
+          justifyContent: 'center'
         }}>
         {cards &&
           cards.map(card => (
@@ -76,9 +77,9 @@ const VotingResult: React.FC<VotingResults> = ({ cards, average, coffee }) => {
 
       <Box
         sx={{
-          width: matchesMd ? '100%' : 'fit-content',
+          width: matchesXs ? '100%' : 'fit-content',
           display: 'flex',
-          flexDirection: matchesMd ? 'row' : 'column',
+          flexDirection: matchesXs ? 'row' : 'column',
           justifyContent: 'center',
           gap: 5
         }}>
@@ -93,7 +94,7 @@ const VotingResult: React.FC<VotingResults> = ({ cards, average, coffee }) => {
             </Typography>
             <Typography
               sx={{
-                fontSize: 35,
+                fontSize: 43,
                 fontWeight: 700,
                 color: 'black'
               }}>

@@ -79,7 +79,7 @@ const Board: React.FC<Board> = ({
             variant='contained'
             color='primary'
             onClick={() => startNewVoting(roomId)}>
-            Start new voting
+            {matchesMd ? 'New voting' : 'Start new voting'}
           </StyledButton>
         );
       } else {
@@ -107,7 +107,7 @@ const Board: React.FC<Board> = ({
         Pick your cards!
       </Typography>
     );
-  }, [allowedReveal, users, revealing, revealingTime]);
+  }, [allowedReveal, users, revealing, revealingTime, matchesMd]);
 
   const feelingLonely = useMemo(() => {
     return (

@@ -24,7 +24,7 @@ const Votes: React.FC<Votes> = ({ users, reveal }) => {
         flexWrap: 'wrap',
         width: users && users.length * 70,
         columnGap: 5,
-        rowGap: matchesMd ? 21 : 25
+        rowGap: matchesMd ? 21 : 22
       }}>
       {users?.length &&
         users.map(user => (
