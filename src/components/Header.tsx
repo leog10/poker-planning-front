@@ -133,7 +133,7 @@ const Header: React.FC<Header> = ({
                   color: '#626262'
                 }}>
                 {username}
-                {/* Disabled until modal is working */}
+                {/* Disabled until modal is working  */}
                 {/* <KeyboardArrowDownIcon
                   sx={{
                     marginTop: 0.2,
