@@ -1,4 +1,12 @@
-import { Box, Dialog, IconButton, styled, Typography } from '@mui/material';
+import {
+  Box,
+  Dialog,
+  IconButton,
+  styled,
+  Typography,
+  useMediaQuery,
+  useTheme
+} from '@mui/material';
 import { StyledButton, StyledTextField } from '../styles';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -11,8 +19,7 @@ const BootstrapDialog = styled(Dialog)(() => ({
     alignItems: 'center',
     justifyContent: 'center',
     maxWidth: 790,
-    width: 787,
-    // height: 307,
+    width: '95vw',
     borderRadius: 20,
     boxShadow: 'none'
   }
@@ -35,6 +42,10 @@ const DeleteIssueModal: React.FC<DeleteIssueModal> = ({
   handleDelete,
   content
 }) => {
+  const theme = useTheme();
+  const matchesMd = useMediaQuery(theme.breakpoints.down('md'));
+  const matchesSm = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <BootstrapDialog
       onClose={handleClose}
@@ -52,7 +63,7 @@ const DeleteIssueModal: React.FC<DeleteIssueModal> = ({
           justifyContent: 'center',
           width: '100%',
           flexGrow: 1,
-          paddingX: 5.9,
+          paddingX: matchesMd ? 3 : 5.9,
           paddingY: 6.7
         }}>
         <IconButton
@@ -83,8 +94,8 @@ const DeleteIssueModal: React.FC<DeleteIssueModal> = ({
           }}>
           <Typography
             sx={{
-              fontSize: 30,
-              fontWeight: 700,
+              fontWeight: matchesMd ? 800 : 700,
+              fontSize: matchesMd ? 26 : 30,
               flexGrow: 1
             }}>
             {content.title}
@@ -100,8 +111,10 @@ const DeleteIssueModal: React.FC<DeleteIssueModal> = ({
         <Box
           sx={{
             display: 'flex',
+            flexDirection: matchesSm ? 'column' : 'row',
             width: '100%',
             marginTop: 3,
+            marginBottom: matchesSm ? 10 : 0,
             gap: 1.8,
             height: 65
           }}>
@@ -117,6 +130,7 @@ const DeleteIssueModal: React.FC<DeleteIssueModal> = ({
               fontWeight: 700,
               fontSize: 23,
               backgroundColor: '#fff',
+              paddingY: matchesSm ? 1.5 : 0,
               ':hover': {
                 border: '2px solid #f1f1f1',
                 transition: 'all 0.3s',
@@ -138,6 +152,7 @@ const DeleteIssueModal: React.FC<DeleteIssueModal> = ({
               fontWeight: 700,
               fontSize: 23,
               backgroundColor: '#ff3d71',
+              paddingY: matchesSm ? 1.5 : 0,
               '&:hover': {
                 border: 2,
                 transition: 'all 0.3s',
