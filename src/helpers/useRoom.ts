@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Socket } from 'socket.io-client';
 import { User } from '../types/User';
 import useCards from './useCards';
+import useIssue from './useIssue';
 import useTimer from './useTimer';
 import useUser from './useUser';
 
@@ -21,6 +22,7 @@ const useCreateRoom = (socket: Socket) => {
 
   const user = useUser(socket);
   const cards = useCards(socket);
+  const issue = useIssue(socket);
 
   const handleChooseUsername = useCallback(() => {
     user.changeUsername(roomId);
@@ -68,17 +70,19 @@ const useCreateRoom = (socket: Socket) => {
         roomUsers,
         reveal,
         gameName,
-        coffeeTime,
+        mateTime,
         cardsVotes,
         average,
-        gameOptions
+        gameOptions,
+        issues
       }) => {
         setUsers(roomUsers);
         cards.setRevealing(reveal);
         setGameName(gameName);
-        cards.setCoffee(coffeeTime);
+        cards.setMate(mateTime);
         cards.setCardsVotes(cardsVotes);
         setAverage(average);
+        issue.issues.setRoomIssues(issues);
 
         if (user.username) {
           setGameStarted(true);
@@ -118,7 +122,7 @@ const useCreateRoom = (socket: Socket) => {
       setUsers(roomUsers);
       setAverage(undefined);
       cards.setCardsVotes([]);
-      cards.setCoffee(false);
+      cards.setMate(false);
       cards.setCanReveal(false);
       cards.fiboCards.forEach(fibo => (fibo.checked = false));
     });
@@ -126,6 +130,10 @@ const useCreateRoom = (socket: Socket) => {
     socket.on('server:invalid_room', () => {
       setGameStarted(false);
       navigate('/404');
+    });
+
+    socket.on('server:issues', issues => {
+      issue.issues.setRoomIssues(issues);
     });
   }, []);
 
@@ -141,7 +149,7 @@ const useCreateRoom = (socket: Socket) => {
       gameName,
       users,
       average,
-      coffee: cards.coffee,
+      mate: cards.mate,
       handleChooseUsername,
       revealingTime: time
     },
@@ -156,7 +164,8 @@ const useCreateRoom = (socket: Socket) => {
       allowedNewGame,
       startNewVoting: cards.startNewVoting,
       revealCards: cards.revealCards
-    }
+    },
+    issue
   };
 };
 

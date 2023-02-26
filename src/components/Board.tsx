@@ -3,8 +3,8 @@ import Typography from '@mui/material/Typography';
 import { StyledButton } from '../styles';
 import { User } from '../types/User';
 import { useMemo } from 'react';
-import { Link } from '@mui/material';
-import Modal from './Modal';
+import Votes from './Votes';
+import { useMediaQuery, useTheme } from '@mui/material';
 
 type Board = {
   revealing: boolean;
@@ -14,6 +14,9 @@ type Board = {
   startNewVoting: (roomId: string) => void;
   roomId: string;
   revealingTime: number;
+  handleOpenInvite: () => void;
+  reveal: boolean;
+  openDrawer: boolean;
 };
 
 const Board: React.FC<Board> = ({
@@ -23,8 +26,14 @@ const Board: React.FC<Board> = ({
   revealCards,
   startNewVoting,
   roomId,
-  revealingTime
+  revealingTime,
+  handleOpenInvite,
+  reveal,
+  openDrawer
 }) => {
+  const theme = useTheme();
+  const matchesMd = useMediaQuery(theme.breakpoints.down('md'));
+
   const boardContent = useMemo(() => {
     if (!revealing) {
       if (allowedReveal) {
@@ -72,7 +81,7 @@ const Board: React.FC<Board> = ({
             variant='contained'
             color='primary'
             onClick={() => startNewVoting(roomId)}>
-            Start new voting
+            {matchesMd ? 'New voting' : 'Start new voting'}
           </StyledButton>
         );
       } else {
@@ -100,65 +109,83 @@ const Board: React.FC<Board> = ({
         Pick your cards!
       </Typography>
     );
-  }, [allowedReveal, users, revealing, revealingTime]);
+  }, [allowedReveal, users, revealing, revealingTime, matchesMd]);
 
-  return (
-    <div>
-      {users && users.length < 2 && (
-        <Box
-          sx={{
-            marginBottom: 1.8
-          }}>
-          <Box
-            sx={{
-              fontSize: 23,
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'baseline',
-              userSelect: 'none'
-            }}>
-            Feeling lonely?
-            <Typography
-              sx={{ fontSize: 18, marginLeft: '5px', userSelect: 'none' }}>
-              😴
-            </Typography>
-          </Box>
-          <Modal
-            children={
-              <Box
-                sx={{
-                  display: 'inline-block',
-                  fontSize: 23,
-                  fontWeight: 700,
-                  color: 'text.secondary',
-                  cursor: 'pointer',
-                  textDecoration: 'none',
-                  transition: 'all 0.3s',
-                  '&:hover': {
-                    transition: 'all 0.3s',
-                    opacity: 0.7
-                  }
-                }}>
-                Invite players
-              </Box>
-            }
-          />
-        </Box>
-      )}
+  const feelingLonely = useMemo(() => {
+    return (
       <Box
         sx={{
+          marginBottom: 1.8
+        }}>
+        <Box
+          sx={{
+            fontSize: 23,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'baseline',
+            userSelect: 'none'
+          }}>
+          Feeling lonely?
+          <Typography
+            sx={{ fontSize: 18, marginLeft: '5px', userSelect: 'none' }}>
+            😴
+          </Typography>
+        </Box>
+        <Box
+          onClick={handleOpenInvite}
+          sx={{
+            display: 'inline-block',
+            fontSize: 23,
+            fontWeight: 700,
+            color: 'text.secondary',
+            cursor: 'pointer',
+            textDecoration: 'none',
+            transition: 'all 0.3s',
+            userSelect: 'none',
+            '&:hover': {
+              transition: 'all 0.3s',
+              opacity: 0.7
+            }
+          }}>
+          Invite players
+        </Box>
+      </Box>
+    );
+  }, []);
+
+  return (
+    <Box
+      sx={{
+        position: 'relative',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: matchesMd ? 10 : 12,
+        width: openDrawer ? 'calc(100vw - 600px)' : '100%',
+        transition: 'all .2s'
+      }}>
+      {users && users.length < 2 && feelingLonely}
+      <Box
+        sx={{
+          position: 'relative',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
           backgroundColor: '#d7e9ff',
-          width: '21rem',
+          width: matchesMd ? 300 : 440,
           height: '9.4rem',
           borderRadius: '35px',
-          margin: '0 auto'
+          margin: '0 auto',
+          zIndex: 1
         }}>
         {boardContent}
       </Box>
-    </div>
+      <Votes
+        users={users}
+        reveal={reveal}
+      />
+    </Box>
   );
 };
 

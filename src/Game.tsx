@@ -1,21 +1,56 @@
 import './App.css';
 import { io } from 'socket.io-client';
 import useRoom from './helpers/useRoom';
-import Cards from './components/Card';
-import Votes from './components/Votes';
+import Cards from './components/Cards';
 import { StyledButton, StyledTextField } from './styles';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import Board from './components/Board';
 import Header from './components/Header';
+import DrawerRight from './components/Drawer';
+import { useCallback, useState } from 'react';
+import InviteModal from './components/InviteModal';
+import VotingResult from './components/VotingResult';
+import { appTheme } from './Theme';
 
 const socket = io('ws://localhost:3000');
 
 const Game = () => {
-  const { room, user } = useRoom(socket);
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const [openInvite, setOpenInvite] = useState(false);
+
+  const { room, user, issue } = useRoom(socket);
+
+  const handleOpenDrawer = useCallback(() => {
+    setOpenDrawer(prev => !prev);
+  }, [openDrawer]);
+
+  const handleDrawerClose = useCallback(() => {
+    setOpenDrawer(false);
+  }, []);
+
+  const handleOpenInvite = useCallback(() => {
+    setOpenInvite(true);
+  }, []);
+
+  const handleCloseInvite = useCallback(() => {
+    setOpenInvite(false);
+  }, []);
+
+  const theme = useTheme();
+  const matchesSm = useMediaQuery(theme.breakpoints.down('sm'));
+  const matchesMd = useMediaQuery(theme.breakpoints.down('md'));
+  const matchesLg = useMediaQuery(theme.breakpoints.down('lg'));
+  const matchesXl = useMediaQuery(theme.breakpoints.down('xl'));
 
   return (
-    <div className='App'>
+    <Box
+      sx={{
+        width: '100vw'
+      }}>
       <Header
+        openDrawer={openDrawer}
+        handleOpenInvite={handleOpenInvite}
+        handleOpenDrawer={handleOpenDrawer}
         gameName={room.gameName}
         username={user.username}
         gameStarted={room.gameStarted}
@@ -26,7 +61,19 @@ const Game = () => {
           sx={{
             display: 'flex',
             flexDirection: 'column',
-            marginTop: '3.5rem'
+            justifyContent: 'center',
+            marginX: 'auto',
+            marginTop: '3.5rem',
+            maxWidth: matchesSm
+              ? '95%'
+              : matchesMd
+              ? '85%'
+              : matchesLg
+              ? '65%'
+              : matchesXl
+              ? '45%'
+              : '33%',
+            transition: 'all .1s'
           }}>
           <Typography
             sx={{
@@ -38,13 +85,16 @@ const Game = () => {
             Choose a name for your game.
           </Typography>
           <StyledTextField
+            sx={{
+              width: '100%'
+            }}
             autoComplete='off'
             variant='outlined'
             label="Game's name"
             onChange={e => room.setGameName(e.target.value)}
           />
           <StyledButton
-            sx={{ fontSize: 24, padding: '0.4rem' }}
+            sx={{ fontSize: 24, padding: '0.4rem', width: '100%' }}
             autoCapitalize='none'
             variant='contained'
             color='primary'
@@ -96,6 +146,7 @@ const Game = () => {
 
       {room.gameStarted && room.gameName && (
         <Board
+          openDrawer={openDrawer}
           users={room.users}
           roomId={room.roomId}
           allowedReveal={user.allowedReveal}
@@ -103,19 +154,14 @@ const Game = () => {
           revealCards={user.revealCards}
           startNewVoting={user.startNewVoting}
           revealingTime={room.revealingTime}
-        />
-      )}
-
-      {room.gameStarted && (
-        <Votes
-          users={room.users}
+          handleOpenInvite={handleOpenInvite}
           reveal={room.revealing && room.revealingTime <= 0}
         />
       )}
 
       {!room.revealing && room.gameStarted && (
         <Cards
-          revealing={room.revealing}
+          openDrawer={openDrawer}
           roomId={room.roomId}
           clientId={user.clientId}
           fiboCards={room.fiboCards}
@@ -124,37 +170,27 @@ const Game = () => {
       )}
 
       {room.revealing && room.revealingTime <= 0 && (
-        <div className='card-container'>
-          {room.cards &&
-            room.cards.map(card => (
-              <div
-                key={card.card}
-                className='card-vote-container'>
-                <div className='card-vote'>{card.card}</div>
-                <span className='vote-quantity'>
-                  {card.quantity} {card.quantity > 1 ? 'Votes' : 'Vote'}
-                </span>
-              </div>
-            ))}
-
-          <div>
-            {room.average !== undefined && room.average !== null && (
-              <div className='average'>
-                <p>Average:</p>
-                <p className='average-number'>{room.average}</p>
-              </div>
-            )}
-
-            {room.coffee && (
-              <div className='coffee'>
-                <p>Coffee time!</p>
-                <span>☕</span>
-              </div>
-            )}
-          </div>
-        </div>
+        <VotingResult
+          openDrawer={openDrawer}
+          average={room.average}
+          cards={room.cards}
+          mate={room.mate}
+        />
       )}
-    </div>
+
+      <InviteModal
+        open={openInvite}
+        handleClose={handleCloseInvite}
+      />
+
+      <DrawerRight
+        open={openDrawer}
+        handleDrawerClose={handleDrawerClose}
+        useIssue={issue}
+        revealing={room.revealing}
+        roomId={room.roomId}
+      />
+    </Box>
   );
 };
 
