@@ -138,11 +138,12 @@ const useIssue = (socket: Socket) => {
       if (issue) {
         if (issue.voting) {
           issue.voting = !issue.voting;
+          handleEditIssue(issue, roomId);
         } else {
           roomIssues.forEach(issue => (issue.voting = false));
           issue.voting = !issue.voting;
+          socket.emit('client:edit_issues_voting', { issue, roomId });
         }
-        handleEditIssue(issue, roomId);
       }
     },
     [votingNow, roomIssues]
