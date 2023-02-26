@@ -30,7 +30,7 @@
   flex-direction: row;
 }
 
-.card-voted {
+/* .card-voted {
   color: #3993ff;
   font-size: 1.3rem;
   font-weight: 700;
@@ -44,7 +44,7 @@
   background-color: #fff;
   margin: 5px 10px;
   cursor: pointer;
-}
+} */
 
 /* .card {
   color: #3993ff;
@@ -134,8 +134,7 @@
   border: 1px solid #ededed25;
 } */
 
-.back-card {
-  cursor: default;
+/* .back-card {
   background-color: #fff;
   background-image: url(/logo.png);
   background-position-x: center;
@@ -144,13 +143,13 @@
   background-size: 2rem 2rem;
   box-shadow: 2px 2px 5px #00000095;
   border: 1px solid #ededed25;
-}
+} */
 
-.user {
+/* .user {
   font-size: 1.2rem;
   font-weight: 600;
   height: 1.2rem;
-}
+} */
 
 .game-name {
   font-size: 1.6rem;

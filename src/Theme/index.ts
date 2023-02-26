@@ -23,7 +23,7 @@ export const appTheme = createTheme({
   breakpoints: {
     values: {
       xs: 330,
-      sm: 425,
+      sm: 500,
       md: 1030,
       lg: 1200,
       xl: 1536

@@ -11,72 +11,89 @@ type VotingResults = {
 const VotingResult: React.FC<VotingResults> = ({ cards, average, coffee }) => {
   const theme = useTheme();
   const matchesMd = useMediaQuery(theme.breakpoints.down('md'));
+  const matchesSm = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <Box
       sx={{
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center',
+        alignItems: matchesSm ? 'flex-start' : 'center',
         userSelect: 'none',
-        position: 'absolute',
+        position: 'fixed',
         width: '100%',
         height: 'fit-content',
+        flexDirection: matchesMd ? 'column-reverse' : 'row',
         bottom: 0,
         zIndex: 1,
         backgroundColor: '#f9f9f9',
-        padding: 1.5
+        padding: 1.5,
+        overflowX: matchesMd ? 'auto' : 'hidden'
       }}>
-      {cards &&
-        cards.map(card => (
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column'
-            }}
-            key={card.card}>
+      <Box
+        sx={{
+          display: 'flex'
+        }}>
+        {cards &&
+          cards.map(card => (
             <Box
               sx={{
-                fontSize: '1.3rem',
-                fontWeight: 600,
                 display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                border: '2px solid #000',
-                borderRadius: '10px',
-                backgroundColor: '#fff',
-                height: 78,
-                width: 50,
-                color: 'black',
-                userSelect: 'none',
-                cursor: 'default',
-                margin: '0 15px 15px'
-              }}>
-              {card.card}
+                flexDirection: 'column',
+                margin: 0.5
+              }}
+              key={card.card}>
+              <Box
+                sx={{
+                  fontSize: 21.5,
+                  fontWeight: 700,
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  border: '2px solid #000',
+                  borderRadius: '10px',
+                  backgroundColor: '#fff',
+                  height: 80,
+                  width: 50,
+                  color: 'black',
+                  userSelect: 'none',
+                  cursor: 'default',
+                  margin: '0 15px 10px'
+                }}>
+                {card.card}
+              </Box>
+              <Box
+                sx={{
+                  color: '#717171',
+                  fontSize: 19.5,
+                  fontWeight: 500
+                }}>
+                {card.quantity} {card.quantity > 1 ? 'Votes' : 'Vote'}
+              </Box>
             </Box>
-            <Box
-              sx={{
-                color: '#717171',
-                fontSize: 19.5,
-                fontWeight: 500
-              }}>
-              {card.quantity} {card.quantity > 1 ? 'Votes' : 'Vote'}
-            </Box>
-          </Box>
-        ))}
+          ))}
+      </Box>
 
-      <div>
+      <Box
+        sx={{
+          width: matchesMd ? '100%' : 'fit-content',
+          display: 'flex',
+          flexDirection: matchesMd ? 'row' : 'column',
+          justifyContent: 'center',
+          gap: 5
+        }}>
         {average !== undefined && average !== null && (
           <Box
             sx={{
-              marginLeft: 5
+              marginLeft: matchesMd ? 0 : 5,
+              marginBottom: 1
             }}>
-            <Typography sx={{ fontSize: 24, color: '#a8aeb2' }}>
+            <Typography sx={{ fontSize: 22, color: '#a8aeb2' }}>
               Average:
             </Typography>
             <Typography
               sx={{
-                fontSize: 40,
+                fontSize: 35,
                 fontWeight: 700,
                 color: 'black'
               }}>
@@ -88,11 +105,10 @@ const VotingResult: React.FC<VotingResults> = ({ cards, average, coffee }) => {
         {coffee && (
           <Box
             sx={{
-              fontSize: 24,
-              marginLeft: 5,
-              color: '#a8aeb2'
+              marginLeft: matchesMd ? 0 : 5,
+              marginBottom: 1
             }}>
-            <Typography sx={{ fontSize: 24, color: '#a8aeb2' }}>
+            <Typography sx={{ fontSize: 22, color: '#a8aeb2' }}>
               Coffee time!
             </Typography>
             <Box
@@ -103,7 +119,7 @@ const VotingResult: React.FC<VotingResults> = ({ cards, average, coffee }) => {
             </Box>
           </Box>
         )}
-      </div>
+      </Box>
     </Box>
   );
 };
