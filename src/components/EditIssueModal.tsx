@@ -4,7 +4,9 @@ import {
   IconButton,
   Link,
   styled,
-  Typography
+  Typography,
+  useMediaQuery,
+  useTheme
 } from '@mui/material';
 import { StyledButton } from '../styles';
 import CloseIcon from '@mui/icons-material/Close';
@@ -26,7 +28,7 @@ const BootstrapDialog = styled(Dialog)(() => ({
     alignItems: 'center',
     justifyContent: 'center',
     maxWidth: 1060,
-    width: 1060,
+    width: '95vw',
     maxHeight: '97vh',
     borderRadius: 20,
     boxShadow: 'none'
@@ -63,6 +65,9 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
     useIssue.issues.handleDeleteIssue(issue.id, roomId);
     handleCloseDeleteIssue();
   }, []);
+
+  const theme = useTheme();
+  const matchesMd = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <Box>
@@ -102,8 +107,8 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
             alignItems: 'center',
             width: '100%',
             flexGrow: 1,
-            paddingX: 5,
-            paddingTop: 9.8,
+            paddingX: matchesMd ? 1 : 5,
+            paddingTop: matchesMd ? 5 : 9.8,
             gap: 3,
             overflow: 'auto',
             paddingBottom: 6
@@ -239,10 +244,10 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                 <Box
                   onClick={useIssue.editLink.handleEditLink}
                   sx={{
-                    width: useIssue.editLink.openEditLink ? '98%' : '97%',
+                    width: useIssue.editLink.openEditLink ? '98%' : '96%',
                     marginTop: issue.link ? 0 : 1.5,
                     marginBottom: 1.5,
-                    marginX: issue.link ? 1 : 2,
+                    marginX: issue.link ? 1 : matchesMd ? 0 : 2,
                     display: 'flex',
                     flexGrow: 1,
                     paddingY: issue.link ? 0.6 : 1.2,
@@ -359,7 +364,7 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                       ? 1
                       : 2,
                     marginBottom: 2,
-                    marginX: 2,
+                    marginX: matchesMd ? 0 : 2,
                     display: 'flex',
                     flexGrow: 1,
                     paddingY: useIssue.editDescription.issueDescription
@@ -438,10 +443,11 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                 border: 'none',
                 borderRadius: 2.5,
                 width: 'fit-content',
-                paddingY: 0.5,
-                paddingX: 3,
+                paddingY: matchesMd ? 3.5 : 0.5,
+                paddingX: matchesMd ? 1 : 3,
                 fontWeight: 700,
                 fontSize: 23,
+                lineHeight: 1,
                 backgroundColor: issue.voting ? '#3993ff' : '#e8e9ea',
                 '&:hover': {
                   border: 'none',
@@ -458,7 +464,7 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
             <Box sx={{ position: 'relative' }}>
               <StyledButton
                 ref={storyPointsButtonRef}
-                onClick={useIssue.editStoryPoints.handleStoryPointsMenu}
+                onClick={e => useIssue.editStoryPoints.handleStoryPointsMenu(e)}
                 variant='outlined'
                 sx={{
                   position: 'relative',

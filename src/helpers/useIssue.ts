@@ -120,7 +120,7 @@ const useIssue = (socket: Socket) => {
 
       if (event.id === 'storyPointsMenuBox') return;
 
-      setOpenStoryPointsMenu(!openStoryPointsMenu);
+      setOpenStoryPointsMenu(prev => !prev);
     },
     [openStoryPointsMenu]
   );
