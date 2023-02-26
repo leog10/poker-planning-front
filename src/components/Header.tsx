@@ -83,7 +83,8 @@ const Header: React.FC<Header> = ({
               }
             }}>
             {gameName && gameStarted ? gameName : 'Create game'}
-            {gameName && gameStarted && (
+            {/* Disabled until modal working */}
+            {/* {gameName && gameStarted && (
               <KeyboardArrowDownIcon
                 sx={{
                   marginTop: 0.5,
@@ -92,7 +93,7 @@ const Header: React.FC<Header> = ({
                   width: '28px'
                 }}
               />
-            )}
+            )} */}
           </Box>
         )}
       </Box>
@@ -132,14 +133,15 @@ const Header: React.FC<Header> = ({
                   color: '#626262'
                 }}>
                 {username}
-                <KeyboardArrowDownIcon
+                {/* Disabled until modal is working */}
+                {/* <KeyboardArrowDownIcon
                   sx={{
                     marginTop: 0.2,
                     marginLeft: 0.5,
                     color: '#626262',
                     width: '28px'
                   }}
-                />
+                /> */}
               </Box>
             </Box>
           )}
