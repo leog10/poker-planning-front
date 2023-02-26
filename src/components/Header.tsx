@@ -10,6 +10,7 @@ type Header = {
   gameStarted: boolean;
   handleOpenDrawer: () => void;
   handleOpenInvite: () => void;
+  openDrawer: boolean;
 };
 
 const Header: React.FC<Header> = ({
@@ -17,7 +18,8 @@ const Header: React.FC<Header> = ({
   username,
   gameStarted,
   handleOpenDrawer,
-  handleOpenInvite
+  handleOpenInvite,
+  openDrawer
 }) => {
   const theme = useTheme();
   const matchesMd = useMediaQuery(theme.breakpoints.down('md'));
@@ -30,14 +32,15 @@ const Header: React.FC<Header> = ({
         position: 'fixed',
         top: 0,
         left: 0,
-        width: '100%',
+        width: openDrawer ? 'calc(100vw - 600px)' : '100%',
         padding: '1.7rem 2.5rem',
         alignItems: 'center',
         justifyContent: 'flex-start',
         backgroundColor: '#F9F9F9',
         userSelect: 'none',
         height: '6.2rem',
-        zIndex: 99
+        zIndex: 99,
+        transition: 'all .2s'
       }}>
       <Box
         sx={{

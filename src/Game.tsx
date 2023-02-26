@@ -1,7 +1,7 @@
 import './App.css';
 import { io } from 'socket.io-client';
 import useRoom from './helpers/useRoom';
-import Cards from './components/Card';
+import Cards from './components/Cards';
 import { StyledButton, StyledTextField } from './styles';
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
 import Board from './components/Board';
@@ -48,6 +48,7 @@ const Game = () => {
         width: '100vw'
       }}>
       <Header
+        openDrawer={openDrawer}
         handleOpenInvite={handleOpenInvite}
         handleOpenDrawer={handleOpenDrawer}
         gameName={room.gameName}
@@ -145,6 +146,7 @@ const Game = () => {
 
       {room.gameStarted && room.gameName && (
         <Board
+          openDrawer={openDrawer}
           users={room.users}
           roomId={room.roomId}
           allowedReveal={user.allowedReveal}
@@ -159,6 +161,7 @@ const Game = () => {
 
       {!room.revealing && room.gameStarted && (
         <Cards
+          openDrawer={openDrawer}
           roomId={room.roomId}
           clientId={user.clientId}
           fiboCards={room.fiboCards}
@@ -168,6 +171,7 @@ const Game = () => {
 
       {room.revealing && room.revealingTime <= 0 && (
         <VotingResult
+          openDrawer={openDrawer}
           average={room.average}
           cards={room.cards}
           mate={room.mate}

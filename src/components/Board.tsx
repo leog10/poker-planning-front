@@ -16,6 +16,7 @@ type Board = {
   revealingTime: number;
   handleOpenInvite: () => void;
   reveal: boolean;
+  openDrawer: boolean;
 };
 
 const Board: React.FC<Board> = ({
@@ -27,7 +28,8 @@ const Board: React.FC<Board> = ({
   roomId,
   revealingTime,
   handleOpenInvite,
-  reveal
+  reveal,
+  openDrawer
 }) => {
   const theme = useTheme();
   const matchesMd = useMediaQuery(theme.breakpoints.down('md'));
@@ -159,7 +161,9 @@ const Board: React.FC<Board> = ({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: matchesMd ? 10 : 12
+        marginBottom: matchesMd ? 10 : 12,
+        width: openDrawer ? 'calc(100vw - 600px)' : '100%',
+        transition: 'all .2s'
       }}>
       {users && users.length < 2 && feelingLonely}
       <Box

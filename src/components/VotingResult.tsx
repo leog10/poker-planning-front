@@ -6,9 +6,15 @@ type VotingResults = {
   cards: CardVotes[] | undefined;
   average: number | undefined;
   mate: boolean;
+  openDrawer: boolean;
 };
 
-const VotingResult: React.FC<VotingResults> = ({ cards, average, mate }) => {
+const VotingResult: React.FC<VotingResults> = ({
+  cards,
+  average,
+  mate,
+  openDrawer
+}) => {
   const theme = useTheme();
   const matchesMd = useMediaQuery(theme.breakpoints.down('md'));
   const matchesXs = useMediaQuery(theme.breakpoints.down('xs'));
@@ -21,14 +27,15 @@ const VotingResult: React.FC<VotingResults> = ({ cards, average, mate }) => {
         alignItems: matchesXs ? 'flex-start' : 'center',
         userSelect: 'none',
         position: 'fixed',
-        width: '100%',
         height: 'fit-content',
         flexDirection: matchesMd ? 'column-reverse' : 'row',
         bottom: 0,
         zIndex: 1,
         backgroundColor: '#f9f9f9',
         padding: 1.5,
-        overflowX: matchesMd ? 'auto' : 'hidden'
+        overflowX: matchesMd ? 'auto' : 'hidden',
+        width: openDrawer ? 'calc(100vw - 600px)' : '100%',
+        transition: 'all .2s'
       }}>
       <Box
         sx={{

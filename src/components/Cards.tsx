@@ -7,13 +7,15 @@ type Cards = {
   roomId: string;
   clientId: string;
   handleCardSelect: (card: string, roomId: string, clientId: string) => void;
+  openDrawer: boolean;
 };
 
 const Cards: React.FC<Cards> = ({
   fiboCards,
   roomId,
   clientId,
-  handleCardSelect
+  handleCardSelect,
+  openDrawer
 }) => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down('md'));
@@ -26,10 +28,11 @@ const Cards: React.FC<Cards> = ({
           flexDirection: 'column',
           justifyContent: 'center',
           position: 'fixed',
-          width: '100%',
           left: 0,
           bottom: 0,
-          zIndex: 1
+          zIndex: 1,
+          width: openDrawer ? 'calc(100vw - 600px)' : '100%',
+          transition: 'all .2s'
         }}>
         {!matches && (
           <Box
