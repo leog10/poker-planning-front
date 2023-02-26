@@ -1,4 +1,11 @@
-import { Box, Drawer, ToggleButton, Typography } from '@mui/material';
+import {
+  Box,
+  Drawer,
+  ToggleButton,
+  Typography,
+  useMediaQuery,
+  useTheme
+} from '@mui/material';
 import { useCallback, useMemo, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
@@ -85,13 +92,18 @@ const DrawerRight: React.FC<DrawerRight> = ({
     }
   }, [useIssue.issues]);
 
+  const theme = useTheme();
+  const matchesDrawer = useMediaQuery(theme.breakpoints.down('drawer'));
+  const matchesMd = useMediaQuery(theme.breakpoints.down('md'));
+
   return (
     <Drawer
       sx={{
         width: -drawerWidth,
         flexShrink: 0,
         '& .MuiDrawer-paper': {
-          width: drawerWidth,
+          maxWidth: drawerWidth,
+          width: matchesDrawer ? '100%' : drawerWidth,
           border: 'none'
         }
       }}
@@ -122,43 +134,49 @@ const DrawerRight: React.FC<DrawerRight> = ({
           </Typography>
         </Box>
         <Box sx={{ position: 'relative' }}>
-          <ToggleButton
-            href=''
-            value={'menu'}
-            onClick={handleIssuesMenu}
-            selected={openIssuesMenu}
-            aria-label='close'
-            sx={{
-              height: 60,
-              width: 60,
-              color: theme => theme.palette.grey[700],
-              borderRadius: 15,
-              border: 'none',
-              '&.Mui-selected': {
-                transition: 'all 0.3s',
-                backgroundColor: '#eaeaea'
-              }
-            }}>
-            <MoreVertIcon
-              sx={{
-                fontSize: 26
-              }}
-            />
-          </ToggleButton>
+          {useIssue.issues.roomIssues &&
+            useIssue.issues.roomIssues.length > 0 && (
+              <ToggleButton
+                href=''
+                value={'menu'}
+                onClick={handleIssuesMenu}
+                selected={openIssuesMenu}
+                aria-label='close'
+                sx={{
+                  height: 60,
+                  width: 60,
+                  color: theme => theme.palette.grey[700],
+                  borderRadius: 15,
+                  border: 'none',
+                  '&.Mui-selected': {
+                    transition: 'all 0.3s',
+                    backgroundColor: '#eaeaea'
+                  }
+                }}>
+                <MoreVertIcon
+                  sx={{
+                    fontSize: 26
+                  }}
+                />
+              </ToggleButton>
+            )}
           <IssuesMenu
             open={openIssuesMenu}
             handleClose={handleCloseMenuIssues}
             openDeleteAllIssuesModal={handleOpenDeleteIssues}
           />
         </Box>
-        <Divider
-          sx={{
-            borderColor: '#d0d0d0',
-            borderWidth: 1,
-            height: 32
-          }}
-          orientation='vertical'
-        />
+        {useIssue.issues.roomIssues &&
+          useIssue.issues.roomIssues.length > 0 && (
+            <Divider
+              sx={{
+                borderColor: '#d0d0d0',
+                borderWidth: 1,
+                height: 32
+              }}
+              orientation='vertical'
+            />
+          )}
         <IconButton
           onClick={handleDrawerClose}
           aria-label='close'
@@ -177,8 +195,8 @@ const DrawerRight: React.FC<DrawerRight> = ({
       <Box
         sx={{
           display: 'flex',
-          paddingLeft: 5,
-          paddingRight: 5,
+          paddingLeft: matchesMd ? 2 : 5,
+          paddingRight: matchesMd ? 2 : 5,
           flexDirection: 'column'
         }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>

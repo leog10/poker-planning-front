@@ -1,4 +1,4 @@
-import { Box, TextField } from '@mui/material';
+import { Box, TextField, useMediaQuery, useTheme } from '@mui/material';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import { useCallback, useState } from 'react';
 import { StyledButton } from '../styles';
@@ -26,6 +26,9 @@ const NewIssue: React.FC<NewIssue> = ({ handleClose, handleAddIssue }) => {
 
     handleAddIssue(title);
   }, [title]);
+
+  const theme = useTheme();
+  const matchesSm = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <ClickAwayListener onClickAway={handleClose}>
@@ -65,7 +68,13 @@ const NewIssue: React.FC<NewIssue> = ({ handleClose, handleAddIssue }) => {
             }
           }}
         />
-        <Box sx={{ display: 'flex', gap: 2, marginTop: 2.5 }}>
+        <Box
+          sx={{
+            display: 'flex',
+            gap: 2,
+            marginTop: 2.5,
+            flexDirection: matchesSm ? 'column' : 'row'
+          }}>
           <StyledButton
             onClick={handleClose}
             variant='outlined'

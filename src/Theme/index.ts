@@ -1,6 +1,17 @@
 import { blue, pink } from '@mui/material/colors';
 import { createTheme } from '@mui/material/styles';
 
+declare module '@mui/material/styles' {
+  interface BreakpointOverrides {
+    xs: true; // removes the `xs` breakpoint
+    sm: true;
+    md: true;
+    lg: true;
+    xl: true;
+    drawer: true;
+  }
+}
+
 export const appTheme = createTheme({
   palette: {
     // mode: 'dark',
@@ -26,7 +37,8 @@ export const appTheme = createTheme({
       sm: 500,
       md: 1030,
       lg: 1200,
-      xl: 1536
+      xl: 1536,
+      drawer: 600
     }
   }
 });
