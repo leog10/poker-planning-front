@@ -38,7 +38,7 @@ const Votes: React.FC<Votes> = ({ users, reveal }) => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 height: matchesMd ? 77 : 90,
-                width: matchesMd ? 45 : 50,
+                width: matchesMd ? 45 : 52,
                 border:
                   user.card && !reveal
                     ? '1px solid #ededed25'
