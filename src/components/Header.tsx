@@ -3,6 +3,7 @@ import { StyledButton } from '../styles';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import { Link } from 'react-router-dom';
+import Tooltip from '@mui/material/Tooltip';
 
 type Header = {
   gameName: string;
@@ -142,52 +143,102 @@ const Header: React.FC<Header> = ({
               </Box>
             </Box>
           )}
-          <StyledButton
-            onClick={handleOpenInvite}
-            variant='outlined'
-            sx={{
-              textWrap: 'no-wrap',
-              border: 2,
-              height: 60,
-              width: matchesMd ? 50 : 250,
-              padding: '0.4rem 1.2rem',
-              fontWeight: 700,
-              fontSize: matchesMd ? 21 : 23,
-              backgroundColor: '#fff',
-              '&:hover': {
-                border: 2,
-                transition: 'all 0.3s',
-                backgroundColor: '#ebf4ff',
-                cursor: 'pointer'
+          <Tooltip
+            title='Invite players'
+            TransitionProps={{ timeout: 0 }}
+            PopperProps={{
+              modifiers: [
+                {
+                  name: 'offset',
+                  options: {
+                    offset: [0, -5]
+                  }
+                }
+              ]
+            }}
+            componentsProps={{
+              tooltip: {
+                sx: {
+                  color: '#ededed',
+                  fontSize: 19,
+                  paddingY: 0.5,
+                  paddingX: 1,
+                  backgroundColor: '#303e49'
+                }
               }
             }}>
-            <Box sx={{ marginRight: matchesMd ? 0 : 2 }}>🧛‍♂️</Box>
-            {matchesMd ? '' : 'Invite players'}
-          </StyledButton>
-          <StyledButton
-            onClick={handleOpenDrawer}
-            variant='outlined'
-            sx={{
-              border: 2,
-              width: 'fit-content',
-              padding: '0.8rem 0.9rem',
-              margin: 0,
-              fontWeight: 700,
-              height: 60,
-              backgroundColor: '#fff',
-              '&:hover': {
+            <StyledButton
+              onClick={handleOpenInvite}
+              variant='outlined'
+              sx={{
+                textWrap: 'no-wrap',
                 border: 2,
-                transition: 'all 0.3s',
-                backgroundColor: '#ebf4ff',
-                cursor: 'pointer'
+                height: 60,
+                width: matchesMd ? 50 : 250,
+                padding: '0.4rem 1.2rem',
+                fontWeight: 700,
+                fontSize: matchesMd ? 21 : 23,
+                backgroundColor: '#fff',
+                '&:hover': {
+                  border: 2,
+                  transition: 'all 0.3s',
+                  backgroundColor: '#ebf4ff',
+                  cursor: 'pointer'
+                }
+              }}>
+              <Box sx={{ marginRight: matchesMd ? 0 : 2 }}>🧛‍♂️</Box>
+              {matchesMd ? '' : 'Invite players'}
+            </StyledButton>
+          </Tooltip>
+          <Tooltip
+            title={openDrawer ? 'Hide issues' : 'Show issues'}
+            TransitionProps={{ timeout: 0 }}
+            PopperProps={{
+              modifiers: [
+                {
+                  name: 'offset',
+                  options: {
+                    offset: [0, -5]
+                  }
+                }
+              ]
+            }}
+            componentsProps={{
+              tooltip: {
+                sx: {
+                  color: '#ededed',
+                  fontSize: 19,
+                  paddingY: 0.5,
+                  paddingX: 1,
+                  backgroundColor: '#303e49'
+                }
               }
             }}>
-            <ArticleOutlinedIcon
-              fontSize='small'
-              viewBox='0 0 24 24'
-              sx={{ width: '24px', height: '24px' }}
-            />
-          </StyledButton>
+            <StyledButton
+              onClick={handleOpenDrawer}
+              variant='outlined'
+              sx={{
+                border: 2,
+                width: 'fit-content',
+                padding: '0.8rem 0.9rem',
+                margin: 0,
+                fontWeight: 700,
+                height: 60,
+                backgroundColor: '#fff',
+                '&:hover': {
+                  border: 2,
+                  transition: 'all 0.3s',
+                  backgroundColor: '#ebf4ff',
+                  cursor: 'pointer'
+                }
+              }}>
+              <ArticleOutlinedIcon
+                fontSize='small'
+                viewBox='0 0 24 24'
+                sx={{ width: '24px', height: '24px' }}
+              />
+            </StyledButton>
+          </Tooltip>
         </Box>
       )}
     </Box>

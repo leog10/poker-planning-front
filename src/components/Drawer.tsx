@@ -2,6 +2,7 @@ import {
   Box,
   Drawer,
   ToggleButton,
+  Tooltip,
   Typography,
   useMediaQuery,
   useTheme
@@ -136,29 +137,54 @@ const DrawerRight: React.FC<DrawerRight> = ({
         <Box sx={{ position: 'relative' }}>
           {useIssue.issues.roomIssues &&
             useIssue.issues.roomIssues.length > 0 && (
-              <ToggleButton
-                href=''
-                value={'menu'}
-                onClick={handleIssuesMenu}
-                selected={openIssuesMenu}
-                aria-label='close'
-                sx={{
-                  height: 60,
-                  width: 60,
-                  color: theme => theme.palette.grey[700],
-                  borderRadius: 15,
-                  border: 'none',
-                  '&.Mui-selected': {
-                    transition: 'all 0.3s',
-                    backgroundColor: '#eaeaea'
+              <Tooltip
+                title={'More actions'}
+                TransitionProps={{ timeout: 0 }}
+                PopperProps={{
+                  modifiers: [
+                    {
+                      name: 'offset',
+                      options: {
+                        offset: [0, -5]
+                      }
+                    }
+                  ]
+                }}
+                componentsProps={{
+                  tooltip: {
+                    sx: {
+                      color: '#ededed',
+                      fontSize: 19,
+                      paddingY: 0.5,
+                      paddingX: 1,
+                      backgroundColor: '#303e49'
+                    }
                   }
                 }}>
-                <MoreVertIcon
+                <ToggleButton
+                  href=''
+                  value={'menu'}
+                  onClick={handleIssuesMenu}
+                  selected={openIssuesMenu}
+                  aria-label='close'
                   sx={{
-                    fontSize: 26
-                  }}
-                />
-              </ToggleButton>
+                    height: 60,
+                    width: 60,
+                    color: theme => theme.palette.grey[700],
+                    borderRadius: 15,
+                    border: 'none',
+                    '&.Mui-selected': {
+                      transition: 'all 0.3s',
+                      backgroundColor: '#eaeaea'
+                    }
+                  }}>
+                  <MoreVertIcon
+                    sx={{
+                      fontSize: 26
+                    }}
+                  />
+                </ToggleButton>
+              </Tooltip>
             )}
           <IssuesMenu
             open={openIssuesMenu}
@@ -177,20 +203,45 @@ const DrawerRight: React.FC<DrawerRight> = ({
               orientation='vertical'
             />
           )}
-        <IconButton
-          onClick={handleDrawerClose}
-          aria-label='close'
-          sx={{
-            height: 60,
-            width: 60,
-            color: theme => theme.palette.grey[700]
+        <Tooltip
+          title={'Hide issues'}
+          TransitionProps={{ timeout: 0 }}
+          PopperProps={{
+            modifiers: [
+              {
+                name: 'offset',
+                options: {
+                  offset: [0, -5]
+                }
+              }
+            ]
+          }}
+          componentsProps={{
+            tooltip: {
+              sx: {
+                color: '#ededed',
+                fontSize: 19,
+                paddingY: 0.5,
+                paddingX: 1,
+                backgroundColor: '#303e49'
+              }
+            }
           }}>
-          <CloseIcon
+          <IconButton
+            onClick={handleDrawerClose}
+            aria-label='close'
             sx={{
-              fontSize: 26
-            }}
-          />
-        </IconButton>
+              height: 60,
+              width: 60,
+              color: theme => theme.palette.grey[700]
+            }}>
+            <CloseIcon
+              sx={{
+                fontSize: 26
+              }}
+            />
+          </IconButton>
+        </Tooltip>
       </DrawerHeader>
       <Box
         sx={{

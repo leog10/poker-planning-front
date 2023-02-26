@@ -21,8 +21,8 @@ const Game = () => {
   const { room, user, issue } = useRoom(socket);
 
   const handleOpenDrawer = useCallback(() => {
-    setOpenDrawer(true);
-  }, []);
+    setOpenDrawer(prev => !prev);
+  }, [openDrawer]);
 
   const handleDrawerClose = useCallback(() => {
     setOpenDrawer(false);

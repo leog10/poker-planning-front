@@ -4,6 +4,7 @@ import {
   IconButton,
   Link,
   styled,
+  Tooltip,
   Typography,
   useMediaQuery,
   useTheme
@@ -462,55 +463,87 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                 : 'Vote this issue'}
             </StyledButton>
             <Box sx={{ position: 'relative' }}>
-              <StyledButton
-                ref={storyPointsButtonRef}
-                onClick={e => useIssue.editStoryPoints.handleStoryPointsMenu(e)}
-                variant='outlined'
-                sx={{
-                  position: 'relative',
-                  color: '#000',
-                  margin: 0,
-                  textWrap: 'no-wrap',
-                  border: 'none',
-                  height: 60,
-                  borderRadius: 2.5,
-                  width: '60px',
-                  minWidth: '60px',
-                  padding: '0.33rem 0rem',
-                  backgroundColor: !issue.voting
-                    ? '#e8e9ea'
-                    : useIssue.editStoryPoints.openStoryPointsMenu &&
-                      issue.voting
-                    ? '#bbd6f7'
-                    : useIssue.editStoryPoints.openStoryPointsMenu
-                    ? '#bfc3c5'
-                    : '#fff',
-                  '&:hover': {
-                    border: 'none',
-                    transition: 'all 0.3s',
-                    backgroundColor: !issue.voting ? '#d1d4d7' : '#ebf4ff'
+              <Tooltip
+                placement='bottom-end'
+                title={
+                  useIssue.editStoryPoints.openStoryPointsMenu
+                    ? ''
+                    : 'Select story points'
+                }
+                TransitionProps={{ timeout: 0 }}
+                PopperProps={{
+                  modifiers: [
+                    {
+                      name: 'offset',
+                      options: {
+                        offset: [0, -5]
+                      }
+                    }
+                  ]
+                }}
+                componentsProps={{
+                  tooltip: {
+                    sx: {
+                      color: '#ededed',
+                      fontSize: 19,
+                      paddingY: 0.5,
+                      paddingX: 1,
+                      backgroundColor: '#303e49'
+                    }
                   }
                 }}>
-                <Typography
-                  sx={{ fontWeight: 700, fontFamily: '', fontSize: 23.5 }}>
-                  {issue.storyPoints}
-                </Typography>
-                <StoryPointsMenu
-                  open={useIssue.editStoryPoints.openStoryPointsMenu}
-                  handleClose={
-                    useIssue.editStoryPoints.handleCloseStoryPointsMenu
+                <StyledButton
+                  ref={storyPointsButtonRef}
+                  onClick={e =>
+                    useIssue.editStoryPoints.handleStoryPointsMenu(e)
                   }
-                  handleSelectPoint={card =>
-                    useIssue.editStoryPoints.handleEditStoryPoints(
-                      issue.id,
-                      card,
-                      false,
-                      roomId
-                    )
-                  }
-                  anchorEl={storyPointsButtonRef.current}
-                />
-              </StyledButton>
+                  variant='outlined'
+                  sx={{
+                    position: 'relative',
+                    color: '#000',
+                    margin: 0,
+                    textWrap: 'no-wrap',
+                    border: 'none',
+                    height: 60,
+                    borderRadius: 2.5,
+                    width: '60px',
+                    minWidth: '60px',
+                    padding: '0.33rem 0rem',
+                    backgroundColor: !issue.voting
+                      ? '#e8e9ea'
+                      : useIssue.editStoryPoints.openStoryPointsMenu &&
+                        issue.voting
+                      ? '#bbd6f7'
+                      : useIssue.editStoryPoints.openStoryPointsMenu
+                      ? '#bfc3c5'
+                      : '#fff',
+                    '&:hover': {
+                      border: 'none',
+                      transition: 'all 0.3s',
+                      backgroundColor: !issue.voting ? '#d1d4d7' : '#ebf4ff'
+                    }
+                  }}>
+                  <Typography
+                    sx={{ fontWeight: 700, fontFamily: '', fontSize: 23.5 }}>
+                    {issue.storyPoints}
+                  </Typography>
+                  <StoryPointsMenu
+                    open={useIssue.editStoryPoints.openStoryPointsMenu}
+                    handleClose={
+                      useIssue.editStoryPoints.handleCloseStoryPointsMenu
+                    }
+                    handleSelectPoint={card =>
+                      useIssue.editStoryPoints.handleEditStoryPoints(
+                        issue.id,
+                        card,
+                        false,
+                        roomId
+                      )
+                    }
+                    anchorEl={storyPointsButtonRef.current}
+                  />
+                </StyledButton>
+              </Tooltip>
             </Box>
           </Box>
         </Box>

@@ -1,4 +1,10 @@
-import { Box, IconButton, ToggleButton, Typography } from '@mui/material';
+import {
+  Box,
+  IconButton,
+  ToggleButton,
+  Tooltip,
+  Typography
+} from '@mui/material';
 import { StyledButton } from '../styles';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import IssueCardMenu from './IssueCardMenu';
@@ -211,39 +217,65 @@ const IssueCard: React.FC<IssueCard> = ({ issue, useIssue, roomId }) => {
                 />
               </IconButton>
             )}
-            <StyledButton
-              ref={storyPointsButtonRef}
-              onClick={handleStoryPointsMenu}
-              variant='outlined'
-              sx={{
-                position: 'relative',
-                color: '#000',
-                margin: 0,
-                textWrap: 'no-wrap',
-                border: 'none',
-                borderRadius: 2.5,
-                width: '5px',
-                minWidth: '50px',
-                padding: 1,
-                backgroundColor: !issue.voting
-                  ? '#e8e9ea'
-                  : openStoryPointsMenu && issue.voting
-                  ? '#bbd6f7'
-                  : openStoryPointsMenu
-                  ? '#bfc3c5'
-                  : '#fff',
-                zIndex: 90,
-                '&:hover': {
-                  border: 'none',
-                  transition: 'all 0.3s',
-                  backgroundColor: !issue.voting ? '#d1d4d7' : '#ebf4ff'
+            <Tooltip
+              placement='bottom-start'
+              title={'Select story points'}
+              TransitionProps={{ timeout: 0 }}
+              PopperProps={{
+                modifiers: [
+                  {
+                    name: 'offset',
+                    options: {
+                      offset: [0, -5]
+                    }
+                  }
+                ]
+              }}
+              componentsProps={{
+                tooltip: {
+                  sx: {
+                    color: '#ededed',
+                    fontSize: 19,
+                    paddingY: 0.5,
+                    paddingX: 1,
+                    backgroundColor: '#303e49'
+                  }
                 }
               }}>
-              <Typography
-                sx={{ fontWeight: 700, fontFamily: '', fontSize: 20.5 }}>
-                {issue.storyPoints}
-              </Typography>
-            </StyledButton>
+              <StyledButton
+                ref={storyPointsButtonRef}
+                onClick={handleStoryPointsMenu}
+                variant='outlined'
+                sx={{
+                  position: 'relative',
+                  color: '#000',
+                  margin: 0,
+                  textWrap: 'no-wrap',
+                  border: 'none',
+                  borderRadius: 2.5,
+                  width: '5px',
+                  minWidth: '50px',
+                  padding: 1,
+                  backgroundColor: !issue.voting
+                    ? '#e8e9ea'
+                    : openStoryPointsMenu && issue.voting
+                    ? '#bbd6f7'
+                    : openStoryPointsMenu
+                    ? '#bfc3c5'
+                    : '#fff',
+                  zIndex: 90,
+                  '&:hover': {
+                    border: 'none',
+                    transition: 'all 0.3s',
+                    backgroundColor: !issue.voting ? '#d1d4d7' : '#ebf4ff'
+                  }
+                }}>
+                <Typography
+                  sx={{ fontWeight: 700, fontFamily: '', fontSize: 20.5 }}>
+                  {issue.storyPoints}
+                </Typography>
+              </StyledButton>
+            </Tooltip>
             <StoryPointsMenu
               open={openStoryPointsMenu}
               handleClose={handleCloseStoryPointsMenu}
