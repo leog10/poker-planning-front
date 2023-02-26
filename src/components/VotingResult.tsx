@@ -79,7 +79,7 @@ const VotingResult: React.FC<VotingResults> = ({ cards, average, mate }) => {
         sx={{
           width: matchesXs ? '100%' : 'fit-content',
           display: 'flex',
-          flexDirection: matchesXs ? 'row' : 'column',
+          flexDirection: matchesMd ? 'row' : 'column',
           justifyContent: 'center',
           gap: 5
         }}>
