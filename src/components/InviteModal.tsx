@@ -4,22 +4,30 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import { StyledButton, StyledTextField } from '../styles';
-import { Box } from '@mui/material';
+import { Box, useMediaQuery, useTheme } from '@mui/material';
 
-const BootstrapDialog = styled(Dialog)(() => ({
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiBackdrop-root': {
     backgroundColor: 'rgba(26,41,53,.8)'
   },
   '& .MuiPaper-root': {
+    [theme.breakpoints.down('md')]: {},
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    padding: '0 1.5rem 3.1rem',
     maxWidth: 790,
-    padding: '0 0 3.1rem',
-    width: 790,
+    width: '95vw',
     height: 408,
     borderRadius: 20,
     boxShadow: 'none'
+  },
+  '& .MuiBox-root': {
+    display: 'flex',
+    justifyContent: 'center',
+    maxWidth: '100vw',
+    width: '100%',
+    overflow: 'hidden'
   }
 }));
 
@@ -34,6 +42,10 @@ const InviteModal: React.FC<Modal> = ({ open, handleClose }) => {
     inviteLink && navigator.clipboard.writeText(inviteLink.toString());
     handleClose();
   };
+
+  const theme = useTheme();
+  const matchesMd = useMediaQuery(theme.breakpoints.down('md'));
+  const matchesSm = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <BootstrapDialog
@@ -72,11 +84,13 @@ const InviteModal: React.FC<Modal> = ({ open, handleClose }) => {
         </IconButton>
         <Typography
           sx={{
-            fontSize: 30,
-            fontWeight: 700,
+            fontWeight: matchesMd ? 800 : 700,
+            fontSize: matchesMd ? 26 : 30,
             alignSelf: 'flex-start',
             flexGrow: 1,
-            marginTop: 7.6
+            marginTop: 7.6,
+            marginLeft: matchesMd ? 0 : 2.5,
+            transition: 'all .1s'
           }}>
           Invite players
         </Typography>
@@ -84,10 +98,11 @@ const InviteModal: React.FC<Modal> = ({ open, handleClose }) => {
           autoFocus={true}
           onFocus={e => e.target.select()}
           sx={{
-            width: 670,
-            marginBottom: 4.8,
+            width: matchesMd ? '100%' : 670,
+            marginBottom: matchesMd ? 4.2 : 4.8,
+            transition: 'all .2s',
             '& .MuiOutlinedInput-root': {
-              height: 60,
+              height: matchesMd ? 70 : 60,
               color: '#000'
             }
           }}
@@ -101,10 +116,11 @@ const InviteModal: React.FC<Modal> = ({ open, handleClose }) => {
           variant='contained'
           sx={{
             fontSize: 24,
-            paddingY: 0.8,
+            paddingY: matchesMd ? 1.3 : 0.8,
             m: 0,
-            width: 670,
-            borderRadius: 2.5
+            width: matchesMd ? '100%' : 670,
+            borderRadius: 2.5,
+            transition: 'all .2s'
           }}>
           Copy Invitation link
         </StyledButton>
