@@ -79,6 +79,8 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                 ? '97vh'
                 : useIssue.editLink.openEditLink
                 ? '91vh'
+                : useIssue.editLink.issueLink.length > 20
+                ? '97vh'
                 : 720,
             maxHeight:
               useIssue.editTitle.openEditTitle ||
@@ -86,6 +88,8 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                 ? '97vh'
                 : useIssue.editLink.openEditLink
                 ? '91vh'
+                : useIssue.editLink.issueLink.length > 20
+                ? '97vh'
                 : 720
           }
         }}
@@ -102,11 +106,7 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
             paddingTop: 9.8,
             gap: 3,
             overflow: 'auto',
-            paddingBottom:
-              useIssue.editTitle.openEditTitle ||
-              useIssue.editDescription.openEditDescription
-                ? 8
-                : 0
+            paddingBottom: 6
           }}>
           <IconButton
             onClick={handleOpenDeleteIssue}
@@ -169,7 +169,9 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                   sx={{
                     fontSize: 27.5,
                     fontWeight: 700,
-                    color: '#000'
+                    color: '#000',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis'
                   }}>
                   {issue.title}
                 </Typography>
@@ -277,6 +279,7 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                         fontWeight: 400,
                         color: '#3993ff',
                         textDecorationColor: '#3993ff',
+                        wordBreak: 'break-word',
                         ':hover': {
                           opacity: 0.7,
                           textDecoration: 'none'
@@ -289,7 +292,8 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                       sx={{
                         fontSize: 22.5,
                         fontWeight: 400,
-                        color: '#444444'
+                        color: '#444444',
+                        wordBreak: 'break-word'
                       }}>
                       {issue.link}
                     </Typography>
@@ -380,7 +384,9 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                     sx={{
                       fontSize: 24,
                       fontWeight: 400,
-                      color: '#444444'
+                      color: '#444444',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis'
                     }}>
                     {issue.description
                       ? issue.description

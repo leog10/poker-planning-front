@@ -89,7 +89,8 @@ const IssueCard: React.FC<IssueCard> = ({ issue, useIssue, roomId }) => {
               : issue.voting
               ? '#ebf4ff'
               : '#f9f9f9',
-          height: 200,
+          minHeight: 200,
+          wordBreak: 'break-word',
           borderRadius: 2.5,
           boxShadow: '0px 1px 4px #a1a1a190',
           padding: 2,
