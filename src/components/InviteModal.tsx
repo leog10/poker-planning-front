@@ -45,7 +45,6 @@ const InviteModal: React.FC<Modal> = ({ open, handleClose }) => {
 
   const theme = useTheme();
   const matchesMd = useMediaQuery(theme.breakpoints.down('md'));
-  const matchesSm = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
     <BootstrapDialog
