@@ -541,6 +541,7 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                       )
                     }
                     anchorEl={storyPointsButtonRef.current}
+                    cardSelected={issue.storyPoints}
                   />
                 </StyledButton>
               </Tooltip>

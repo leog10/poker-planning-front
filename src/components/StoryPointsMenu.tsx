@@ -6,13 +6,15 @@ type StoryPointsMenu = {
   handleClose: () => void;
   handleSelectPoint: (card: string) => void;
   anchorEl: any;
+  cardSelected: string;
 };
 
 const StoryPointsMenu: React.FC<StoryPointsMenu> = ({
   open,
   handleClose,
   handleSelectPoint,
-  anchorEl
+  anchorEl,
+  cardSelected
 }) => {
   return (
     <Popper
@@ -68,8 +70,10 @@ const StoryPointsMenu: React.FC<StoryPointsMenu> = ({
                     height: 60,
                     borderRadius: 50,
                     margin: 1,
+                    backgroundColor:
+                      cardSelected === card.card ? '#d1d1d1' : '',
                     ':hover': {
-                      backgroundColor: '#f1f1f1'
+                      backgroundColor: '#d1d1d1'
                     }
                   }}>
                   {card.card}

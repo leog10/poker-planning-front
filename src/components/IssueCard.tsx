@@ -15,7 +15,6 @@ import StoryPointsMenu from './StoryPointsMenu';
 import { Issue } from '../types/Issue';
 import useIssue from '../types/useIssue';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { fiboCardsArray } from '../helpers/useCards';
 
 type IssueCard = {
   issue: Issue;
@@ -289,6 +288,7 @@ const IssueCard: React.FC<IssueCard> = ({ issue, useIssue, roomId }) => {
                 );
                 handleCloseStoryPointsMenu();
               }}
+              cardSelected={issue.storyPoints}
             />
           </Box>
         </Box>
