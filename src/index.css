@@ -20,4 +20,5 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background-color: #F9F9F9 !important;
+  justify-content: center;
 }

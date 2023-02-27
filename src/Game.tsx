@@ -1,4 +1,3 @@
-import './App.css';
 import { io } from 'socket.io-client';
 import useRoom from './helpers/useRoom';
 import Cards from './components/Cards';
@@ -10,7 +9,6 @@ import DrawerRight from './components/Drawer';
 import { useCallback, useState } from 'react';
 import InviteModal from './components/InviteModal';
 import VotingResult from './components/VotingResult';
-import { appTheme } from './Theme';
 
 const socket = io('ws://localhost:3000');
 
