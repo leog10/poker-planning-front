@@ -34,7 +34,6 @@ export const StyledTextField = styled(TextField)(({ theme }) => ({
     }
   },
   '& label.MuiInputLabel-root': {
-    marginLeft: 2,
     fontFamily: 'Segoe UI',
     fontWeight: 600,
     color: '#ababab'
