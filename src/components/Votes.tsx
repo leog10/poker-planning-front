@@ -22,7 +22,7 @@ const Votes: React.FC<Votes> = ({ users, reveal }) => {
         userSelect: 'none',
         flexDirection: 'row',
         flexWrap: 'wrap',
-        width: users && users.length * 55,
+        width: users && users.length * 65,
         columnGap: 7,
         rowGap: matchesMd ? 21 : 22
       }}>
