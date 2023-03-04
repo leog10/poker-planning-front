@@ -9,7 +9,8 @@ const NotFound = () => {
         sx={{
           userSelect: "none",
           fontSize: 34,
-        }}>
+        }}
+      >
         ☠ Game Over ☠
       </Typography>
       <Link to={"/"} style={{ textDecoration: "none" }}>

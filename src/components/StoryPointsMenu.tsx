@@ -1,5 +1,5 @@
-import { Box, ClickAwayListener, Modal, Popper } from '@mui/material';
-import { fiboCardsArray } from '../helpers/useCards';
+import { Box, ClickAwayListener, Modal, Popper } from "@mui/material";
+import { fiboCardsArray } from "../helpers/useCards";
 
 type StoryPointsMenu = {
   open: boolean;
@@ -14,56 +14,59 @@ const StoryPointsMenu: React.FC<StoryPointsMenu> = ({
   handleClose,
   handleSelectPoint,
   anchorEl,
-  cardSelected
+  cardSelected,
 }) => {
   return (
     <Popper
       anchorEl={anchorEl}
       sx={{
-        outline: 'none',
-        width: 'fit-content',
-        zIndex: 1200
+        outline: "none",
+        width: "fit-content",
+        zIndex: 1200,
       }}
       open={open}
       modifiers={[
         {
-          name: 'offset',
+          name: "offset",
           options: {
-            offset: [0, 10]
-          }
-        }
+            offset: [0, 10],
+          },
+        },
       ]}
-      placement={'left'}>
+      placement={"left"}
+    >
       <ClickAwayListener onClickAway={handleClose}>
         <Box
           sx={{
-            backgroundColor: '#fff',
-            boxShadow: '0 4px 8px hsl(204deg 6% 68% / 40%)',
-            display: 'flex',
-            flexDirection: 'column',
+            backgroundColor: "#fff",
+            boxShadow: "0 4px 8px hsl(204deg 6% 68% / 40%)",
+            display: "flex",
+            flexDirection: "column",
             width: 375,
             height: 360,
-            borderRadius: 2
-          }}>
+            borderRadius: 2,
+          }}
+        >
           <Box
-            id='storyPointsMenuBox'
+            id="storyPointsMenuBox"
             sx={{
-              display: 'flex',
-              flexWrap: 'wrap',
+              display: "flex",
+              flexWrap: "wrap",
               paddingY: 1.8,
-              paddingX: 1.9
-            }}>
-            {fiboCardsArray.map(card => {
+              paddingX: 1.9,
+            }}
+          >
+            {fiboCardsArray.map((card) => {
               return (
                 <Box
                   onClick={() => handleSelectPoint(card.card)}
                   key={card.card}
                   sx={{
-                    cursor: 'pointer',
-                    color: '#48545d',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
+                    cursor: "pointer",
+                    color: "#48545d",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
                     fontSize: 22.5,
                     fontWeight: 700,
                     width: 60,
@@ -71,11 +74,12 @@ const StoryPointsMenu: React.FC<StoryPointsMenu> = ({
                     borderRadius: 50,
                     margin: 1,
                     backgroundColor:
-                      cardSelected === card.card ? '#d1d1d1' : '',
-                    ':hover': {
-                      backgroundColor: '#d1d1d1'
-                    }
-                  }}>
+                      cardSelected === card.card ? "#d1d1d1" : "",
+                    ":hover": {
+                      backgroundColor: "#d1d1d1",
+                    },
+                  }}
+                >
                   {card.card}
                 </Box>
               );

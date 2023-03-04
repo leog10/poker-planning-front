@@ -1,22 +1,22 @@
-import { useCallback, useEffect, useState } from 'react';
-import { Socket } from 'socket.io-client';
-import { CardVotes } from '../types/CardVotes';
-import { FiboCards } from '../types/FiboCards';
+import { useCallback, useEffect, useState } from "react";
+import { Socket } from "socket.io-client";
+import { CardVotes } from "../types/CardVotes";
+import { FiboCards } from "../types/FiboCards";
 
 export const fiboCardsArray: FiboCards[] = [
-  { card: '0', checked: false },
-  { card: '1', checked: false },
-  { card: '2', checked: false },
-  { card: '3', checked: false },
-  { card: '5', checked: false },
-  { card: '8', checked: false },
-  { card: '13', checked: false },
-  { card: '21', checked: false },
-  { card: '34', checked: false },
-  { card: '55', checked: false },
-  { card: '89', checked: false },
-  { card: '?', checked: false },
-  { card: '🧉', checked: false }
+  { card: "0", checked: false },
+  { card: "1", checked: false },
+  { card: "2", checked: false },
+  { card: "3", checked: false },
+  { card: "5", checked: false },
+  { card: "8", checked: false },
+  { card: "13", checked: false },
+  { card: "21", checked: false },
+  { card: "34", checked: false },
+  { card: "55", checked: false },
+  { card: "89", checked: false },
+  { card: "?", checked: false },
+  { card: "🧉", checked: false },
 ];
 
 const useCards = (socket: Socket) => {
@@ -27,7 +27,7 @@ const useCards = (socket: Socket) => {
   const [fiboCards, setFiboCards] = useState<FiboCards[]>(fiboCardsArray);
 
   const revealCards = useCallback((roomId: string) => {
-    socket.emit('client:reveal_cards', roomId);
+    socket.emit("client:reveal_cards", roomId);
   }, []);
 
   const handleCardSelect = useCallback(
@@ -36,7 +36,7 @@ const useCards = (socket: Socket) => {
         return;
       }
 
-      const cardIndex = fiboCards.findIndex(fibo => fibo.card === card);
+      const cardIndex = fiboCards.findIndex((fibo) => fibo.card === card);
 
       if (cardIndex === -1) {
         return;
@@ -44,12 +44,12 @@ const useCards = (socket: Socket) => {
 
       if (fiboCards[cardIndex].checked) {
         setCanReveal(false);
-        socket.emit('client:card_select', { card: '', roomId, clientId });
+        socket.emit("client:card_select", { card: "", roomId, clientId });
         fiboCards[cardIndex].checked = false;
       } else {
-        fiboCards.forEach(fibo => (fibo.checked = false));
+        fiboCards.forEach((fibo) => (fibo.checked = false));
         setCanReveal(true);
-        socket.emit('client:card_select', { card, roomId, clientId });
+        socket.emit("client:card_select", { card, roomId, clientId });
         fiboCards[cardIndex].checked = true;
       }
     },
@@ -57,21 +57,21 @@ const useCards = (socket: Socket) => {
   );
 
   const startNewVoting = useCallback((roomId: string) => {
-    socket.emit('client:start_new_voting', roomId);
+    socket.emit("client:start_new_voting", roomId);
     setRevealing(false);
     setCardsVotes([]);
     setMate(false);
   }, []);
 
   useEffect(() => {
-    socket.on('server:mate', () => {
+    socket.on("server:mate", () => {
       setMate(true);
     });
   }, []);
 
   useEffect(() => {
-    socket.on('server:selected_card', card => {
-      const cardIndex = fiboCards.findIndex(fibo => fibo.card === card);
+    socket.on("server:selected_card", (card) => {
+      const cardIndex = fiboCards.findIndex((fibo) => fibo.card === card);
 
       if (cardIndex === -1) {
         return;
@@ -97,7 +97,7 @@ const useCards = (socket: Socket) => {
     setMate,
     cardsVotes,
     setCardsVotes,
-    startNewVoting
+    startNewVoting,
   };
 };
 

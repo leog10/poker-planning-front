@@ -1,4 +1,4 @@
-import { Issue } from './Issue';
+import { Issue } from "./Issue";
 
 type useIssue = {
   editTitle: {

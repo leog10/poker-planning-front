@@ -1,20 +1,20 @@
-import { useCallback, useEffect, useState } from 'react';
-import { Socket } from 'socket.io-client';
+import { useCallback, useEffect, useState } from "react";
+import { Socket } from "socket.io-client";
 
 const useUser = (socket: Socket) => {
-  const [clientId, setClientId] = useState<string>('');
+  const [clientId, setClientId] = useState<string>("");
   const [username, setUsername] = useState<string | undefined>(undefined);
 
   const setClientInLocalStorage = useCallback(
     (username: string, clientId: string) => {
       const clientInfo = JSON.stringify({ username, clientId });
-      localStorage.setItem('client', clientInfo);
+      localStorage.setItem("client", clientInfo);
     },
     []
   );
 
   const getClientFromLocalStorage = useCallback(() => {
-    const clientInfo = localStorage.getItem('client');
+    const clientInfo = localStorage.getItem("client");
 
     if (clientInfo) {
       const clientInfoParsed = JSON.parse(clientInfo);
@@ -22,21 +22,21 @@ const useUser = (socket: Socket) => {
       setUsername(clientInfoParsed.username);
       setClientId(clientInfoParsed.clientId);
 
-      socket.emit('client:client_connected', { username, clientId });
+      socket.emit("client:client_connected", { username, clientId });
     }
   }, []);
 
   const changeUsername = useCallback(
     (roomId: string) => {
-      socket.emit('client:change_username', { username, roomId });
+      socket.emit("client:change_username", { username, roomId });
     },
     [username]
   );
 
   useEffect(() => {
-    socket.on('server:client_id', clientId => {
+    socket.on("server:client_id", (clientId) => {
       setClientId(clientId);
-      setClientInLocalStorage(username || '', clientId);
+      setClientInLocalStorage(username || "", clientId);
     });
   }, [username]);
 
@@ -50,7 +50,7 @@ const useUser = (socket: Socket) => {
     username,
     setUsername,
     setClientInLocalStorage,
-    changeUsername
+    changeUsername,
   };
 };
 

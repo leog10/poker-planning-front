@@ -1,16 +1,16 @@
-import { useCallback, useEffect, useState } from 'react';
-import { Socket } from 'socket.io-client';
-import { Issue } from '../types/Issue';
+import { useCallback, useEffect, useState } from "react";
+import { Socket } from "socket.io-client";
+import { Issue } from "../types/Issue";
 
 const useIssue = (socket: Socket) => {
   const [roomIssues, setRoomIssues] = useState<Issue[]>([]);
 
   const handleEditIssue = (issue: Issue, roomId: string) => {
-    socket.emit('client:edit_issue', { issue, roomId });
+    socket.emit("client:edit_issue", { issue, roomId });
   };
 
   const [openEditTitle, setOpenEditTitle] = useState(false);
-  const [issueTitle, setIssueTitle] = useState('issueTitle');
+  const [issueTitle, setIssueTitle] = useState("issueTitle");
 
   const handleEditTitle = useCallback(() => {
     setOpenEditTitle(!openEditTitle);
@@ -18,7 +18,7 @@ const useIssue = (socket: Socket) => {
 
   const handleSaveIssueTitle = useCallback(
     (id: string, textFieldValue: string, roomId: string) => {
-      const issue = roomIssues.find(issue => issue.id === id);
+      const issue = roomIssues.find((issue) => issue.id === id);
       if (issue) {
         issue.title = textFieldValue;
         setIssueTitle(textFieldValue);
@@ -30,7 +30,7 @@ const useIssue = (socket: Socket) => {
   );
 
   const [openEditLink, setOpenEditLink] = useState(false);
-  const [issueLink, setIssueLink] = useState('');
+  const [issueLink, setIssueLink] = useState("");
 
   const handleEditLink = useCallback(() => {
     setOpenEditLink(!openEditLink);
@@ -39,21 +39,21 @@ const useIssue = (socket: Socket) => {
   const handleSaveIssueLink = useCallback(
     (id: string, textFieldValue: string, roomId: string) => {
       const PROTOCOLS = [
-        'http',
-        'http:',
-        'http:/',
-        'http://',
-        'https',
-        'https:',
-        'https:/',
-        'https://'
+        "http",
+        "http:",
+        "http:/",
+        "http://",
+        "https",
+        "https:",
+        "https:/",
+        "https://",
       ];
-      const issue = roomIssues.find(issue => issue.id === id);
+      const issue = roomIssues.find((issue) => issue.id === id);
       if (!issue) return;
 
       if (!textFieldValue) {
         issue.link = textFieldValue;
-        setIssueLink('');
+        setIssueLink("");
         handleEditIssue(issue, roomId);
         return;
       }
@@ -67,8 +67,8 @@ const useIssue = (socket: Socket) => {
         }
       }
 
-      setIssueLink('https://' + textFieldValue);
-      issue.link = 'https://' + textFieldValue;
+      setIssueLink("https://" + textFieldValue);
+      issue.link = "https://" + textFieldValue;
 
       handleEditIssue(issue, roomId);
     },
@@ -76,7 +76,7 @@ const useIssue = (socket: Socket) => {
   );
 
   const [openEditDescription, setOpenEditDescription] = useState(false);
-  const [issueDescription, setIssueDescription] = useState('');
+  const [issueDescription, setIssueDescription] = useState("");
 
   const handleEditDescription = useCallback(() => {
     setOpenEditDescription(!openEditDescription);
@@ -84,7 +84,7 @@ const useIssue = (socket: Socket) => {
 
   const handleSaveIssueDescription = useCallback(
     (id: string, textFieldValue: string, roomId: string) => {
-      const issue = roomIssues.find(issue => issue.id === id);
+      const issue = roomIssues.find((issue) => issue.id === id);
       if (issue) {
         issue.description = textFieldValue;
         setIssueDescription(textFieldValue);
@@ -95,15 +95,15 @@ const useIssue = (socket: Socket) => {
   );
 
   const [openStoryPointsMenu, setOpenStoryPointsMenu] = useState(false);
-  const [storyPoints, setStoryPoints] = useState('-');
+  const [storyPoints, setStoryPoints] = useState("-");
 
   const handleEditStoryPoints = useCallback(
     (id: string, storyPoints: string, voting?: boolean, roomId?: string) => {
       setStoryPoints(storyPoints);
-      const issue = roomIssues.find(issue => issue.id === id);
+      const issue = roomIssues.find((issue) => issue.id === id);
       if (issue) {
         if (issue.storyPoints === storyPoints && !voting) {
-          issue.storyPoints = '-';
+          issue.storyPoints = "-";
         } else {
           issue.storyPoints = storyPoints;
         }
@@ -118,7 +118,7 @@ const useIssue = (socket: Socket) => {
     (e?: React.MouseEvent<HTMLElement, MouseEvent>) => {
       const event = e?.target as HTMLElement;
 
-      if (event.id === 'storyPointsMenuBox') return;
+      if (event.id === "storyPointsMenuBox") return;
 
       setOpenStoryPointsMenu(!openStoryPointsMenu);
     },
@@ -134,15 +134,15 @@ const useIssue = (socket: Socket) => {
   const handleVotingNow = useCallback(
     (id: string, roomId: string) => {
       setVotingNow(!votingNow);
-      const issue = roomIssues.find(issue => issue.id === id);
+      const issue = roomIssues.find((issue) => issue.id === id);
       if (issue) {
         if (issue.voting) {
           issue.voting = !issue.voting;
           handleEditIssue(issue, roomId);
         } else {
-          roomIssues.forEach(issue => (issue.voting = false));
+          roomIssues.forEach((issue) => (issue.voting = false));
           issue.voting = !issue.voting;
-          socket.emit('client:edit_issues_voting', { issue, roomId });
+          socket.emit("client:edit_issues_voting", { issue, roomId });
         }
       }
     },
@@ -155,13 +155,13 @@ const useIssue = (socket: Socket) => {
         id: new Date().getTime().toString(),
         title,
         voting: roomIssues.length < 1 && !revealing,
-        storyPoints: '-'
+        storyPoints: "-",
       };
       setRoomIssues((prev: Issue[]) => {
         return [...prev, issue];
       });
 
-      socket.emit('client:new_issue', { issue, roomId });
+      socket.emit("client:new_issue", { issue, roomId });
     },
     [roomIssues]
   );
@@ -169,9 +169,9 @@ const useIssue = (socket: Socket) => {
   const handleDeleteIssue = useCallback(
     (id: string, roomId: string) => {
       setRoomIssues((prev: Issue[]) => {
-        return prev.filter(issue => issue.id !== id);
+        return prev.filter((issue) => issue.id !== id);
       });
-      socket.emit('client:delete_issue', { issueId: id, roomId });
+      socket.emit("client:delete_issue", { issueId: id, roomId });
     },
     [roomIssues]
   );
@@ -179,7 +179,7 @@ const useIssue = (socket: Socket) => {
   const handleDeleteAllIssues = useCallback(
     (roomId: string) => {
       setRoomIssues([]);
-      socket.emit('client:delete_all_issues', roomId);
+      socket.emit("client:delete_all_issues", roomId);
     },
     [roomIssues]
   );
@@ -189,38 +189,38 @@ const useIssue = (socket: Socket) => {
       openEditTitle,
       issueTitle,
       handleEditTitle,
-      handleSaveIssueTitle
+      handleSaveIssueTitle,
     },
     editLink: {
       openEditLink,
       issueLink,
       handleEditLink,
-      handleSaveIssueLink
+      handleSaveIssueLink,
     },
     editDescription: {
       openEditDescription,
       issueDescription,
       handleEditDescription,
-      handleSaveIssueDescription
+      handleSaveIssueDescription,
     },
     editStoryPoints: {
       openStoryPointsMenu,
       storyPoints,
       handleEditStoryPoints,
       handleStoryPointsMenu,
-      handleCloseStoryPointsMenu
+      handleCloseStoryPointsMenu,
     },
     editVotingNow: {
       votingNow,
-      handleVotingNow
+      handleVotingNow,
     },
     issues: {
       handleAddIssue,
       handleDeleteIssue,
       handleDeleteAllIssues,
       roomIssues,
-      setRoomIssues
-    }
+      setRoomIssues,
+    },
   };
 };
 

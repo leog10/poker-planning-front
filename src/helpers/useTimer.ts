@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback } from "react";
 
 const useTimer = () => {
   const [time, setTime] = useState(0);
@@ -10,7 +10,7 @@ const useTimer = () => {
     }
     setTime(2);
     intervalRef.current = setInterval(() => {
-      setTime(prev => prev - 1);
+      setTime((prev) => prev - 1);
     }, 500);
   }, []);
 

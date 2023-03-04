@@ -1,9 +1,9 @@
-import { Box, useMediaQuery, useTheme } from '@mui/material';
-import { StyledButton } from '../styles';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
-import { Link } from 'react-router-dom';
-import Tooltip from '@mui/material/Tooltip';
+import { Box, useMediaQuery, useTheme } from "@mui/material";
+import { StyledButton } from "../styles";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
+import { Link } from "react-router-dom";
+import Tooltip from "@mui/material/Tooltip";
 
 type Header = {
   gameName: string;
@@ -20,69 +20,69 @@ const Header: React.FC<Header> = ({
   gameStarted,
   handleOpenDrawer,
   handleOpenInvite,
-  openDrawer
+  openDrawer,
 }) => {
   const theme = useTheme();
-  const matchesMd = useMediaQuery(theme.breakpoints.down('md'));
-  const matchesSm = useMediaQuery(theme.breakpoints.down('sm'));
+  const matchesMd = useMediaQuery(theme.breakpoints.down("md"));
+  const matchesSm = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <Box
       sx={{
-        display: 'flex',
-        position: 'fixed',
+        display: "flex",
+        position: "fixed",
         top: 0,
         left: 0,
-        width: openDrawer ? 'calc(100vw - 600px)' : '100%',
-        padding: '1.7rem 2.5rem',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        backgroundColor: '#F9F9F9',
-        userSelect: 'none',
-        height: '6.2rem',
+        width: openDrawer ? "calc(100vw - 600px)" : "100%",
+        padding: "1.7rem 2.5rem",
+        alignItems: "center",
+        justifyContent: "flex-start",
+        backgroundColor: "#F9F9F9",
+        userSelect: "none",
+        height: "6.2rem",
         zIndex: 99,
-        transition: 'all .2s'
-      }}>
+        transition: "all .2s",
+      }}
+    >
       <Box
         sx={{
-          alignSelf: 'end'
-        }}>
+          alignSelf: "end",
+        }}
+      >
         <Link
-          to={'/'}
+          to={"/"}
           onClick={() => {
-            window.history.replaceState(null, 'Create game', '/');
+            window.history.replaceState(null, "Create game", "/");
             window.location.reload();
-          }}>
-          <img
-            src='/logo.png'
-            alt=''
-            width={48}
-          />
+          }}
+        >
+          <img src="/logo.png" alt="" width={48} />
         </Link>
       </Box>
       <Box sx={{ flexGrow: 1, marginRight: matchesSm ? 3 : 0 }}>
         {!matchesSm && (
           <Box
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              margin: '0 1rem',
-              width: 'fit-content',
-              color: '#222222',
-              fontSize: '1.4rem',
+              display: "flex",
+              alignItems: "center",
+              margin: "0 1rem",
+              width: "fit-content",
+              color: "#222222",
+              fontSize: "1.4rem",
               fontWeight: 700,
-              padding: '0rem 0.4rem',
-              borderRadius: '10px',
-              transition: 'all 0.3s',
-              userSelect: 'none',
-              textAlign: 'left',
-              '&:hover': {
-                transition: 'all 0.3s',
-                backgroundColor: '#f1f1f1',
-                cursor: 'pointer'
-              }
-            }}>
-            {gameName && gameStarted ? gameName : 'Create game'}
+              padding: "0rem 0.4rem",
+              borderRadius: "10px",
+              transition: "all 0.3s",
+              userSelect: "none",
+              textAlign: "left",
+              "&:hover": {
+                transition: "all 0.3s",
+                backgroundColor: "#f1f1f1",
+                cursor: "pointer",
+              },
+            }}
+          >
+            {gameName && gameStarted ? gameName : "Create game"}
             {/* Disabled until modal working */}
             {/* {gameName && gameStarted && (
               <KeyboardArrowDownIcon
@@ -100,38 +100,37 @@ const Header: React.FC<Header> = ({
       {gameStarted && (
         <Box
           sx={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            gap: 3
-          }}>
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: 3,
+          }}
+        >
           {!matchesMd && (
             <Box
               sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
                 gap: 2,
-                borderRadius: '10px',
-                padding: '0.7rem 0.8rem',
-                '&:hover': {
-                  transition: 'all 0.3s',
-                  backgroundColor: '#f1f1f1',
-                  cursor: 'pointer'
-                }
-              }}>
-              <img
-                src='/logo.png'
-                alt=''
-                width={32}
-              />
+                borderRadius: "10px",
+                padding: "0.7rem 0.8rem",
+                "&:hover": {
+                  transition: "all 0.3s",
+                  backgroundColor: "#f1f1f1",
+                  cursor: "pointer",
+                },
+              }}
+            >
+              <img src="/logo.png" alt="" width={32} />
               <Box
                 sx={{
-                  display: 'flex',
+                  display: "flex",
                   fontSize: 21,
                   fontWeight: 700,
-                  color: '#626262'
-                }}>
+                  color: "#626262",
+                }}
+              >
                 {username}
                 {/* Disabled until modal is working  */}
                 {/* <KeyboardArrowDownIcon
@@ -146,98 +145,102 @@ const Header: React.FC<Header> = ({
             </Box>
           )}
           <Tooltip
-            title='Invite players'
+            title="Invite players"
             TransitionProps={{ timeout: 0 }}
             PopperProps={{
               modifiers: [
                 {
-                  name: 'offset',
+                  name: "offset",
                   options: {
-                    offset: [0, -5]
-                  }
-                }
-              ]
+                    offset: [0, -5],
+                  },
+                },
+              ],
             }}
             componentsProps={{
               tooltip: {
                 sx: {
-                  color: '#ededed',
+                  color: "#ededed",
                   fontSize: 19,
                   paddingY: 0.5,
                   paddingX: 1,
-                  backgroundColor: '#303e49'
-                }
-              }
-            }}>
+                  backgroundColor: "#303e49",
+                },
+              },
+            }}
+          >
             <StyledButton
               onClick={handleOpenInvite}
-              variant='outlined'
+              variant="outlined"
               sx={{
-                textWrap: 'no-wrap',
+                textWrap: "no-wrap",
                 border: 2,
                 height: 60,
                 width: matchesMd ? 50 : 250,
-                padding: '0.4rem 1.2rem',
+                padding: "0.4rem 1.2rem",
                 fontWeight: 700,
                 fontSize: matchesMd ? 21 : 23,
-                backgroundColor: '#fff',
-                '&:hover': {
+                backgroundColor: "#fff",
+                "&:hover": {
                   border: 2,
-                  transition: 'all 0.3s',
-                  backgroundColor: '#ebf4ff',
-                  cursor: 'pointer'
-                }
-              }}>
+                  transition: "all 0.3s",
+                  backgroundColor: "#ebf4ff",
+                  cursor: "pointer",
+                },
+              }}
+            >
               <Box sx={{ marginRight: matchesMd ? 0 : 2 }}>🧛‍♂️</Box>
-              {matchesMd ? '' : 'Invite players'}
+              {matchesMd ? "" : "Invite players"}
             </StyledButton>
           </Tooltip>
           <Tooltip
-            title={openDrawer ? 'Hide issues' : 'Show issues'}
+            title={openDrawer ? "Hide issues" : "Show issues"}
             TransitionProps={{ timeout: 0 }}
             PopperProps={{
               modifiers: [
                 {
-                  name: 'offset',
+                  name: "offset",
                   options: {
-                    offset: [0, -5]
-                  }
-                }
-              ]
+                    offset: [0, -5],
+                  },
+                },
+              ],
             }}
             componentsProps={{
               tooltip: {
                 sx: {
-                  color: '#ededed',
+                  color: "#ededed",
                   fontSize: 19,
                   paddingY: 0.5,
                   paddingX: 1,
-                  backgroundColor: '#303e49'
-                }
-              }
-            }}>
+                  backgroundColor: "#303e49",
+                },
+              },
+            }}
+          >
             <StyledButton
               onClick={handleOpenDrawer}
-              variant='outlined'
+              variant="outlined"
               sx={{
                 border: 2,
-                width: 'fit-content',
-                padding: '0.8rem 0.9rem',
+                width: "fit-content",
+                padding: "0.8rem 0.9rem",
                 margin: 0,
                 fontWeight: 700,
                 height: 60,
-                backgroundColor: '#fff',
-                '&:hover': {
+                backgroundColor: "#fff",
+                "&:hover": {
                   border: 2,
-                  transition: 'all 0.3s',
-                  backgroundColor: '#ebf4ff',
-                  cursor: 'pointer'
-                }
-              }}>
+                  transition: "all 0.3s",
+                  backgroundColor: "#ebf4ff",
+                  cursor: "pointer",
+                },
+              }}
+            >
               <ArticleOutlinedIcon
-                fontSize='small'
-                viewBox='0 0 24 24'
-                sx={{ width: '24px', height: '24px' }}
+                fontSize="small"
+                viewBox="0 0 24 24"
+                sx={{ width: "24px", height: "24px" }}
               />
             </StyledButton>
           </Tooltip>

@@ -1,8 +1,8 @@
 export type Issue = {
-    id: string;
-    title: string;
-    link?: string;
-    description?: string;
-    storyPoints: string;
-    voting: boolean;
+  id: string;
+  title: string;
+  link?: string;
+  description?: string;
+  storyPoints: string;
+  voting: boolean;
 };
