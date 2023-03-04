@@ -1,22 +1,19 @@
-import { Box, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
-import { StyledButton } from './styles';
+import { Box, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
+import { StyledButton } from "./styles";
 
 const NotFound = () => {
   return (
     <Box>
       <Typography
         sx={{
-          fontSize: 25
+          userSelect: "none",
+          fontSize: 34,
         }}>
-        Ups... You are lost
+        ☠ Game Over ☠
       </Typography>
-      <Link
-        to={'/'}
-        style={{ textDecoration: 'none' }}>
-        <StyledButton
-          variant='contained'
-          sx={{ width: 300 }}>
+      <Link to={"/"} style={{ textDecoration: "none" }}>
+        <StyledButton variant="contained" sx={{ width: 300 }}>
           Go Home
         </StyledButton>
       </Link>
