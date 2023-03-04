@@ -1,20 +1,22 @@
-import { useCallback, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Socket } from 'socket.io-client';
-import { User } from '../types/User';
-import useCards from './useCards';
-import useIssue from './useIssue';
-import useTimer from './useTimer';
-import useUser from './useUser';
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Socket } from "socket.io-client";
+import { CardVotes } from "../types/CardVotes";
+import { User } from "../types/User";
+import useCards from "./useCards";
+import useIssue from "./useIssue";
+import useTimer from "./useTimer";
+import useUser from "./useUser";
 
 const useCreateRoom = (socket: Socket) => {
-  const [roomId, setRoomId] = useState<string>('');
+  const [roomId, setRoomId] = useState<string>("");
   const [gameStarted, setGameStarted] = useState<boolean>(false);
   const [allowedReveal, setAllowedReveal] = useState(false);
   const [allowedNewGame, setAllowedNewGame] = useState(false);
-  const [gameName, setGameName] = useState<string>('');
+  const [gameName, setGameName] = useState<string>("");
   const [users, setUsers] = useState<User[]>();
   const [average, setAverage] = useState<number | undefined>();
+  const [confettiTime, setConfettiTime] = useState(false);
   const { roomParamId } = useParams();
 
   const { time, countdown } = useTimer();
@@ -32,9 +34,9 @@ const useCreateRoom = (socket: Socket) => {
   const createRoom = useCallback(
     (username: string, gameName: string, clientId: string) => {
       if (clientId) {
-        socket.emit('client:create_room', { username, gameName, clientId });
+        socket.emit("client:create_room", { username, gameName, clientId });
       } else {
-        socket.emit('client:create_room', { username, gameName });
+        socket.emit("client:create_room", { username, gameName });
       }
       if (username) {
         setGameStarted(true);
@@ -48,24 +50,42 @@ const useCreateRoom = (socket: Socket) => {
   const joinRoom = useCallback(
     (roomId: string, username: string, clientId: string) => {
       if (clientId) {
-        socket.emit('client:join_room', { roomId, username, clientId });
+        socket.emit("client:join_room", { roomId, username, clientId });
       } else {
-        socket.emit('client:join_room', { roomId, username });
+        socket.emit("client:join_room", { roomId, username });
       }
     },
     [user.username]
   );
 
+  const validateFullConsenus = (cardsVotes: CardVotes[]) => {
+    const checkCard = cardsVotes[0].card;
+
+    if (cardsVotes.some((card) => card.card === "🧉")) {
+      return;
+    }
+
+    if (cardsVotes.every((card) => card.card === checkCard)) {
+      setTimeout(() => {
+        setConfettiTime(true);
+      }, 1000);
+
+      setTimeout(() => {
+        setConfettiTime(false);
+      }, 2000);
+    }
+  };
+
   useEffect(() => {
     if (roomParamId) {
       setRoomId(roomParamId);
-      joinRoom(roomId, user.username || '', user.clientId);
+      joinRoom(roomId, user.username || "", user.clientId);
     }
   }, [roomId]);
 
   useEffect(() => {
     socket.on(
-      'server:user_joined',
+      "server:user_joined",
       ({
         roomUsers,
         reveal,
@@ -74,7 +94,7 @@ const useCreateRoom = (socket: Socket) => {
         cardsVotes,
         average,
         gameOptions,
-        issues
+        issues,
       }) => {
         setUsers(roomUsers);
         cards.setRevealing(reveal);
@@ -99,40 +119,41 @@ const useCreateRoom = (socket: Socket) => {
   }, [user.clientId]);
 
   useEffect(() => {
-    socket.on('server:new_room', ({ roomId, users }) => {
+    socket.on("server:new_room", ({ roomId, users }) => {
       setRoomId(roomId);
       setUsers(users);
       window.history.replaceState(null, `Game ${gameName}`, `${roomId}`);
     });
 
-    socket.on('server:users', ({ roomVoting, reveal }) => {
+    socket.on("server:users", ({ roomVoting, reveal }) => {
       setUsers(roomVoting);
       cards.setRevealing(reveal);
     });
 
-    socket.on('server:reveal_cards', ({ averageVoting, cardsVotes }) => {
+    socket.on("server:reveal_cards", ({ averageVoting, cardsVotes }) => {
       cards.setCardsVotes(cardsVotes);
       setAverage(averageVoting);
       cards.setRevealing(true);
+      validateFullConsenus(cardsVotes);
       countdown();
     });
 
-    socket.on('server:start_new_voting', ({ roomUsers }) => {
+    socket.on("server:start_new_voting", ({ roomUsers }) => {
       cards.setRevealing(false);
       setUsers(roomUsers);
       setAverage(undefined);
       cards.setCardsVotes([]);
       cards.setMate(false);
       cards.setCanReveal(false);
-      cards.fiboCards.forEach(fibo => (fibo.checked = false));
+      cards.fiboCards.forEach((fibo) => (fibo.checked = false));
     });
 
-    socket.on('server:invalid_room', () => {
+    socket.on("server:invalid_room", () => {
       setGameStarted(false);
-      navigate('/404');
+      navigate("/404");
     });
 
-    socket.on('server:issues', issues => {
+    socket.on("server:issues", (issues) => {
       issue.issues.setRoomIssues(issues);
     });
   }, []);
@@ -151,7 +172,8 @@ const useCreateRoom = (socket: Socket) => {
       average,
       mate: cards.mate,
       handleChooseUsername,
-      revealingTime: time
+      revealingTime: time,
+      confettiTime,
     },
     user: {
       username: user.username,
@@ -163,9 +185,9 @@ const useCreateRoom = (socket: Socket) => {
       allowedReveal,
       allowedNewGame,
       startNewVoting: cards.startNewVoting,
-      revealCards: cards.revealCards
+      revealCards: cards.revealCards,
     },
-    issue
+    issue,
   };
 };
 
