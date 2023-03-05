@@ -1,5 +1,5 @@
 import { Box, ClickAwayListener, TextField } from "@mui/material";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { StyledButton } from "../styles";
 
 type EditIssueField = {
@@ -17,12 +17,16 @@ const EditIssueField: React.FC<EditIssueField> = ({
 }) => {
   const [textFieldValue, setTextFieldValue] = useState(fieldValue);
 
-  const handleChangeField = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setTextFieldValue(e.target.value);
-    },
-    []
-  );
+  const handleChangeField = useCallback((textField: string) => {
+    setTextFieldValue(textField);
+  }, []);
+
+  const handleSaveTextField = useCallback(() => {
+    if (textFieldValue.trim().length < 1) return;
+
+    handleSave(textFieldValue.trim());
+    handleClose();
+  }, [textFieldValue]);
 
   return (
     <ClickAwayListener onClickAway={handleClose}>
@@ -36,7 +40,10 @@ const EditIssueField: React.FC<EditIssueField> = ({
         }}
       >
         <TextField
-          onChange={(e) => handleChangeField(e)}
+          onKeyDown={(e) =>
+            e.key.toLowerCase() === "enter" && handleSaveTextField()
+          }
+          onChange={(e) => handleChangeField(e.target.value)}
           autoFocus
           multiline={id !== "editLink"}
           value={textFieldValue}
@@ -54,8 +61,8 @@ const EditIssueField: React.FC<EditIssueField> = ({
               display: "flex",
               alignItems: "flex-start",
               minHeight: id === "editLink" ? 50 : 150,
-              fontSize: "inherit",
-              fontWeight: "inherit",
+              fontSize: id === "editTitle" ? 28 : "inherit",
+              fontWeight: id === "editTitle" ? 700 : "inherit",
               color: "inherit",
             },
             "& .css-1sqnrkk-MuiInputBase-input-MuiOutlinedInput-input": {
@@ -86,26 +93,18 @@ const EditIssueField: React.FC<EditIssueField> = ({
             Cancel
           </StyledButton>
           <StyledButton
-            onClick={() => {
-              handleSave(textFieldValue);
-              handleClose();
-            }}
-            variant="outlined"
+            onClick={handleSaveTextField}
+            variant="contained"
+            disabled={textFieldValue.trim().length < 1}
+            color="primary"
             sx={{
-              color: "#fff",
               margin: 0,
               textWrap: "no-wrap",
-              border: 2,
               width: "100%",
               padding: "0.4rem 1.2rem",
               fontWeight: 700,
               fontSize: 23,
               backgroundColor: "#3993ff",
-              "&:hover": {
-                border: 2,
-                transition: "all 0.3s",
-                backgroundColor: "#3993ff90",
-              },
             }}
           >
             Save

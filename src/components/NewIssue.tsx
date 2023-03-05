@@ -13,13 +13,13 @@ const NewIssue: React.FC<NewIssue> = ({ handleClose, handleAddIssue }) => {
 
   const handleSetTitle = useCallback(
     (title: string) => {
-      setTitle(title);
+      setTitle(title.trim());
     },
     [title]
   );
 
   const addIssue = useCallback(() => {
-    if (title.length < 1 || title.trim().length < 1) {
+    if (title.length < 1) {
       handleClose();
       return;
     }
@@ -41,6 +41,10 @@ const NewIssue: React.FC<NewIssue> = ({ handleClose, handleAddIssue }) => {
         }}
       >
         <TextField
+          onBlur={addIssue}
+          onKeyDown={(e) => {
+            e.key.toLowerCase() === "enter" && addIssue();
+          }}
           onChange={(e) => handleSetTitle(e.target.value)}
           autoFocus
           multiline

@@ -35,6 +35,26 @@ const Game = () => {
     setOpenInvite(false);
   }, []);
 
+  const handleCreateGame = () => {
+    const isValidGameName = room.gameName.trim().length > 0;
+
+    if (isValidGameName) {
+      return room.createRoom(
+        user.username || "",
+        room.gameName.trim(),
+        user.clientId
+      );
+    }
+  };
+
+  const handleChooseUsername = () => {
+    const isValidUsername = user?.username && user.username.trim().length > 0;
+
+    if (isValidUsername) {
+      return room.handleChooseUsername();
+    }
+  };
+
   const theme = useTheme();
   const matchesSm = useMediaQuery(theme.breakpoints.down("sm"));
   const matchesMd = useMediaQuery(theme.breakpoints.down("md"));
@@ -89,13 +109,19 @@ const Game = () => {
             Choose a name for your game.
           </Typography>
           <StyledTextField
+            inputProps={{
+              maxLength: 50,
+            }}
             sx={{
               width: "100%",
             }}
             autoComplete="off"
             variant="outlined"
             label="Game's name"
-            onChange={(e) => room.setGameName(e.target.value)}
+            onChange={(e) => room.setGameName(e.target.value.trim())}
+            onKeyDown={(e) =>
+              e.key.toLowerCase() === "enter" && handleCreateGame()
+            }
           />
           <StyledButton
             sx={{ fontSize: 24, padding: "0.4rem", width: "100%" }}
@@ -103,9 +129,7 @@ const Game = () => {
             variant="contained"
             color="primary"
             disabled={!room.gameName}
-            onClick={() =>
-              room.createRoom(user.username || "", room.gameName, user.clientId)
-            }
+            onClick={handleCreateGame}
           >
             Create game
           </StyledButton>
@@ -134,6 +158,9 @@ const Game = () => {
             variant="outlined"
             label="Your display name"
             type="text"
+            onKeyDown={(e) =>
+              e.key.toLowerCase() === "enter" && handleChooseUsername()
+            }
             onChange={(e) => {
               user.setUsername(e.target.value);
             }}
@@ -145,7 +172,7 @@ const Game = () => {
             variant="contained"
             color="primary"
             disabled={!room.roomId || !user.username}
-            onClick={room.handleChooseUsername}
+            onClick={handleChooseUsername}
           >
             Continue to game
           </StyledButton>

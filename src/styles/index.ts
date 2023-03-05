@@ -13,6 +13,16 @@ export const StyledButton = styled(Button)(({ theme }) => ({
   textTransform: "unset",
   fontSize: 22,
   fontWeight: 600,
+  boxShadow: "none",
+  "&:disabled": {
+    backgroundColor: "#d1d4d7",
+    color: "#fff",
+  },
+  "&:hover": {
+    boxShadow: "none",
+    transition: "all 0.1s",
+    backgroundColor: "#3993ff90",
+  },
 }));
 
 export const StyledTextField = styled(TextField)(({ theme }) => ({

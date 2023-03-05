@@ -1,4 +1,4 @@
-import { Box, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { StyledButton } from "../styles";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
@@ -59,14 +59,22 @@ const Header: React.FC<Header> = ({
           <img src="/logo.png" alt="" width={48} />
         </Link>
       </Box>
-      <Box sx={{ flexGrow: 1, marginRight: matchesSm ? 3 : 0 }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexGrow: 1,
+          marginRight: matchesMd ? 3 : 2,
+          overflow: "hidden",
+        }}
+      >
         {!matchesSm && (
-          <Box
+          <Typography
             sx={{
-              display: "flex",
+              flexGrow: 0,
+              overflow: "hidden",
+              textOverflow: "ellipsis",
               alignItems: "center",
               margin: "0 1rem",
-              width: "fit-content",
               color: "#222222",
               fontSize: "1.4rem",
               fontWeight: 700,
@@ -82,7 +90,6 @@ const Header: React.FC<Header> = ({
               },
             }}
           >
-            {gameName && gameStarted ? gameName : "Create game"}
             {/* Disabled until modal working */}
             {/* {gameName && gameStarted && (
               <KeyboardArrowDownIcon
@@ -94,7 +101,8 @@ const Header: React.FC<Header> = ({
                 }}
               />
             )} */}
-          </Box>
+            {gameName && gameStarted ? gameName : "Create game"}
+          </Typography>
         )}
       </Box>
       {gameStarted && (
