@@ -159,16 +159,6 @@ const Votes: React.FC<Votes> = ({ users, reveal }) => {
                 {user.username}
               </Typography>
             </Tooltip>
-            {/* <Typography
-              sx={{
-                fontSize: matchesMd ? 19 : 22,
-                fontWeight: matchesMd ? 600 : 700,
-                width: 75,
-                textOverflow: "ellipsis",
-                overflow: "hidden",
-              }}>
-              {user.username}
-            </Typography> */}
           </Box>
         ))}
     </Box>
