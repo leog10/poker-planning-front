@@ -7,6 +7,7 @@ type VotingResults = {
   average: number | undefined;
   mate: boolean;
   openDrawer: boolean;
+  revealingTime: number;
 };
 
 const VotingResult: React.FC<VotingResults> = ({
@@ -14,6 +15,7 @@ const VotingResult: React.FC<VotingResults> = ({
   average,
   mate,
   openDrawer,
+  revealingTime,
 }) => {
   const theme = useTheme();
   const matchesMd = useMediaQuery(theme.breakpoints.down("md"));
@@ -27,21 +29,24 @@ const VotingResult: React.FC<VotingResults> = ({
         alignItems: matchesXs ? "flex-start" : "center",
         userSelect: "none",
         position: "fixed",
-        height: "calc(30%)",
+        height: matchesMd ? 260 : 200,
         flexDirection: matchesMd ? "column-reverse" : "row",
-        bottom: 0,
+        bottom: revealingTime > 0 ? "-100%" : 0,
         zIndex: 1,
         backgroundColor: "#f9f9f9",
         padding: 1.5,
+        overflowY: "hidden",
         overflowX: matchesMd ? "auto" : "hidden",
         width: openDrawer ? "calc(100vw - 600px)" : "100%",
-        transition: "all .2s",
-      }}>
+        transition: "all .2s, bottom .25s ease-in-out",
+      }}
+    >
       <Box
         sx={{
           display: "flex",
           justifyContent: "center",
-        }}>
+        }}
+      >
         {cards &&
           cards.map((card) => (
             <Box
@@ -50,7 +55,8 @@ const VotingResult: React.FC<VotingResults> = ({
                 flexDirection: "column",
                 margin: 0.5,
               }}
-              key={card.card}>
+              key={card.card}
+            >
               <Box
                 sx={{
                   fontSize: 21.5,
@@ -67,7 +73,8 @@ const VotingResult: React.FC<VotingResults> = ({
                   userSelect: "none",
                   cursor: "default",
                   margin: "0 15px 10px",
-                }}>
+                }}
+              >
                 {card.card}
               </Box>
               <Box
@@ -75,7 +82,8 @@ const VotingResult: React.FC<VotingResults> = ({
                   color: "#717171",
                   fontSize: 19.5,
                   fontWeight: 500,
-                }}>
+                }}
+              >
                 {card.quantity} {card.quantity > 1 ? "Votes" : "Vote"}
               </Box>
             </Box>
@@ -88,14 +96,16 @@ const VotingResult: React.FC<VotingResults> = ({
           display: "flex",
           flexDirection: matchesMd ? "row" : "column",
           justifyContent: "center",
-          gap: 5,
-        }}>
+          gap: matchesMd ? 5 : 0,
+        }}
+      >
         {average !== undefined && average !== null && (
           <Box
             sx={{
               marginLeft: matchesMd ? 0 : 5,
               marginBottom: 1,
-            }}>
+            }}
+          >
             <Typography sx={{ fontSize: 22, color: "#a8aeb2" }}>
               Average:
             </Typography>
@@ -104,7 +114,8 @@ const VotingResult: React.FC<VotingResults> = ({
                 fontSize: 43,
                 fontWeight: 700,
                 color: "black",
-              }}>
+              }}
+            >
               {average}
             </Typography>
           </Box>
@@ -115,14 +126,16 @@ const VotingResult: React.FC<VotingResults> = ({
             sx={{
               marginLeft: matchesMd ? 0 : 5,
               marginBottom: 1,
-            }}>
+            }}
+          >
             <Typography sx={{ fontSize: 22, color: "#a8aeb2" }}>
               Mate time!
             </Typography>
             <Box
               sx={{
                 fontSize: 40,
-              }}>
+              }}
+            >
               🧉
             </Box>
           </Box>

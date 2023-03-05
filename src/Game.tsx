@@ -65,7 +65,8 @@ const Game = () => {
     <Box
       sx={{
         width: "100vw",
-      }}>
+      }}
+    >
       <Header
         openDrawer={openDrawer}
         handleOpenInvite={handleOpenInvite}
@@ -95,14 +96,16 @@ const Game = () => {
               ? "45%"
               : "33%",
             transition: "all .1s",
-          }}>
+          }}
+        >
           <Typography
             sx={{
               fontSize: 24,
               marginBottom: 3,
               marginTop: -15,
               fontWeight: 400,
-            }}>
+            }}
+          >
             Choose a name for your game.
           </Typography>
           <StyledTextField
@@ -126,7 +129,8 @@ const Game = () => {
             variant="contained"
             color="primary"
             disabled={!room.gameName}
-            onClick={handleCreateGame}>
+            onClick={handleCreateGame}
+          >
             Create game
           </StyledButton>
         </Box>
@@ -138,14 +142,16 @@ const Game = () => {
             display: "flex",
             flexDirection: "column",
             marginTop: "3.5rem",
-          }}>
+          }}
+        >
           <Typography
             sx={{
               fontSize: 21,
               marginBottom: 4,
               marginTop: -15,
               fontWeight: 600,
-            }}>
+            }}
+          >
             Choose your display name
           </Typography>
           <StyledTextField
@@ -169,7 +175,8 @@ const Game = () => {
             variant="contained"
             color="primary"
             disabled={!room.roomId || !user.username}
-            onClick={handleChooseUsername}>
+            onClick={handleChooseUsername}
+          >
             Continue to game
           </StyledButton>
         </Box>
@@ -201,8 +208,9 @@ const Game = () => {
         />
       )}
 
-      {room.revealing && room.revealingTime <= 0 && (
+      {room.revealing && (
         <VotingResult
+          revealingTime={room.revealingTime}
           openDrawer={openDrawer}
           average={room.average}
           cards={room.cards}

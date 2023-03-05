@@ -27,7 +27,8 @@ const Cards: React.FC<Cards> = ({
       sx={{
         position: "relative",
         overflow: "hidden",
-      }}>
+      }}
+    >
       <Box
         sx={{
           display: "flex",
@@ -39,7 +40,8 @@ const Cards: React.FC<Cards> = ({
           zIndex: 1,
           width: openDrawer ? "calc(100vw - 600px)" : "100%",
           transition: "all .2s",
-        }}>
+        }}
+      >
         {!matches && (
           <Box
             sx={{
@@ -50,7 +52,8 @@ const Cards: React.FC<Cards> = ({
               justifyContent: "center",
               alignItems: "center",
               userSelect: "none",
-            }}>
+            }}
+          >
             {revealing ? "Counting votes..." : "Choose your card"}
             {!revealing && (
               <Typography sx={{ fontSize: 20, marginLeft: 0.6 }}>👇</Typography>
@@ -69,7 +72,8 @@ const Cards: React.FC<Cards> = ({
             transition: "all 1s",
             paddingX: 2,
             pointerEvents: revealing ? "none" : "auto",
-          }}>
+          }}
+        >
           {fiboCards.map((fibo) => (
             <Box
               sx={{
@@ -115,7 +119,8 @@ const Cards: React.FC<Cards> = ({
                 },
               }}
               onClick={() => handleCardSelect(fibo.card, roomId, clientId)}
-              key={fibo.card}>
+              key={fibo.card}
+            >
               {fibo.card}
             </Box>
           ))}
