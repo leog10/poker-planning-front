@@ -8,6 +8,7 @@ type Cards = {
   clientId: string;
   handleCardSelect: (card: string, roomId: string, clientId: string) => void;
   openDrawer: boolean;
+  revealing: boolean;
 };
 
 const Cards: React.FC<Cards> = ({
@@ -16,12 +17,17 @@ const Cards: React.FC<Cards> = ({
   clientId,
   handleCardSelect,
   openDrawer,
+  revealing,
 }) => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
-    <Box sx={{ position: "relative", overflow: "hidden" }}>
+    <Box
+      sx={{
+        position: "relative",
+        overflow: "hidden",
+      }}>
       <Box
         sx={{
           display: "flex",
@@ -33,22 +39,22 @@ const Cards: React.FC<Cards> = ({
           zIndex: 1,
           width: openDrawer ? "calc(100vw - 600px)" : "100%",
           transition: "all .2s",
-        }}
-      >
+        }}>
         {!matches && (
           <Box
             sx={{
               margin: 0.5,
-              fontSize: 22.5,
+              fontSize: revealing ? 20 : 22.5,
               color: "#000",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
               userSelect: "none",
-            }}
-          >
-            Choose your card
-            <Typography sx={{ fontSize: 20, marginLeft: 0.6 }}>👇</Typography>
+            }}>
+            {revealing ? "Counting votes..." : "Choose your card"}
+            {!revealing && (
+              <Typography sx={{ fontSize: 20, marginLeft: 0.6 }}>👇</Typography>
+            )}
           </Box>
         )}
         <Box
@@ -62,13 +68,20 @@ const Cards: React.FC<Cards> = ({
             overflowX: matches ? "auto" : "hidden",
             transition: "all 1s",
             paddingX: 2,
-          }}
-        >
+            pointerEvents: revealing ? "none" : "auto",
+          }}>
           {fiboCards.map((fibo) => (
             <Box
               sx={{
                 flexShrink: 0,
-                color: fibo.checked ? "#fff" : "#3993ff",
+                color:
+                  revealing && fibo.checked
+                    ? "#fff"
+                    : revealing
+                    ? "#a8aeb2"
+                    : fibo.checked
+                    ? "#fff"
+                    : "#3993ff",
                 fontSize: 20,
                 fontWeight: 700,
                 display: "flex",
@@ -77,9 +90,20 @@ const Cards: React.FC<Cards> = ({
                 height: 100,
                 width: 60,
                 border: "2px solid",
-                borderColor: fibo.checked ? "#1a7bf2" : "#3993ff",
+                borderColor: revealing
+                  ? "#a8aeb2"
+                  : fibo.checked
+                  ? "#1a7bf2"
+                  : "#3993ff",
                 borderRadius: 2.5,
-                backgroundColor: fibo.checked ? "#1a7bf2" : "#fff",
+                backgroundColor:
+                  revealing && fibo.checked
+                    ? "#a8aeb2"
+                    : revealing
+                    ? "#fff"
+                    : fibo.checked
+                    ? "#1a7bf2"
+                    : "#fff",
                 margin: "5px 10px",
                 cursor: "pointer",
                 transition: "all 0.1s",
@@ -91,8 +115,7 @@ const Cards: React.FC<Cards> = ({
                 },
               }}
               onClick={() => handleCardSelect(fibo.card, roomId, clientId)}
-              key={fibo.card}
-            >
+              key={fibo.card}>
               {fibo.card}
             </Box>
           ))}
