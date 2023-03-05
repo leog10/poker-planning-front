@@ -1,4 +1,4 @@
-import { Box, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Tooltip, useMediaQuery, useTheme } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { User } from "../types/User";
 
@@ -11,6 +11,18 @@ const Votes: React.FC<Votes> = ({ users, reveal }) => {
   const theme = useTheme();
   const matchesMd = useMediaQuery(theme.breakpoints.down("md"));
 
+  const validateUsers = () => {
+    if (users) {
+      if (users.length % 2 === 0) {
+        return users.length / 2;
+      } else {
+        return Math.ceil(users.length / 2);
+      }
+    } else {
+      return 60;
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -22,14 +34,26 @@ const Votes: React.FC<Votes> = ({ users, reveal }) => {
         userSelect: "none",
         flexDirection: "row",
         flexWrap: "wrap",
-        width: users && users.length * 65,
-        columnGap: 7,
+        width:
+          users && matchesMd
+            ? validateUsers() * 80
+            : users && validateUsers() * 100,
+        columnGap: matchesMd ? 3 : 5,
         rowGap: matchesMd ? 21 : 22,
       }}
     >
       {users?.length &&
         users.map((user) => (
-          <div key={user.clientId}>
+          <Box
+            key={user.clientId}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              width: 60,
+            }}
+          >
             <Box
               id="flip-card"
               sx={{
@@ -98,15 +122,54 @@ const Votes: React.FC<Votes> = ({ users, reveal }) => {
               </Box>
             </Box>
 
-            <Typography
+            <Tooltip
+              title={user.username}
+              TransitionProps={{ timeout: 0 }}
+              PopperProps={{
+                modifiers: [
+                  {
+                    name: "offset",
+                    options: {
+                      offset: [0, -5],
+                    },
+                  },
+                ],
+              }}
+              componentsProps={{
+                tooltip: {
+                  sx: {
+                    color: "#ededed",
+                    fontSize: 19,
+                    paddingY: 0.5,
+                    paddingX: 1,
+                    backgroundColor: "#303e49",
+                  },
+                },
+              }}
+            >
+              <Typography
+                sx={{
+                  fontSize: matchesMd ? 19 : 22,
+                  fontWeight: matchesMd ? 600 : 700,
+                  width: 75,
+                  textOverflow: "ellipsis",
+                  overflow: "hidden",
+                }}
+              >
+                {user.username}
+              </Typography>
+            </Tooltip>
+            {/* <Typography
               sx={{
                 fontSize: matchesMd ? 19 : 22,
                 fontWeight: matchesMd ? 600 : 700,
-              }}
-            >
+                width: 75,
+                textOverflow: "ellipsis",
+                overflow: "hidden",
+              }}>
               {user.username}
-            </Typography>
-          </div>
+            </Typography> */}
+          </Box>
         ))}
     </Box>
   );

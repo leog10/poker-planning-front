@@ -155,6 +155,9 @@ const Game = () => {
             Choose your display name
           </Typography>
           <StyledTextField
+            inputProps={{
+              maxLength: 20,
+            }}
             variant="outlined"
             label="Your display name"
             type="text"
