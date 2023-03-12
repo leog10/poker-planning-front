@@ -154,6 +154,7 @@ const Votes: React.FC<Votes> = ({ users, reveal }) => {
                   width: 75,
                   textOverflow: "ellipsis",
                   overflow: "hidden",
+                  height: "30px",
                 }}
               >
                 {user.username}
