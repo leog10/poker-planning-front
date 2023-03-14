@@ -1,14 +1,18 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Socket } from "socket.io-client";
 import { CardVotes } from "../types/CardVotes";
 import { User } from "../types/User";
 import useCards from "./useCards";
 import useIssue from "./useIssue";
 import useTimer from "./useTimer";
 import useUser from "./useUser";
+import { io } from "socket.io-client";
 
-const useCreateRoom = (socket: Socket) => {
+const socket = io(
+  import.meta.env.DEV ? "http://localhost:3000" : import.meta.env.VITE_API_PROD
+);
+
+const useCreateRoom = () => {
   const [roomId, setRoomId] = useState<string>("");
   const [gameStarted, setGameStarted] = useState<boolean>(false);
   const [allowedReveal, setAllowedReveal] = useState(false);

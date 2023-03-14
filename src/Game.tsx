@@ -1,4 +1,3 @@
-import { io } from "socket.io-client";
 import useRoom from "./helpers/useRoom";
 import Cards from "./components/Cards";
 import { StyledButton, StyledTextField } from "./styles";
@@ -11,13 +10,11 @@ import InviteModal from "./components/InviteModal";
 import VotingResult from "./components/VotingResult";
 import Confetti from "./components/Confetti";
 
-const socket = io("ws://localhost:3000");
-
 const Game = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openInvite, setOpenInvite] = useState(false);
 
-  const { room, user, issue } = useRoom(socket);
+  const { room, user, issue } = useRoom();
 
   const handleOpenDrawer = useCallback(() => {
     setOpenDrawer((prev) => !prev);
@@ -65,8 +62,7 @@ const Game = () => {
     <Box
       sx={{
         width: "100vw",
-      }}
-    >
+      }}>
       <Header
         openDrawer={openDrawer}
         handleOpenInvite={handleOpenInvite}
@@ -96,16 +92,14 @@ const Game = () => {
               ? "45%"
               : "33%",
             transition: "all .1s",
-          }}
-        >
+          }}>
           <Typography
             sx={{
               fontSize: 24,
               marginBottom: 3,
               marginTop: -15,
               fontWeight: 400,
-            }}
-          >
+            }}>
             Choose a name for your game.
           </Typography>
           <StyledTextField
@@ -129,8 +123,7 @@ const Game = () => {
             variant="contained"
             color="primary"
             disabled={!room.gameName}
-            onClick={handleCreateGame}
-          >
+            onClick={handleCreateGame}>
             Create game
           </StyledButton>
         </Box>
@@ -142,16 +135,14 @@ const Game = () => {
             display: "flex",
             flexDirection: "column",
             marginTop: "3.5rem",
-          }}
-        >
+          }}>
           <Typography
             sx={{
               fontSize: 21,
               marginBottom: 4,
               marginTop: -15,
               fontWeight: 600,
-            }}
-          >
+            }}>
             Choose your display name
           </Typography>
           <StyledTextField
@@ -175,8 +166,7 @@ const Game = () => {
             variant="contained"
             color="primary"
             disabled={!room.roomId || !user.username}
-            onClick={handleChooseUsername}
-          >
+            onClick={handleChooseUsername}>
             Continue to game
           </StyledButton>
         </Box>
