@@ -97,15 +97,12 @@ const VotingResult: React.FC<VotingResults> = ({
           flexDirection: matchesMd ? "row" : "column",
           justifyContent: "center",
           gap: matchesMd ? 5 : 0,
+          marginLeft: matchesMd ? 0 : 5,
+          marginBottom: 1,
         }}
       >
         {average !== undefined && average !== null && (
-          <Box
-            sx={{
-              marginLeft: matchesMd ? 0 : 5,
-              marginBottom: 1,
-            }}
-          >
+          <Box>
             <Typography sx={{ fontSize: 22, color: "#a8aeb2" }}>
               Average:
             </Typography>
@@ -114,6 +111,7 @@ const VotingResult: React.FC<VotingResults> = ({
                 fontSize: 43,
                 fontWeight: 700,
                 color: "black",
+                lineHeight: 1.2,
               }}
             >
               {average}
@@ -124,11 +122,12 @@ const VotingResult: React.FC<VotingResults> = ({
         {mate && (
           <Box
             sx={{
-              marginLeft: matchesMd ? 0 : 5,
               marginBottom: 1,
             }}
           >
-            <Typography sx={{ fontSize: 22, color: "#a8aeb2" }}>
+            <Typography
+              sx={{ fontSize: 22, color: "#a8aeb2", marginBottom: 1 }}
+            >
               Mate time!
             </Typography>
             <Box

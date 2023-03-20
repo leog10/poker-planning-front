@@ -168,9 +168,11 @@ const Board: React.FC<Board> = ({
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        marginBottom: matchesMd ? 4 : 10,
+        marginBottom: matchesMd ? 8 : 10,
         width: openDrawer ? "calc(100vw - 600px)" : "100%",
         transition: "all .2s",
+        overflowY: matchesMd ? "auto" : "hidden",
+        height: matchesMd ? "120vh" : "80vh",
       }}
     >
       {users && users.length < 2 && feelingLonely}
