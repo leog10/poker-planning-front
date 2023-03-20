@@ -4,6 +4,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ArticleOutlinedIcon from "@mui/icons-material/ArticleOutlined";
 import { Link } from "react-router-dom";
 import Tooltip from "@mui/material/Tooltip";
+import { useCallback } from "react";
 
 type Header = {
   gameName: string;
@@ -26,6 +27,11 @@ const Header: React.FC<Header> = ({
   const matchesMd = useMediaQuery(theme.breakpoints.down("md"));
   const matchesSm = useMediaQuery(theme.breakpoints.down("sm"));
 
+  const goHome = useCallback(() => {
+    window.history.replaceState(null, "Create game", "/");
+    window.location.reload();
+  }, []);
+
   return (
     <Box
       sx={{
@@ -34,30 +40,20 @@ const Header: React.FC<Header> = ({
         top: 0,
         left: 0,
         width: openDrawer ? "calc(100vw - 600px)" : "100%",
-        padding: "1.7rem 2.5rem",
+        paddingX: "2.5rem",
+        paddingTop: 3,
         alignItems: "center",
         justifyContent: "flex-start",
         backgroundColor: "#F9F9F9",
+        // backgroundColor: "black",
         userSelect: "none",
-        height: "6.2rem",
+        height: 95,
         zIndex: 99,
         transition: "all .2s",
       }}
     >
-      <Box
-        sx={{
-          alignSelf: "end",
-        }}
-      >
-        <Link
-          to={"/"}
-          onClick={() => {
-            window.history.replaceState(null, "Create game", "/");
-            window.location.reload();
-          }}
-        >
-          <img src="/logo.png" alt="" width={48} />
-        </Link>
+      <Box sx={{ display: "flex" }}>
+        <img onClick={goHome} src="/logo.png" alt="" width={48} />
       </Box>
       <Box
         sx={{

@@ -168,7 +168,7 @@ const Board: React.FC<Board> = ({
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        marginBottom: matchesMd ? 10 : 12,
+        marginBottom: matchesMd ? 4 : 10,
         width: openDrawer ? "calc(100vw - 600px)" : "100%",
         transition: "all .2s",
       }}

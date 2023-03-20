@@ -5,6 +5,14 @@ import { Issue } from "../types/Issue";
 const useIssue = (socket: Socket) => {
   const [roomIssues, setRoomIssues] = useState<Issue[]>([]);
 
+  const resetState = useCallback(() => {
+    setIssueTitle("");
+    setIssueLink("");
+    setIssueDescription("");
+    setStoryPoints("");
+    setVotingNow(false);
+  }, []);
+
   const handleEditIssue = (issue: Issue, roomId: string) => {
     socket.emit("client:edit_issue", { issue, roomId });
   };
@@ -171,6 +179,7 @@ const useIssue = (socket: Socket) => {
       setRoomIssues((prev: Issue[]) => {
         return prev.filter((issue) => issue.id !== id);
       });
+      resetState();
       socket.emit("client:delete_issue", { issueId: id, roomId });
     },
     [roomIssues]
@@ -179,6 +188,7 @@ const useIssue = (socket: Socket) => {
   const handleDeleteAllIssues = useCallback(
     (roomId: string) => {
       setRoomIssues([]);
+      resetState();
       socket.emit("client:delete_all_issues", roomId);
     },
     [roomIssues]

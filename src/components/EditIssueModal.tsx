@@ -85,7 +85,7 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                 ? "97vh"
                 : useIssue.editLink.openEditLink
                 ? "91vh"
-                : useIssue.editLink.issueLink.length > 20
+                : useIssue.editLink.issueLink.length > 50
                 ? "97vh"
                 : 720,
             maxHeight:
@@ -94,7 +94,7 @@ const EditIssueModal: React.FC<EditIssueModal> = ({
                 ? "97vh"
                 : useIssue.editLink.openEditLink
                 ? "91vh"
-                : useIssue.editLink.issueLink.length > 20
+                : useIssue.editLink.issueLink.length > 50
                 ? "97vh"
                 : 720,
           },
