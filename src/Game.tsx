@@ -136,9 +136,21 @@ const Game = () => {
       {!room.gameStarted && room.roomId && room.gameName && (
         <Box
           sx={{
+            zIndex: 999,
             display: "flex",
             flexDirection: "column",
+            marginX: "auto",
             marginTop: "3.5rem",
+            maxWidth: matchesSm
+              ? "95%"
+              : matchesMd
+              ? "85%"
+              : matchesLg
+              ? "65%"
+              : matchesXl
+              ? "45%"
+              : "33%",
+            transition: "all .1s",
           }}
         >
           <Typography
@@ -152,6 +164,9 @@ const Game = () => {
             Choose your display name
           </Typography>
           <StyledTextField
+            sx={{
+              width: "100%",
+            }}
             inputProps={{
               maxLength: 20,
             }}
@@ -168,7 +183,7 @@ const Game = () => {
           />
 
           <StyledButton
-            sx={{ fontSize: 24, padding: "0.4rem" }}
+            sx={{ fontSize: 24, padding: "0.4rem", width: "100%" }}
             variant="contained"
             color="primary"
             disabled={!room.roomId || !user.username}
@@ -205,7 +220,7 @@ const Game = () => {
         />
       )}
 
-      {room.revealing && (
+      {room.revealing && room.gameStarted && (
         <VotingResult
           revealingTime={room.revealingTime}
           openDrawer={openDrawer}
